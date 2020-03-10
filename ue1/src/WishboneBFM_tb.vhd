@@ -19,6 +19,9 @@ architecture tb of WishboneBFM_tb is
     signal toBus    : aBusIn;
     signal fromBus  : aBusOut;
 
+    -- used as exit condition by simulation script
+    signal finished : std_ulogic := '0';
+
 begin
     --
     -- Instantiate entities
@@ -81,6 +84,7 @@ begin
 
         -- TODO: checks after DUT has been started
 
+        finished <= '1';
         wait;
     end process;
 
