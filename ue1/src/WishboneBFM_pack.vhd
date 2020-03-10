@@ -17,8 +17,6 @@ package WishboneBFM_pack is
     --
 
     type aBusIn is record
-        clk_i : std_ulogic;
-        rst_i : std_ulogic;
         dat_i : std_ulogic_vector(cDataWidth-1 downto 0);
         adr_i : std_ulogic_vector(cAddrWidth-1 downto 0);
         sel_i : std_ulogic_vector(cDataWidth/8-1 downto 0);
@@ -39,17 +37,17 @@ package WishboneBFM_pack is
     --
 
     procedure busWrite (
-        constant addr   : in  std_ulogic_vector(cAddrWidth-1 downto 0);
-        constant data   : in  std_ulogic_vector(cDataWidth-1 downto 0);
-        signal   busin  : in  aBusIn;
-        signal   busout : out aBusOut
+        constant addr    : in  std_ulogic_vector(cAddrWidth-1 downto 0);
+        constant data    : in  std_ulogic_vector(cDataWidth-1 downto 0);
+        signal   fromBus : in  aBusOut;
+        signal   toBus   : out aBusIn
     );
 
     procedure busRead (
-        constant addr   : in  std_ulogic_vector(cAddrWidth-1 downto 0);
-        variable data   : out std_ulogic_vector(cDataWidth-1 downto 0);
-        signal   busin  : in  aBusIn;
-        signal   busout : out aBusOut
+        constant addr    : in  std_ulogic_vector(cAddrWidth-1 downto 0);
+        signal   fromBus : in  aBusOut;
+        signal   toBus   : out aBusIn;
+        variable data    : out std_ulogic_vector(cDataWidth-1 downto 0)
     );
 end package;
 
@@ -57,20 +55,20 @@ end package;
 package body WishboneBFM_pack is
 
     procedure busWrite (
-        constant addr   : in  std_ulogic_vector(cAddrWidth-1 downto 0);
-        constant data   : in  std_ulogic_vector(cDataWidth-1 downto 0);
-        signal   busin  : in  aBusIn;
-        signal   busout : out aBusOut
+        constant addr    : in  std_ulogic_vector(cAddrWidth-1 downto 0);
+        constant data    : in  std_ulogic_vector(cDataWidth-1 downto 0);
+        signal   fromBus : in  aBusOut;
+        signal   toBus   : out aBusIn
     ) is
     begin
         -- TODO: implement
     end procedure;
 
     procedure busRead (
-        constant addr   : in  std_ulogic_vector(cAddrWidth-1 downto 0);
-        variable data   : out std_ulogic_vector(cDataWidth-1 downto 0);
-        signal   busin  : in  aBusIn;
-        signal   busout : out aBusOut
+        constant addr    : in  std_ulogic_vector(cAddrWidth-1 downto 0);
+        signal   fromBus : in  aBusOut;
+        signal   toBus   : out aBusIn;
+        variable data    : out std_ulogic_vector(cDataWidth-1 downto 0)
     ) is
     begin
         -- TODO: implement
