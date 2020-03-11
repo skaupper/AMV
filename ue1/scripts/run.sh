@@ -12,11 +12,11 @@ cd $SIM_PATH
 
 
 echo "Run comp.do ..."
-vsim -batch -do ../scripts/comp.do
+vsim -c -do ../scripts/comp.do
 
 if [ "$ARG" == "sim" ]; then
     echo "Run sim.do without GUI ..."
-    vsim -batch -do ../scripts/sim.do
+    vsim -c -do ../scripts/sim.do
 elif [ "$ARG" == "gui" ]; then
     echo "Run sim.do with GUI ..."
     vsim -do ../scripts/sim.do

@@ -2,7 +2,7 @@
 # This script is intended to run from the sim/ directory!
 #
 
-
+transcript quietly
 
 #
 # Define constants
