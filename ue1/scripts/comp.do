@@ -31,7 +31,7 @@ set VERILOG_COMPILER        vlog
 set GENERAL_COMPILE_FLAGS   [list -work $LIB_NAME             \
                                   -quiet]
 set VHDL_COMPILE_FLAGS      [list {*}$GENERAL_COMPILE_FLAGS     \
-                                  +acc=$STOP_SIGNAL]
+                                  -O0]
 set VERILOG_COMPILE_FLAGS   [list {*}$GENERAL_COMPILE_FLAGS]
 
 

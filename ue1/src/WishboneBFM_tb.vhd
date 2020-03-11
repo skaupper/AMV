@@ -16,8 +16,8 @@ architecture tb of WishboneBFM_tb is
     signal clk      : std_ulogic;
     signal rst      : std_ulogic;
 
-    signal toBus    : aBusIn;
-    signal fromBus  : aBusOut;
+    signal bfmOut : aBfmOut;
+    signal bfmIn  : aBfmIn;
 
     -- used as exit condition by simulation script
     signal finished : std_ulogic := '0';
@@ -33,14 +33,14 @@ begin
     ) port map (
         clk_i => clk,
         rst_i => rst,
-        adr_i => toBus.adr_i,
-        dat_i => toBus.dat_i,
-        sel_i => toBus.sel_i,
-        cyc_i => toBus.cyc_i,
-        stb_i => toBus.stb_i,
-        we_i  => toBus.we_i,
-        dat_o => fromBus.dat_o,
-        ack_o => fromBus.ack_o
+        adr_i => bfmOut.adr,
+        dat_i => bfmOut.dat,
+        sel_i => bfmOut.sel,
+        cyc_i => bfmOut.cyc,
+        stb_i => bfmOut.stb,
+        we_i  => bfmOut.we,
+        dat_o => bfmIn.dat,
+        ack_o => bfmIn.ack
     );
 
 
