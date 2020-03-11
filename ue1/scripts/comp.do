@@ -2,6 +2,12 @@
 # This script is intended to run from the sim/ directory!
 #
 
+if [batch_mode] {
+  eval echo "Detected batch mode"
+  eval onerror {quit -f}
+  eval onbreak {quit -f}
+}
+
 transcript quietly
 
 #
