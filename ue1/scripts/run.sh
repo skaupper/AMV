@@ -2,7 +2,7 @@
 set -euo pipefail
 ARG=${1:-"all"}
 
-SCRIPT_PATH=$(realpath $(dirname $BASH_SOURCE))
+SCRIPT_PATH=$(readlink -f $(dirname $BASH_SOURCE))
 SIM_PATH=$SCRIPT_PATH/../sim
 SRC_PATH=$SCRIPT_PATH/../src
 
