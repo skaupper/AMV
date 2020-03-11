@@ -25,6 +25,7 @@ architecture tb of WishboneBFM_tb is
 
     constant cEndAddress : natural := 2**cAddrWidth-1;
 
+
 begin
     --
     -- Instantiate entities
@@ -79,6 +80,8 @@ begin
 
     STIMULUS_proc: process is
         variable rdata : std_ulogic_vector(cDataWidth-1 downto 0);
+        variable wdataArr : aDataArray(0 to cEndAddress);
+        variable rdataArr : aDataArray(0 to cEndAddress);
     begin
         wait until rising_edge(clk);
 
@@ -95,6 +98,23 @@ begin
 
             assert rdata = std_ulogic_vector(to_unsigned(i, cDataWidth))
                 report "(AMV) Read wrong data." severity error;
+        end loop;
+
+        wait for 200 * C_CLOCK_PERIOD;
+
+        -- Initialize data array
+        for i in wdataArr'range loop
+            wdataArr(i) := std_ulogic_vector(to_unsigned(i*4, cDataWidth));
+        end loop;
+
+        busWriteBlock(std_ulogic_vector(to_unsigned(0, cAddrWidth)),
+                      wdataArr, bfmOut, bfmIn);
+        busReadBlock(std_ulogic_vector(to_unsigned(0, cAddrWidth)),
+                     bfmOut, bfmIn, rdataArr);
+
+        for i in wdataArr'range loop
+            assert rdataArr(i) = wdataArr(i)
+            report "(AMV) Read wrong data in array." severity error;
         end loop;
 
         finished <= '1';
