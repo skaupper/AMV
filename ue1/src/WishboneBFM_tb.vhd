@@ -1,5 +1,6 @@
 library ieee;
 use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
 
 library work;
 use work.WishboneBFM_pack.all;
@@ -10,7 +11,7 @@ end entity;
 
 architecture tb of WishboneBFM_tb is
     constant C_CLOCK_FREQ   : integer := 100e6;
-    constant C_CLOCK_PERIOD : time := (1 / C_CLOCK_FREQ) * 1 sec;
+    constant C_CLOCK_PERIOD : time := 1 sec / C_CLOCK_FREQ;
 
 
     signal clk      : std_ulogic;
@@ -21,6 +22,8 @@ architecture tb of WishboneBFM_tb is
 
     -- used as exit condition by simulation script
     signal finished : std_ulogic := '0';
+
+    constant cEndAddress : natural := 2**cAddrWidth-1;
 
 begin
     --
@@ -75,6 +78,7 @@ begin
     --
 
     STIMULUS_proc: process is
+        variable rdata : std_ulogic_vector(cDataWidth-1 downto 0);
     begin
         wait until rising_edge(clk);
 
@@ -82,7 +86,16 @@ begin
 
         wait until falling_edge(rst);
 
-        -- TODO: checks after DUT has been started
+        for i in 0 to cEndAddress loop
+            busWrite(std_ulogic_vector(to_unsigned(i, cAddrWidth)),
+                     std_ulogic_vector(to_unsigned(i, cDataWidth)),
+                     bfmOut, bfmIn);
+            busRead(std_ulogic_vector(to_unsigned(i, cAddrWidth)),
+                    bfmOut, bfmIn, rdata);
+
+            assert rdata = std_ulogic_vector(to_unsigned(i, cDataWidth))
+                report "(AMV) Read wrong data." severity error;
+        end loop;
 
         finished <= '1';
         wait;
