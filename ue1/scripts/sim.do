@@ -13,7 +13,7 @@ set TB_NAME         WishboneBFM_tb
 set SCRIPTS_PATH    ../scripts
 set WAVE_FILE       $SCRIPTS_PATH/wave.do
 
-set STOP_SIGNAL     WishboneBFM_tb.finished
+set STOP_SIGNAL     /$TB_NAME/finished
 
 
 

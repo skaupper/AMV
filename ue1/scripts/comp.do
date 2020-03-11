@@ -17,6 +17,8 @@ set SOURCES                 [list   ram.sv                  \
                                     WishboneBFM_pack.vhd    \
                                     WishboneBFM_tb.vhd]
 
+set STOP_SIGNAL             /WishboneBFM_tb/finished
+
 # the patterns to identify VHDL and Verilog files
 set VHDL_REGEX              {\.vhd$}
 set VERILOG_REGEX           {\.s?v$}
@@ -28,7 +30,8 @@ set VERILOG_COMPILER        vlog
 # compile flags to used split into general and language specific flags
 set GENERAL_COMPILE_FLAGS   [list -work $LIB_NAME             \
                                   -quiet]
-set VHDL_COMPILE_FLAGS      [list {*}$GENERAL_COMPILE_FLAGS]
+set VHDL_COMPILE_FLAGS      [list {*}$GENERAL_COMPILE_FLAGS     \
+                                  +acc=$STOP_SIGNAL]
 set VERILOG_COMPILE_FLAGS   [list {*}$GENERAL_COMPILE_FLAGS]
 
 
@@ -37,7 +40,6 @@ set VERILOG_COMPILE_FLAGS   [list {*}$GENERAL_COMPILE_FLAGS]
 # Create library (work)
 #
 
-catch {vdel -all -lib $LIB_NAME}
 vlib $LIB_NAME
 vmap $LIB_NAME $LIB_NAME
 
