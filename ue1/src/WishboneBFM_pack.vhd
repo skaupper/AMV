@@ -39,6 +39,11 @@ package WishboneBFM_pack is
     -- Functions and procedures
     --
 
+    procedure busIdle (
+        signal   bfmOut  : out aBfmOut;
+        signal   bfmIn   : in  aBfmIn
+    );
+
     procedure busWrite (
         constant addr    : in  std_ulogic_vector(cAddrWidth-1 downto 0);
         constant data    : in  std_ulogic_vector(cDataWidth-1 downto 0);
@@ -70,6 +75,16 @@ end package;
 
 
 package body WishboneBFM_pack is
+
+    procedure busIdle (
+        signal   bfmOut  : out aBfmOut;
+        signal   bfmIn   : in  aBfmIn
+    ) is
+    begin
+        wait until rising_edge(bfmIn.clk);
+        bfmOut.stb <= '0';
+        bfmOut.cyc <= '0';
+    end procedure;
 
     procedure busWrite (
         constant addr    : in  std_ulogic_vector(cAddrWidth-1 downto 0);
