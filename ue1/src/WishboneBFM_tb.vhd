@@ -100,6 +100,7 @@ begin
                 report "(AMV) Read wrong data." severity error;
         end loop;
 
+        busIdle(bfmOut, bfmIn);
         wait for 200 * C_CLOCK_PERIOD;
 
         -- Initialize data array
