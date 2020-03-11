@@ -69,5 +69,4 @@ foreach f $SOURCES {
     eval $command
 }
 
-
-exit
+quit -f

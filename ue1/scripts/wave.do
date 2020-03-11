@@ -1,5 +1,4 @@
 onerror {resume}
-quietly WaveActivateNextPane {} 0
 add wave -noupdate /wishbonebfm_tb/clk
 add wave -noupdate /wishbonebfm_tb/rst
 add wave -noupdate /wishbonebfm_tb/toBus
