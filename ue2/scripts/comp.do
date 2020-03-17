@@ -21,8 +21,7 @@ set LIB_NAME                work
 # source path and filenames to compile (relative to the sim/ directory!)
 set SOURCE_PATH             ../src
 set SOURCES                 [list   ram.sv                  \
-                                    WishboneBFM_pack.vhd    \
-                                    WishboneBFM_tb.vhd]
+                                    wishbone_bfm.sv]
 
 set STOP_SIGNAL             /WishboneBFM_tb/finished
 
