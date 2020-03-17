@@ -75,4 +75,6 @@ foreach f $SOURCES {
     eval $command
 }
 
-quit -f
+if [batch_mode] {
+    quit -f
+}
