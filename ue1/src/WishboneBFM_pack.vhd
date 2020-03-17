@@ -96,7 +96,7 @@ package body WishboneBFM_pack is
         wait until rising_edge(bfmIn.clk);
         bfmOut.adr <= addr;
         bfmOut.dat <= data;
-        bfmOut.we <= '1';
+        bfmOut.we  <= '1';
         bfmOut.sel <= (others => '1');
         bfmOut.stb <= '1';
         bfmOut.cyc <= '1';
@@ -115,7 +115,7 @@ package body WishboneBFM_pack is
     begin
         wait until rising_edge(bfmIn.clk);
         bfmOut.adr <= addr;
-        bfmOut.we <= '0';
+        bfmOut.we  <= '0';
         bfmOut.sel <= (others => '1');
         bfmOut.stb <= '1';
         bfmOut.cyc <= '1';
@@ -139,7 +139,7 @@ package body WishboneBFM_pack is
         for i in data'low to data'high loop
             bfmOut.adr <= std_ulogic_vector(curr_addr);
             bfmOut.dat <= data(i);
-            bfmOut.we <= '1';
+            bfmOut.we  <= '1';
             bfmOut.sel <= (others => '1');
             bfmOut.stb <= '1';
             bfmOut.cyc <= '1';
@@ -164,7 +164,7 @@ package body WishboneBFM_pack is
 
         for i in data'low to data'high loop
             bfmOut.adr <= std_ulogic_vector(curr_addr);
-            bfmOut.we <= '0';
+            bfmOut.we  <= '0';
             bfmOut.sel <= (others => '1');
             bfmOut.stb <= '1';
             bfmOut.cyc <= '1';

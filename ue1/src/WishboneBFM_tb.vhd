@@ -10,21 +10,21 @@ entity WishboneBFM_tb is
 end entity;
 
 architecture tb of WishboneBFM_tb is
-    constant C_CLOCK_FREQ   : integer := 100e6;
-    constant C_CLOCK_PERIOD : time := 1 sec / C_CLOCK_FREQ;
+    constant cClockFreq   : integer := 100e6;
+    constant cClockPeriod : time := 1 sec / cClockFreq;
+
+    constant cEndAddress  : natural := 2**cAddrWidth-1;
 
 
     signal clk      : std_ulogic;
     signal rst      : std_ulogic;
 
-    signal bfmOut : aBfmOut;
-    signal bfmIn  : aBfmIn;
+    signal bfmOut   : aBfmOut;
+    signal bfmIn    : aBfmIn;
+
 
     -- used as exit condition by simulation script
     signal finished : std_ulogic := '0';
-
-    constant cEndAddress : natural := 2**cAddrWidth-1;
-
 
 begin
     --
@@ -57,7 +57,7 @@ begin
         clk <= '0';
 
         loop
-            wait for C_CLOCK_PERIOD / 2;
+            wait for cClockPeriod / 2;
             clk <= not clk;
         end loop;
     end process;
@@ -67,7 +67,7 @@ begin
         rst <= '1';
 
         wait until rising_edge(clk);
-        wait for C_CLOCK_PERIOD * 15.7;
+        wait for cClockPeriod * 15.7;
 
         rst <= '0';
         wait;
@@ -77,6 +77,8 @@ begin
     --
     -- Actual test cases
     --
+
+    bfmIn.clk <= clk;
 
     STIMULUS_proc: process is
         variable rdata : std_ulogic_vector(cDataWidth-1 downto 0);
@@ -101,7 +103,7 @@ begin
         end loop;
 
         busIdle(bfmOut, bfmIn);
-        wait for 200 * C_CLOCK_PERIOD;
+        wait for 200 * cClockPeriod;
 
         -- Initialize data array
         for i in wdataArr'range loop
