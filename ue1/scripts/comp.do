@@ -2,7 +2,13 @@
 # This script is intended to run from the sim/ directory!
 #
 
+if [batch_mode] {
+  eval echo "Detected batch mode"
+  eval onerror {quit -f}
+  eval onbreak {quit -f}
+}
 
+transcript quietly
 
 #
 # Define constants
@@ -10,30 +16,29 @@
 
 
 # the library name which all sources get compiled into
-set LIB_NAME work
+set LIB_NAME                work
 
 # source path and filenames to compile (relative to the sim/ directory!)
-set SOURCE_PATH ../src
-set SOURCES [list           \
-    ram.sv                  \
-    WishboneBFM_pack.vhd    \
-    WishboneBFM_tb.vhd
-]
+set SOURCE_PATH             ../src
+set SOURCES                 [list   ram.sv                  \
+                                    WishboneBFM_pack.vhd    \
+                                    WishboneBFM_tb.vhd]
+
+set STOP_SIGNAL             /WishboneBFM_tb/finished
 
 # the patterns to identify VHDL and Verilog files
-set VHDL_REGEX {\.vhd$}
-set VERILOG_REGEX {\.s?v$}
+set VHDL_REGEX              {\.vhd$}
+set VERILOG_REGEX           {\.s?v$}
 
 # set the compilers used to compile different languages
-set VHDL_COMPILER vcom
-set VERILOG_COMPILER vlog
+set VHDL_COMPILER           vcom
+set VERILOG_COMPILER        vlog
 
 # compile flags to used split into general and language specific flags
-set GENERAL_COMPILE_FLAGS [list \
-    -work $LIB_NAME             \
-    -quiet
-]
-set VHDL_COMPILE_FLAGS      [list {*}$GENERAL_COMPILE_FLAGS]
+set GENERAL_COMPILE_FLAGS   [list -work $LIB_NAME             \
+                                  -quiet]
+set VHDL_COMPILE_FLAGS      [list {*}$GENERAL_COMPILE_FLAGS     \
+                                  -O0]
 set VERILOG_COMPILE_FLAGS   [list {*}$GENERAL_COMPILE_FLAGS]
 
 
@@ -42,7 +47,6 @@ set VERILOG_COMPILE_FLAGS   [list {*}$GENERAL_COMPILE_FLAGS]
 # Create library (work)
 #
 
-catch {vdel -all -lib $LIB_NAME}
 vlib $LIB_NAME
 vmap $LIB_NAME $LIB_NAME
 
@@ -53,6 +57,8 @@ vmap $LIB_NAME $LIB_NAME
 #
 
 foreach f $SOURCES {
+    # check if `f` contains a VHDL or Verilog source file
+    # and set compiler and compile flags accordingly
     if {[regexp $VHDL_REGEX $f]} {
         set compiler $VHDL_COMPILER
         set compile_flags $VHDL_COMPILE_FLAGS
@@ -63,10 +69,12 @@ foreach f $SOURCES {
         return -code error "Unknown file format: $f"
     }
 
+    # build compile command and execute it
     set command [list $compiler {*}$compile_flags $SOURCE_PATH/$f]
-    puts $command
+    # puts $command
     eval $command
 }
 
-
-exit 0
+if [batch_mode] {
+    quit -f
+}
