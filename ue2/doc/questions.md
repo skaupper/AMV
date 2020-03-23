@@ -1,15 +1,12 @@
-- Welchen Effekt hat die VHDL-Anweisung `wait until clk_i = '1';`?
-  Was passiert, wenn `clk_i` zum Zeitpunkt des Aufrufs bereits `'1'` ist?
+- Erklären Sie den Unterschied zwischen den SystemVerilog-Datentypen `bit` und `logic`! Wo liegen die jeweiligen Vorteile?
 
-Die Funktion `wait until` wartet auf ein Event. Wenn clk_i also bereits '1' ist, wird trotzdem auf die nächste rising edge gewartet. Das passiert im nächsten Zyklus.
+Mit `bit` kann man zweiwertige Logik modellieren ('0' und '1'), während man mit `logic` vierwertige darstellen kann ('0', '1', 'X' und 'Z').
+Der Vorteil von `logic` liegt darin, dass in der Simulation zwischen mehr Werten (z.B. ungültige Werte mit 'X') unterschieden werden kann, was bei der Fehlersuche hilfreich ist.
+Ein `bit` währenddessen benötigt nur den halben Speicher eines `logic`s und ist somit speichereffizienter.
 
-- Welchen Effekt hat die VHDL-Anweisung `wait on clk_i until ack_i = '1';`?
 
-Diese `wait`-Anweisung wartet darauf, dass `ack_i` während eines Events von `clk_i` `'1'` ist.
-Dabei spielt es keine Rolle, ob `clk_i` eine steigende oder eine fallende Flanke aufweist.
+- Erklären Sie den Unterschied zwischen `packed` und `unpacked` Arrays! Geben Sie für beide Varianten sinnvolle Einsatzbeispiele an!
 
-- Warum müssen für die Funktionen des BFM Signal-Parameter verwendet werden
-  (im Gegensatz zu Constants oder Variables)?
+Bei `packed` Arrays liegen die Elemente direkt hintereinander im Speicher (ähnlich eines VHDL-Vektors), wohingegen die Elemente eines `unpacked` Arrays nicht zwingenderweise nacheinander im Speicher liegen.
 
-Damit man diese direkt in das DUT weiterleiten kann. Dort werden Signale
-erwartet, die nicht als `variable`s an Prozeduren übergeben werden können.
+`packed`-Arrays werden bei breiten Signalen (32 Bit breite Register, Bussignale, etc.) verwendet, während `unpacked`-Arrays bei lose gekoppelten Elementen (z.B. die Testfälle einer Simulation) verwendet werden.

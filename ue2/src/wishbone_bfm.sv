@@ -169,25 +169,29 @@ program test #(parameter int gDataWidth = 32, parameter int gAddrWidth = 8)(wish
 		// stimuli ------------------------------------------------------------
 		// ...
 
+        // Test single read and single write routines
         for (int addr = 0; addr < cEndAddress; addr++) begin
 		    bfm.singleWrite(addr, addr);
             bfm.singleRead(addr, rdata);
             assert (rdata == addr);
         end
 
+        // Idle for some cycles
         for (int i = 0; i < 200; i++) begin
             bfm.idle();
         end
 
 
-        // Initialize data array
+        // Initialize data array for block read/write test
         for (int addr = 0; addr < cEndAddress; addr++) begin
             wdataArr[addr] = addr*4;
         end
 
+        // Write data block and read it back
         bfm.blockWrite(0, wdataArr);
         bfm.blockRead(0, rdataArr);
 
+        // Compare read data with written data
         for (int addr = 0; addr < cEndAddress; addr++) begin
             assert (wdataArr[addr] == rdataArr[addr]);
         end
