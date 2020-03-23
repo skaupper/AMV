@@ -81,9 +81,9 @@ package body WishboneBFM_pack is
         signal   bfmIn   : in  aBfmIn
     ) is
     begin
-        wait until rising_edge(bfmIn.clk);
         bfmOut.stb <= '0';
         bfmOut.cyc <= '0';
+        wait until rising_edge(bfmIn.clk);
     end procedure;
 
     procedure busWrite (
@@ -93,7 +93,6 @@ package body WishboneBFM_pack is
         signal   bfmIn   : in  aBfmIn
     ) is
     begin
-        wait until rising_edge(bfmIn.clk);
         bfmOut.adr <= addr;
         bfmOut.dat <= data;
         bfmOut.we  <= '1';
@@ -113,7 +112,6 @@ package body WishboneBFM_pack is
         variable data    : out std_ulogic_vector(cDataWidth-1 downto 0)
     ) is
     begin
-        wait until rising_edge(bfmIn.clk);
         bfmOut.adr <= addr;
         bfmOut.we  <= '0';
         bfmOut.sel <= (others => '1');
@@ -134,8 +132,6 @@ package body WishboneBFM_pack is
     ) is
         variable curr_addr : unsigned(addr'range) := unsigned(addr);
     begin
-        wait until rising_edge(bfmIn.clk);
-
         for i in data'low to data'high loop
             bfmOut.adr <= std_ulogic_vector(curr_addr);
             bfmOut.dat <= data(i);
@@ -160,8 +156,6 @@ package body WishboneBFM_pack is
     ) is
         variable curr_addr : unsigned(addr'range) := unsigned(addr);
     begin
-        wait until rising_edge(bfmIn.clk);
-
         for i in data'low to data'high loop
             bfmOut.adr <= std_ulogic_vector(curr_addr);
             bfmOut.we  <= '0';
