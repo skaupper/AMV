@@ -10,7 +10,12 @@ program test;
     task automatic execute(ref Prol16Model model, ref Prol16Opcode op, input Prol16Command cmd, int ra = UNUSED, int rb = UNUSED, data_v data = '0);
         op.setAll(cmd, ra, rb, data);
         model.execute(op);
+
+        // Print
+        op.print;
         model.print;
+        $display();
+
         #1ns;
     endtask
 
@@ -21,13 +26,9 @@ program test;
         static Prol16Opcode op = new;
         static Prol16Model model = new;
 
-        model.print;
-        op.print;
-
         for (int i = 0; i < gRegs; ++i) begin
             execute(model, op, LOADI, i, UNUSED, 16'h1111 * i);
         end
-        model.print;
 
         execute(model, op, SLEEP);
         execute(model, op, LOAD, 1, 0);
@@ -79,7 +80,6 @@ program test;
         execute(model, op, SHRC, 6);
 
         // TODO: check registers
-
 
         $finish;
     end : stimuli
