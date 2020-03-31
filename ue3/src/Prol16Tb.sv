@@ -7,79 +7,66 @@ endmodule
 
 program test;
 
-    task automatic execute(ref Prol16Model model, ref Prol16Opcode op, input Prol16Command cmd, int ra = UNUSED, int rb = UNUSED, data_v data = '0);
-        op.setAll(cmd, ra, rb, data);
-        model.execute(op);
+    typedef Prol16Opcode Prol16OpcodeQueue[$];
 
-        // Print
-        op.print;
-        model.print;
-        $display();
-
-        #1ns;
-    endtask
-
-    initial begin : stimuli
-        // stimuli ------------------------------------------------------------
-        // ...
-
-        static Prol16Opcode op = new;
-        static Prol16Model model = new;
+    function Prol16OpcodeQueue generateTests();
+        Prol16OpcodeQueue tests;
 
         for (int i = 0; i < gRegs; ++i) begin
-            execute(model, op, LOADI, i, UNUSED, 16'h1111 * i);
+            tests.push_back(Prol16Opcode::create(LOADI, i, UNUSED, 16'h1111 * i));
         end
 
-        execute(model, op, SLEEP);
-        execute(model, op, LOAD, 1, 0);
-        execute(model, op, STORE, 2, 3);
+        tests.push_back(Prol16Opcode::create(NOP));
+        tests.push_back(Prol16Opcode::create(SLEEP));
+        tests.push_back(Prol16Opcode::create(LOAD, 1, 0));
+        tests.push_back(Prol16Opcode::create(STORE, 2, 3));
 
-        // TODO: assert state
+        tests.push_back(Prol16Opcode::create(JUMP, 21));
+        tests.push_back(Prol16Opcode::create(JUMPC, 26));
+        tests.push_back(Prol16Opcode::create(JUMPZ, 31));
 
-        execute(model, op, JUMP, 21);
-        execute(model, op, JUMPC, 26);
-        execute(model, op, JUMPZ, 31);
+        tests.push_back(Prol16Opcode::create(SHL, 15));
+        tests.push_back(Prol16Opcode::create(COMP, 0, 0));
 
-        // TODO: assert PC
+        tests.push_back(Prol16Opcode::create(JUMP, 10));
+        tests.push_back(Prol16Opcode::create(JUMPC, 15));
+        tests.push_back(Prol16Opcode::create(JUMPZ, 20));
 
-        // set carry and zero flags
-        execute(model, op, SHL, 15);
-        execute(model, op, COMP, 0, 0);
+        tests.push_back(Prol16Opcode::create(MOVE, 5, 15));
+        tests.push_back(Prol16Opcode::create(AND, 14, 3));
+        tests.push_back(Prol16Opcode::create(OR, 13, 6));
+        tests.push_back(Prol16Opcode::create(XOR, 12, 11));
+        tests.push_back(Prol16Opcode::create(NOT, 11));
+
+        tests.push_back(Prol16Opcode::create(ADD, 3, 12));
+        tests.push_back(Prol16Opcode::create(ADDC, 1, 2));
+        tests.push_back(Prol16Opcode::create(SUB, 11, 7));
+        tests.push_back(Prol16Opcode::create(SUBC, 2, 3));
+
+        tests.push_back(Prol16Opcode::create(COMP, 3, 12));
+        tests.push_back(Prol16Opcode::create(INC, 15));
+        tests.push_back(Prol16Opcode::create(DEC, 1));
+
+        tests.push_back(Prol16Opcode::create(SHL, 3));
+        tests.push_back(Prol16Opcode::create(SHR, 4));
+        tests.push_back(Prol16Opcode::create(SHLC, 5));
+        tests.push_back(Prol16Opcode::create(SHRC, 6));
+
+        return tests;
+    endfunction
 
 
-        execute(model, op, JUMP, 10);
-        execute(model, op, JUMPC, 15);
-        execute(model, op, JUMPZ, 20);
+    initial begin : stimuli
+        static Prol16OpcodeQueue ops = generateTests();
+        static Prol16Model model = new;
 
-        // TODO: assert PC
+        for (int i = 0; i < ops.size(); ++i) begin
+            model.execute(ops[i]);
 
-        execute(model, op, MOVE, 5, 15);
-        execute(model, op, AND, 14, 3);
-        execute(model, op, OR, 13, 6);
-        execute(model, op, XOR, 12, 11);
-        execute(model, op, NOT, 11);
-
-        // TODO: check registers
-
-        execute(model, op, ADD, 3, 12);
-        execute(model, op, ADDC, 1, 2);
-        execute(model, op, SUB, 11, 7);
-        execute(model, op, SUBC, 2, 3);
-
-        // TODO: check registers
-
-        execute(model, op, COMP, 3, 12);
-        execute(model, op, INC, 15);
-        execute(model, op, DEC, 1);
-
-        // TODO: check registers
-
-        execute(model, op, SHL, 3);
-        execute(model, op, SHR, 4);
-        execute(model, op, SHLC, 5);
-        execute(model, op, SHRC, 6);
-
-        // TODO: check registers
+            ops[i].print;
+            model.print;
+            $display();
+        end
 
         $finish;
     end : stimuli

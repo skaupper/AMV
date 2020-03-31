@@ -43,6 +43,12 @@ class Prol16Opcode;
         setAll(NOP);
     endfunction
 
+    static function Prol16Opcode create(Prol16Command cmd, int ra = UNUSED, int rb = UNUSED, data_v data = '0);
+        Prol16Opcode op = new;
+        op.setAll(cmd, ra, rb, data);
+        return op;
+    endfunction
+
     function void setAll(Prol16Command cmd, int ra = UNUSED, int rb = UNUSED, data_v data = '0);
         this.cmd = cmd;
         this.ra = ra;
