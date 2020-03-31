@@ -40,10 +40,10 @@ class Prol16Opcode;
     data_v data;
 
     function new();
-        setAll(NOP, 0);
+        setAll(NOP);
     endfunction
 
-    function void setAll(Prol16Command cmd, int ra, int rb = UNUSED, data_v data = '0);
+    function void setAll(Prol16Command cmd, int ra = UNUSED, int rb = UNUSED, data_v data = '0);
         this.cmd = cmd;
         this.ra = ra;
         this.rb = rb;
