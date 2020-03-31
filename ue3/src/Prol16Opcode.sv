@@ -39,16 +39,25 @@ class Prol16Opcode;
     Prol16Command cmd;
     data_v data;
 
-    function new(Prol16Command cmd, int ra, int rb, data_v data = '0);
-        setAll(cmd, ra, rb, data);
+    function new();
+        setAll(NOP, 0);
     endfunction
 
-    task setAll(Prol16Command cmd, int ra, int rb, data_v data = '0);
+    function void setAll(Prol16Command cmd, int ra, int rb = UNUSED, data_v data = '0);
         this.cmd = cmd;
         this.ra = ra;
         this.rb = rb;
         this.data = data;
-    endtask
+    endfunction
+
+    function void print;
+        $write("Prol16Opcode: {");
+        $write("Command: %s, ", cmd.name());
+        $write("Ra: %2d, ", ra);
+        $write("Rb: %2d, ", rb);
+        $write("Data: 0x%4h", data);
+        $write("}\n");
+    endfunction
 endclass
 
 

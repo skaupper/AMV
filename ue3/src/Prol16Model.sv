@@ -16,22 +16,17 @@ endclass
 class Prol16Model;
     local Prol16State state;
 
-    local function __reset;
+    function new;
+        state = new;
+        reset;
+    endfunction
+
+    function void reset;
         state.regs = '{gRegs{'0}};
         state.zero = 0;
         state.carry = 0;
         state.pc = 0;
-        return 0;
     endfunction
-
-    function new;
-        state = new;
-        void'(__reset);
-    endfunction
-
-    task reset;
-        void'(__reset);
-    endtask
 
     task execute (Prol16Opcode opc);
         int ra = state.regs[opc.ra];
@@ -129,15 +124,23 @@ class Prol16Model;
         state.pc = newPc;
     endtask
 
-    class Prol16State;
-        data_v regs[gRegs];
-        bit zero;
-        bit carry;
-        int pc;
-    endclass
 
-    task print();
-        string s;
+    function void print;
+        $write("Prol16Model State: {");
+        $write("PC: %d, ", state.pc);
+        $write("Zero: %b, ", state.zero);
+        $write("Carry: %b, ", state.carry);
+
+        $write("(");
+        for (int i = 0; i < gRegs; i++) begin
+            if (i != 0) begin
+                $write(", ");
+            end
+            $write("[%2d]: 0x%4h", i, state.regs[i]);
+        end
+        $write(")}\n");
+
+
         // $sformat(s, "Prol16Model State: Command: %s; Ra: %d; Rb: %d; Data: %d", state.cmd.name(), state.ra )
         $display("----- Prol16Model State -------------------------------");
         for (int i = 0; i < gRegs; i++) begin
@@ -147,8 +150,7 @@ class Prol16Model;
         $display("Carry : %b", state.carry);
         $display("PC    : %d", state.pc);
         $display("-------------------------------------------------------");
-
-    endtask
+    endfunction
 
 endclass
 

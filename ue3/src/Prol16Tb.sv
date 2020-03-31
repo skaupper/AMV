@@ -11,9 +11,10 @@ program test;
         // stimuli ------------------------------------------------------------
         // ...
 
-        Prol16Opcode op;
-        Prol16Model model;
-        model.reset;
+        static Prol16Opcode op = new;
+        static Prol16Model model = new;
+
+        model.print;
 
         op.setAll(LOADI, 0, UNUSED, 16'hABCD);
         model.execute(op);
