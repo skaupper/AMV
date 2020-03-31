@@ -15,6 +15,7 @@ program test;
         static Prol16Model model = new;
 
         model.print;
+        op.print;
 
         op.setAll(LOADI, 0, UNUSED, 16'hABCD);
         model.execute(op);

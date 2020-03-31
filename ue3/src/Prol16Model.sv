@@ -127,7 +127,7 @@ class Prol16Model;
 
     function void print;
         $write("Prol16Model State: {");
-        $write("PC: %d, ", state.pc);
+        $write("PC: %0d, ", state.pc);
         $write("Zero: %b, ", state.zero);
         $write("Carry: %b, ", state.carry);
 
@@ -139,17 +139,6 @@ class Prol16Model;
             $write("[%2d]: 0x%4h", i, state.regs[i]);
         end
         $write(")}\n");
-
-
-        // $sformat(s, "Prol16Model State: Command: %s; Ra: %d; Rb: %d; Data: %d", state.cmd.name(), state.ra )
-        $display("----- Prol16Model State -------------------------------");
-        for (int i = 0; i < gRegs; i++) begin
-            $display("Reg[%2d]: %H", i, state.regs[i]);
-        end
-        $display("Zero  : %b", state.zero);
-        $display("Carry : %b", state.carry);
-        $display("PC    : %d", state.pc);
-        $display("-------------------------------------------------------");
     endfunction
 
 endclass
