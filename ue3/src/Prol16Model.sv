@@ -33,19 +33,20 @@ class Prol16Model;
         void'(__reset);
     endtask
 
-    function execute (Prol16Opcode opc);
+    task execute (Prol16Opcode opc);
         int ra = state.regs[opc.ra];
         int rb = state.regs[opc.rb];
 
         bit setZero = 1;
-        // If Ra or Carry should not be updated, neither change the values of res nor carry.
         int res = ra;
         int carry = state.carry;
+        int newPc = state.pc + 1;
 
 
         // Calculate operation result
         case (opc.cmd)
             LOADI:  begin
+                newPc = state.pc + 2;
                 setZero = 0;
                 res = opc.data;
             end
@@ -98,6 +99,10 @@ class Prol16Model;
 
         // Calculate carry out
         case (opc.cmd)
+            AND:    begin carry = 0; end
+            OR:     begin carry = 0; end
+            XOR:    begin carry = 0; end
+            NOT:    begin carry = 0; end
             ADD:    begin carry = (res > (1 << gDataWidth)); end
             ADDC:   begin carry = (res > (1 << gDataWidth)); end
             SUB:    begin carry = (res < 0); end
@@ -114,15 +119,36 @@ class Prol16Model;
         endcase
 
 
-        // update flags
+        // Update flags, registers and program counter
         if (setZero == 0) begin
             state.zero = (res == 0);
         end
         state.carry = carry;
 
-        // Update register Ra
         state.regs[opc.ra] = res;
-    endfunction
+        state.pc = newPc;
+    endtask
+
+    class Prol16State;
+        data_v regs[gRegs];
+        bit zero;
+        bit carry;
+        int pc;
+    endclass
+
+    task print();
+        string s;
+        // $sformat(s, "Prol16Model State: Command: %s; Ra: %d; Rb: %d; Data: %d", state.cmd.name(), state.ra )
+        $display("----- Prol16Model State -------------------------------");
+        for (int i = 0; i < gRegs; i++) begin
+            $display("Reg[%2d]: %H", i, state.regs[i]);
+        end
+        $display("Zero  : %b", state.zero);
+        $display("Carry : %b", state.carry);
+        $display("PC    : %d", state.pc);
+        $display("-------------------------------------------------------");
+
+    endtask
 
 endclass
 

@@ -31,12 +31,24 @@ typedef enum int {
     SHRC    = 31
 } Prol16Command;
 
+const int UNUSED = -1;
 
 class Prol16Opcode;
     int ra;
     int rb;
     Prol16Command cmd;
     data_v data;
+
+    function new(Prol16Command cmd, int ra, int rb, data_v data = '0);
+        setAll(cmd, ra, rb, data);
+    endfunction
+
+    task setAll(Prol16Command cmd, int ra, int rb, data_v data = '0);
+        this.cmd = cmd;
+        this.ra = ra;
+        this.rb = rb;
+        this.data = data;
+    endtask
 endclass
 
 
