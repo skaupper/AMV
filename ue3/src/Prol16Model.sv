@@ -14,7 +14,7 @@ endclass
 
 
 class Prol16Model;
-    local Prol16State state;
+    Prol16State state;
 
     function new;
         state = new;
