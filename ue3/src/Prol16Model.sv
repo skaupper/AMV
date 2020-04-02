@@ -116,12 +116,14 @@ class Prol16Model;
 
 
         // Update flags, registers and program counter
-        if (setZero == 1) begin
+        if (setZero) begin
             state.zero = (res == 0);
         end
         state.carry = carry;
 
-        state.regs[opc.ra] = res;
+        if (setResult) begin
+            state.regs[opc.ra] = res;
+        end
         state.pc = newPc;
     endtask
 
