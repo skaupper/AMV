@@ -33,6 +33,7 @@ class Prol16Model;
         int rb = state.regs[opc.rb];
 
         bit setZero = 1;
+        bit setResult = 1;
         int res = ra;
         int carry = state.carry;
         int newPc = state.pc + 1;
@@ -47,19 +48,19 @@ class Prol16Model;
             end
             JUMP:   begin
                 setZero = 0;
-                state.pc = ra;
+                newPc = ra;
             end
             JUMPC:  begin
                 setZero = 0;
                 if (state.carry) begin
-                    state.pc = ra;
+                    newPc = ra;
                 end
             end
 
             JUMPZ:  begin
                 setZero = 0;
                 if (state.zero) begin
-                    state.pc = ra;
+                    newPc = ra;
                 end
             end
 
@@ -67,12 +68,12 @@ class Prol16Model;
             AND:    begin res = ra & rb;                    end
             OR:     begin res = ra | rb;                    end
             XOR:    begin res = ra ^ rb;                    end
-            NOT:    begin res = !ra;                        end
+            NOT:    begin res = ~ra;                        end
             ADD:    begin res = ra + rb;                    end
             ADDC:   begin res = ra + rb + state.carry;      end
             SUB:    begin res = ra - rb;                    end
             SUBC:   begin res = ra - rb - state.carry;      end
-            COMP:   begin res = ra - rb;                    end
+            COMP:   begin res = ra - rb;                        setResult = 0;  end
             INC:    begin res = ra + 1;                     end
             DEC:    begin res = ra - 1;                     end
             SHL:    begin res = ra << 1;                    end
@@ -115,7 +116,7 @@ class Prol16Model;
 
 
         // Update flags, registers and program counter
-        if (setZero == 0) begin
+        if (setZero == 1) begin
             state.zero = (res == 0);
         end
         state.carry = carry;
