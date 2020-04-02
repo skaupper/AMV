@@ -48,19 +48,19 @@ class Prol16Model;
             end
             JUMP:   begin
                 setZero = 0;
-                newPc = ra;
+                newPc = opc.ra;
             end
             JUMPC:  begin
                 setZero = 0;
                 if (state.carry) begin
-                    newPc = ra;
+                    newPc = opc.ra;
                 end
             end
 
             JUMPZ:  begin
                 setZero = 0;
                 if (state.zero) begin
-                    newPc = ra;
+                    newPc = opc.ra;
                 end
             end
 
@@ -106,9 +106,9 @@ class Prol16Model;
             COMP:   begin carry = (res < 0); end
             INC:    begin carry = (res > (1 << gDataWidth)); end
             DEC:    begin carry = (res < 0); end
-            SHL:    begin carry = (ra & (1 << (gDataWidth-1)) != 0); end
+            SHL:    begin carry = (ra & (1 << (gDataWidth-1))) != 0; end
             SHR:    begin carry = ra & 1; end
-            SHLC:   begin carry = (ra & (1 << (gDataWidth-1)) != 0); end
+            SHLC:   begin carry = (ra & (1 << (gDataWidth-1))) != 0; end
             SHRC:   begin carry = ra & 1; end
 
             default: begin end
