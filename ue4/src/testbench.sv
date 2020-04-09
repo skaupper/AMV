@@ -79,9 +79,10 @@ program test (cpu_if.tb duv_if, output logic rst);
         #123ns;
         rst <= 1;
 
+        // Initialize signal spy and reset CPU regs
         driver.resetCpuRegs();
-        #1ns;
         setupSignalSpy();
+
 
         // Run all test cases
         while (generator.hasTests()) begin
@@ -98,7 +99,8 @@ program test (cpu_if.tb duv_if, output logic rst);
         static Monitor monitor = new(duv_if, cpu_prefix);
         static Prol16State state;
 
-        @(negedge rst);
+        @(posedge rst);
+
 
         forever begin
             monitor.waitForTest(state, duv_state);
