@@ -30,9 +30,9 @@ class Generator;
       end
 
       tests.push_back(Prol16Opcode::create(NOP));
-      tests.push_back(Prol16Opcode::create(SLEEP));
-      tests.push_back(Prol16Opcode::create(LOAD, 1, 0));
-      tests.push_back(Prol16Opcode::create(STORE, 2, 3));
+      // tests.push_back(Prol16Opcode::create(SLEEP));
+      // tests.push_back(Prol16Opcode::create(LOAD, 1, 0));
+      // tests.push_back(Prol16Opcode::create(STORE, 2, 3));
 
       tests.push_back(Prol16Opcode::create(JUMP, 21));
       tests.push_back(Prol16Opcode::create(SHL, 15));
