@@ -10,8 +10,6 @@ class Driver;
   function new (virtual cpu_if.tb _duv_if, string _duv_prefix);
     duv_if = _duv_if;
     duv_prefix = _duv_prefix;
-
-    resetCpuRegs();
   endfunction
 
   function void resetCpuRegs();

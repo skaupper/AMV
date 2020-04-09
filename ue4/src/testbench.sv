@@ -60,6 +60,9 @@ program test (cpu_if.tb duv_if, output logic rst);
         #123ns;
         rst <= 0;
 
+
+        driver.resetCpuRegs();
+
         // Run all test cases
         while (generator.hasTests()) begin
             opc = generator.nextTest();
@@ -74,6 +77,9 @@ program test (cpu_if.tb duv_if, output logic rst);
         static Checker check = new(model);
         static Monitor monitor = new(duv_if, cpu_prefix);
         static Prol16State state;
+
+        @(negedge rst);
+        monitor.setupSignalSpy();
 
         forever begin
             monitor.waitForTest(state);
