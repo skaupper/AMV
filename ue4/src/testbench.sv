@@ -104,6 +104,7 @@ program test (cpu_if.tb duv_if, output logic rst);
 
         @(posedge rst);
         wait(commandStart.triggered);
+        ->executeNextOpc;
 
         forever begin
             monitor.waitForTest(state, duv_state, commandStart);
