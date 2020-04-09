@@ -3,15 +3,14 @@
 
 
 module top;
-    bit clk = 0, rst;
-
-
-	always #10ns clk = ~clk;
-
+    // Signal and interface definitions
+    logic clk = 0, rst;
     cpu_if dut_if(clk);
 
-    test TheTest();
+    // Clock generator
+    always #10ns clk = ~clk;
 
+    // DUT
     cpu duv (
         .clk_i          (clk),
         .rst_i          (reset),
@@ -24,14 +23,18 @@ module top;
         .illegal_inst_o (dut_if.illegal_inst_o),
         .cpu_halt_o     (dut_if.cpu_halt_o)
     );
+
+    // Testbench
+    test TheTest(dut_if.tb, rst);
 endmodule
 
-program test;
+program test (cpu_if.tb dut_if, output logic rst);
 
     initial begin : stimuli
         static Generator generator = new;
         static Prol16OpcodeQueue ops = generator.generateTests();
         static Prol16Model model = new;
+        static Driver driver = new;
 
         for (int i = 0; i < ops.size(); ++i) begin
             model.execute(ops[i]);
