@@ -8,17 +8,17 @@ class Monitor;
     string cpu_prefix;
 
     // DUV state
-    data_v cpu_reg_0;
-    data_v cpu_reg_1;
-    data_v cpu_reg_2;
-    data_v cpu_reg_3;
-    data_v cpu_reg_4;
-    data_v cpu_reg_5;
-    data_v cpu_reg_6;
-    data_v cpu_reg_7;
-    data_v cpu_pc;
-    logic cpu_zero;
-    logic cpu_carry;
+    static data_v cpu_reg_0;
+    static data_v cpu_reg_1;
+    static data_v cpu_reg_2;
+    static data_v cpu_reg_3;
+    static data_v cpu_reg_4;
+    static data_v cpu_reg_5;
+    static data_v cpu_reg_6;
+    static data_v cpu_reg_7;
+    static data_v cpu_pc;
+    static logic cpu_zero;
+    static logic cpu_carry;
 
     function void setupSignalSpy();
       $init_signal_spy("/top/duv/datapath_inst/thereg_file/registers(0)",  "/top/TheTest/monitor_checker/monitor.cpu_reg_0");
