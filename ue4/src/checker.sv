@@ -12,7 +12,9 @@ class Checker;
     endfunction
 
     function void checkResult (Prol16State duv_state);
-        assert (duv_state == model.state);
+        // assert (duv_state == model.state);
+        assert_equal(duv_state, model.state, "actual duv_state != expected model.state");
+
         duv_state.print();
         model.state.print();
     endfunction
