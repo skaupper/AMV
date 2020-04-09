@@ -24,6 +24,7 @@ class Generator;
     local function Prol16OpcodeQueue generateTests();
       Prol16OpcodeQueue tests;
 
+      tests.push_back(Prol16Opcode::create(LOADI, 7, UNUSED, 16'h4711));
       for (int i = 0; i < gRegs; ++i) begin
           tests.push_back(Prol16Opcode::create(LOADI, i, UNUSED, 16'h1111 * i));
       end
