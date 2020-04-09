@@ -30,7 +30,7 @@ class Monitor;
       $init_signal_spy("/top/duv/datapath_inst/thereg_file/registers(6)",  "/top/TheTest/monitor_checker/monitor.cpu_reg_6");
       $init_signal_spy("/top/duv/datapath_inst/thereg_file/registers(7)",  "/top/TheTest/monitor_checker/monitor.cpu_reg_7");
       $init_signal_spy("/top/duv/datapath_inst/RegPC",                     "/top/TheTest/monitor_checker/monitor.cpu_pc");
-      $init_signal_spy("/top/duv/control_inst/zero",                       "/top/TheTest/monitor_checker/monitor.cpu_zero");
+      //$init_signal_spy("/top/duv/control_inst/zero",                       "/top/TheTest/monitor_checker/monitor.cpu_zero");
       $init_signal_spy("/top/duv/control_inst/carry",                      "/top/TheTest/monitor_checker/monitor.cpu_carry");
     endfunction
 

@@ -39,6 +39,8 @@ program test (cpu_if.tb duv_if, output logic rst);
     const string cpu_prefix = "/top/duv";
     Prol16Model model = new;
 
+    logic test_zero;
+
 
     initial begin
         model.setOpcode(Prol16Opcode::create(NOP));
@@ -60,6 +62,7 @@ program test (cpu_if.tb duv_if, output logic rst);
         #123ns;
         rst <= 0;
 
+        $init_signal_spy("/top/duv/control_inst/zero", "/top/TheTest/test_zero");
 
         driver.resetCpuRegs();
 
