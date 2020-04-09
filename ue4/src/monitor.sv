@@ -9,7 +9,7 @@ class Monitor;
     string cpu_prefix;
 
 
-    function new (virtual cpu_if.tb _duv_if, duv_state_t _duv_state, string _cpu_prefix);
+    function new (virtual cpu_if.tb _duv_if, string _cpu_prefix, ref duv_state_t _duv_state);
         duv_if      = _duv_if;
         duv_state   = _duv_state;
         cpu_prefix  = _cpu_prefix;

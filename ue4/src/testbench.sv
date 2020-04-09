@@ -95,7 +95,7 @@ program test (cpu_if.tb duv_if, output logic rst);
 
     initial begin : monitor_checker
         static Checker check = new(model);
-        static Monitor monitor = new(duv_if, duv_state, cpu_prefix);
+        static Monitor monitor = new(duv_if, cpu_prefix, duv_state);
         static Prol16State state;
 
         @(negedge rst);
