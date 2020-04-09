@@ -64,7 +64,7 @@ program test (cpu_if.tb duv_if, output logic rst);
         model.setOpcode(Prol16Opcode::create(NOP));
 
         forever begin
-            @(executeNextOpc.triggered);
+            @(executeNextOpc);
             model.executeNext();
         end
     end
