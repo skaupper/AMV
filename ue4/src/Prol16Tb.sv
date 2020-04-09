@@ -1,60 +1,64 @@
 `include "model/Prol16Model.sv"
+`include "generator.sv"
 
+
+/*
+
+
+entity cpu is
+
+  port (
+    clk_i : in std_ulogic;
+    res_i : in std_ulogic;
+
+    -- don't use user types (netlist)
+    mem_addr_o : out std_ulogic_vector(data_vec_length_c - 1 downto 0);
+    mem_data_o : out std_ulogic_vector(data_vec_length_c - 1 downto 0);
+    mem_data_i : in  std_ulogic_vector(data_vec_length_c - 1 downto 0);
+    mem_ce_no  : out std_ulogic;        -- chip enable (low active)
+    mem_oe_no  : out std_ulogic;        -- output enable (low active)
+    mem_we_no  : out std_ulogic;        -- write enable (low active)
+
+    illegal_inst_o : out std_ulogic;
+    cpu_halt_o     : out std_ulogic);
+
+end cpu;
+
+
+
+*/
 
 module top;
+    bit clk;
+    bit reset;
+
+    logic[gDataWidth-1:0] mem_addr;
+    logic[gDataWidth-1:0] mem_data_o;
+    logic[gDataWidth-1:0] mem_data_i;
+    logic mem_ce_n;
+    logic mem_oe_n;
+    logic mem_we_n;
+    logic illegal_inst;
+    logic cpu_halt;
+
     test TheTest();
+
+
+    cpu duv(
+        .clk_i          = clk,
+        .rst_i          = reset,
+        .mem_addr_o     = mem_addr,
+        .mem_data_o     = mem_data_o,
+        .mem_data_i     = mem_data_i,
+        .mem_ce_no      = mem_ce_n,
+        .mem_oe_no      = mem_oe_n,
+        .mem_we_no      = mem_we_n,
+        .illegal_inst_o = illegal_inst,
+        .cpu_halt_o     = cpu_halt
+    );
 endmodule
 
 program test;
-
-    typedef Prol16Opcode Prol16OpcodeQueue[$];
-
-    function Prol16OpcodeQueue generateTests();
-        Prol16OpcodeQueue tests;
-
-        for (int i = 0; i < gRegs; ++i) begin
-            tests.push_back(Prol16Opcode::create(LOADI, i, UNUSED, 16'h1111 * i));
-        end
-
-        tests.push_back(Prol16Opcode::create(NOP));
-        tests.push_back(Prol16Opcode::create(SLEEP));
-        tests.push_back(Prol16Opcode::create(LOAD, 1, 0));
-        tests.push_back(Prol16Opcode::create(STORE, 2, 3));
-
-        tests.push_back(Prol16Opcode::create(JUMP, 21));
-        tests.push_back(Prol16Opcode::create(SHL, 15));
-        tests.push_back(Prol16Opcode::create(JUMPC, 26));
-        tests.push_back(Prol16Opcode::create(JUMPZ, 31));
-
-        tests.push_back(Prol16Opcode::create(COMP, 0, 0));
-
-        tests.push_back(Prol16Opcode::create(JUMP, 10));
-        tests.push_back(Prol16Opcode::create(JUMPC, 15));
-        tests.push_back(Prol16Opcode::create(JUMPZ, 20));
-
-        tests.push_back(Prol16Opcode::create(MOVE, 5, 15));
-        tests.push_back(Prol16Opcode::create(AND, 14, 3));
-        tests.push_back(Prol16Opcode::create(OR, 13, 6));
-        tests.push_back(Prol16Opcode::create(XOR, 12, 11));
-        tests.push_back(Prol16Opcode::create(NOT, 11));
-
-        tests.push_back(Prol16Opcode::create(ADD, 3, 12));
-        tests.push_back(Prol16Opcode::create(ADDC, 1, 2));
-        tests.push_back(Prol16Opcode::create(SUBC, 2, 3));
-        tests.push_back(Prol16Opcode::create(SUB, 11, 7));
-
-        tests.push_back(Prol16Opcode::create(COMP, 3, 12));
-        tests.push_back(Prol16Opcode::create(INC, 15));
-        tests.push_back(Prol16Opcode::create(DEC, 1));
-
-        tests.push_back(Prol16Opcode::create(SHL, 3));
-        tests.push_back(Prol16Opcode::create(SHLC, 5));
-        tests.push_back(Prol16Opcode::create(SHR, 4));
-        tests.push_back(Prol16Opcode::create(SHRC, 6));
-
-        return tests;
-    endfunction
-
 
     initial begin : stimuli
         static Prol16OpcodeQueue ops = generateTests();
