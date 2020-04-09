@@ -79,8 +79,8 @@ program test (cpu_if.tb duv_if, output logic rst);
         #123ns;
         rst <= 1;
 
-        setupSignalSpy();
         driver.resetCpuRegs();
+        setupSignalSpy();
 
         // Run all test cases
         while (generator.hasTests()) begin
