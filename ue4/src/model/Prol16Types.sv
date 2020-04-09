@@ -2,7 +2,7 @@
 `define PROL16_TYPES
 
 
-localparam int gRegs        = 16;
+localparam int gRegs        = 8;
 localparam int gDataWidth   = 16;
 
 typedef logic[gDataWidth-1 : 0] data_v;
