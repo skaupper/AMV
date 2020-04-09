@@ -107,7 +107,6 @@ program test (cpu_if.tb duv_if, output logic rst);
 
         forever begin
             monitor.waitForTest(state, duv_state, commandStart);
-            state.print();
             check.checkResult(state);
             ->executeNextOpc;
         end
