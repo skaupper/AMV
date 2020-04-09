@@ -29,10 +29,10 @@ interface cpu_if(input bit clk);
 
 
     modport tb (
-        output mem_data_i;
+        output mem_data_i,
 
         input  mem_addr_o, mem_data_o, mem_ce_no,
-               mem_oe_no, mem_we_no, illegal_inst_o, cpu_halt_o;
+               mem_oe_no, mem_we_no, illegal_inst_o, cpu_halt_o
     );
 endinterface
 
