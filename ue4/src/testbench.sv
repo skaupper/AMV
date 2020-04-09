@@ -34,19 +34,25 @@ endmodule
 
 program test (cpu_if.tb duv_if, output logic rst);
 
+    event executeNextOpc;
+
     Prol16Model model = new;
 
+
+    initial begin
+        model.setOpcode(Prol16Opcode::create(NOP));
+
+        forever begin
+            @(executeNextOpc.triggered);
+            model.executeNext();
+        end
+    end
 
     initial begin : stimuli
         static Generator generator = new;
         static Driver driver = new(duv_if);
         static Agent agent = new(model, driver, duv_if);
         static Prol16Opcode opc;
-
-        #2ns;
-        agent.model.execute(Prol16Opcode::create(LOADI, 3, 16'h1234));
-        agent.model.print();
-        #10ns;
 
         while (generator.hasTests()) begin
             opc = generator.nextTest();
@@ -61,14 +67,10 @@ program test (cpu_if.tb duv_if, output logic rst);
         static Monitor monitor = new(duv_if);
         static Prol16State state;
 
-        check.model.print();
-        #10ns;
-        check.model.print();
-
-
-        while (1) begin
+        forever begin
             monitor.waitForTest(state);
             check.checkResult(state);
+            ->executeNextOpc;
         end
     end : monitor_checker
 

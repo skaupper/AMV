@@ -19,8 +19,8 @@ class Agent;
   endfunction
 
   function void runTest(Prol16Opcode opc);
+    model.setOpcode(opc);
     driver.setOpcode(opc);
-    // TODO
   endfunction
 
 endclass

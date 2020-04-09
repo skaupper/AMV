@@ -8,6 +8,7 @@
 
 class Prol16Model;
     Prol16State state;
+    Prol16Opcode nextOpc;
 
     function new;
         state = new;
@@ -21,7 +22,15 @@ class Prol16Model;
         state.pc = 0;
     endfunction
 
-    task execute (Prol16Opcode opc);
+    function void setOpcode(Prol16Opcode opc);
+        nextOpc = opc;
+    endfunction
+
+    function void executeNext();
+        execute(nextOpc);
+    endfunction
+
+    function void execute (Prol16Opcode opc);
         int ra = state.regs[opc.ra];
         int rb = state.regs[opc.rb];
 
@@ -118,7 +127,7 @@ class Prol16Model;
             state.regs[opc.ra] = res;
         end
         state.pc = newPc;
-    endtask
+    endfunction
 
 
     function void print;
