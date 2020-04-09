@@ -30,6 +30,9 @@ set SOURCES                 [list   duv_prol16/prol16_pack.vhd    \
                                     model/Prol16Model.sv          \
                                     model/Prol16Types.sv          \
                                     types.sv                      \
+                                    agent.sv                      \
+                                    monitor.sv                    \
+                                    checker.sv                    \
                                     driver.sv                     \
                                     generator.sv                  \
                                     testbench.sv]

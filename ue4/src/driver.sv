@@ -1,7 +1,7 @@
 `ifndef _DRIVER_
 `define _DRIVER_
 
-//`include
+`include "types.sv"
 
 class Driver;
 

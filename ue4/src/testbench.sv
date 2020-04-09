@@ -1,5 +1,9 @@
 `include "model/Prol16Model.sv"
 `include "generator.sv"
+`include "driver.sv"
+`include "agent.sv"
+`include "monitor.sv"
+`include "checker.sv"
 
 
 module top;
@@ -30,49 +34,28 @@ endmodule
 
 program test (cpu_if.tb dut_if, output logic rst);
 
+    static Prol16Model model = new;
+
+    static Generator generator = new;
+    static Driver driver = new(dut_if);
+    static Checker check = new(model);
+    static Agent agent = new(model, driver, dut_if);
+    static Monitor monitor = new(dut_if);
+
+
     initial begin : stimuli
-        static Generator generator = new;
-        static Prol16OpcodeQueue ops = generator.generateTests();
-        static Prol16Model model = new;
-        static Driver driver = new;
-
-        for (int i = 0; i < ops.size(); ++i) begin
-            model.execute(ops[i]);
-
-            ops[i].print;
-            model.print;
-            $display();
+        while generator.hasTests() begin
+            opc = generator.nextTest();
+            agent.runTest(opc);
         end
 
         $finish;
     end : stimuli
+
+    initial begin : monitor_checker
+        while true begin
+            state = monitor.wait();
+            checker.checkResult(state);
+        end
+    end : monitor_checker
 endprogram
-
-
-`ifndef TYPES
-`define TYPES
-
-
-interface cpu_if(input bit clk);
-    logic[gDataWidth-1:0] mem_addr_o;
-    logic[gDataWidth-1:0] mem_data_i;
-    logic[gDataWidth-1:0] mem_data_o;
-    logic mem_ce_no;
-    logic mem_oe_no;
-    logic mem_we_no;
-    logic illegal_inst_o;
-    logic cpu_halt_o;
-
-
-    clocking cb @(posedge clk);
-        input  mem_data_i;
-
-        output mem_addr_o, mem_data_o, mem_ce_no,
-               mem_oe_no, mem_we_no, illegal_inst_o, cpu_halt_o;
-    endclocking
-
-    modport tb (clocking cb);
-endinterface
-
-
-`endif
