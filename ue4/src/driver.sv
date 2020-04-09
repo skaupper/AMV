@@ -26,8 +26,8 @@ class Driver;
   endfunction
 
   task setOpcode(Prol16Opcode opc);
-    @(negedge duv_if.mem_oe_no);
-    duv_if.mem_data_i <= opc.toBinary();
+    @(negedge duv_if.cb.mem_oe_no);
+    duv_if.cb.mem_data_i <= opc.toBinary();
   endtask
 
 endclass

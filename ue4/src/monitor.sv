@@ -42,7 +42,7 @@ class Monitor;
     endfunction
 
     task waitForTest (output Prol16State state);
-        @(posedge duv_if.mem_oe_no);
+        @(posedge duv_if.cb.mem_oe_no);
         state = new;
         state.regs[0] = cpu_reg_0;
         state.regs[1] = cpu_reg_1;
