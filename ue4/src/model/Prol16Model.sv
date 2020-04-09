@@ -50,19 +50,19 @@ class Prol16Model;
             end
             JUMP:   begin
                 setZero = 0;
-                newPc = opc.ra;
+                newPc = ra;
             end
             JUMPC:  begin
                 setZero = 0;
                 if (state.carry) begin
-                    newPc = opc.ra;
+                    newPc = ra;
                 end
             end
 
             JUMPZ:  begin
                 setZero = 0;
                 if (state.zero) begin
-                    newPc = opc.ra;
+                    newPc = ra;
                 end
             end
 
