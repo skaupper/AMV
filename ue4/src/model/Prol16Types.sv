@@ -5,7 +5,7 @@
 localparam int gRegs        = 16;
 localparam int gDataWidth   = 16;
 
-typedef bit[gDataWidth-1 : 0] data_v;
+typedef logic[gDataWidth-1 : 0] data_v;
 
 typedef class Prol16Opcode;
 typedef Prol16Opcode Prol16OpcodeQueue[$];
