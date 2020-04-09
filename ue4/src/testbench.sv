@@ -17,7 +17,7 @@ module top;
     // DUV
     cpu duv (
         .clk_i          (clk),
-        .res_i          (reset),
+        .res_i          (rst),
         .mem_addr_o     (duv_if.mem_addr_o),
         .mem_data_o     (duv_if.mem_data_o),
         .mem_data_i     (duv_if.mem_data_i),
@@ -36,6 +36,7 @@ program test (cpu_if.tb duv_if, output logic rst);
 
     event executeNextOpc;
 
+    const string cpu_prefix = "/top/duv/";
     Prol16Model model = new;
 
 
@@ -50,10 +51,16 @@ program test (cpu_if.tb duv_if, output logic rst);
 
     initial begin : stimuli
         static Generator generator = new;
-        static Driver driver = new(duv_if);
+        static Driver driver = new(duv_if, cpu_prefix);
         static Agent agent = new(model, driver, duv_if);
         static Prol16Opcode opc;
 
+        // Generate reset
+        rst <= 1;
+        #123ns;
+        rst <= 0;
+
+        // Run all test cases
         while (generator.hasTests()) begin
             opc = generator.nextTest();
             agent.runTest(opc);
@@ -64,7 +71,7 @@ program test (cpu_if.tb duv_if, output logic rst);
 
     initial begin : monitor_checker
         static Checker check = new(model);
-        static Monitor monitor = new(duv_if);
+        static Monitor monitor = new(duv_if, cpu_prefix);
         static Prol16State state;
 
         forever begin

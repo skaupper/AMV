@@ -57,6 +57,14 @@ class Prol16Opcode;
         this.data = data;
     endfunction
 
+    function data_v toBinary();
+        data_v data = 0;
+        data[15:10] = cmd;
+        data[9:5] = ra;
+        data[4:0] = rb;
+        return data;
+    endfunction
+
     function void print;
         $write("Prol16Opcode: {");
         $write("Command: %s, ", cmd.name());
