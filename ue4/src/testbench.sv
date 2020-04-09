@@ -80,6 +80,7 @@ program test (cpu_if.tb duv_if, output logic rst);
         rst <= 1;
 
         driver.resetCpuRegs();
+        #1ns;
         setupSignalSpy();
 
         // Run all test cases
