@@ -9,42 +9,46 @@
 module top;
     // Signal and interface definitions
     logic clk = 0, rst;
-    cpu_if dut_if(clk);
+    cpu_if duv_if(clk);
 
     // Clock generator
     always #10ns clk = ~clk;
 
-    // DUT
+    // DUV
     cpu duv (
         .clk_i          (clk),
         .rst_i          (reset),
-        .mem_addr_o     (dut_if.mem_addr_o),
-        .mem_data_o     (dut_if.mem_data_o),
-        .mem_data_i     (dut_if.mem_data_i),
-        .mem_ce_no      (dut_if.mem_ce_no),
-        .mem_oe_no      (dut_if.mem_oe_no),
-        .mem_we_no      (dut_if.mem_we_no),
-        .illegal_inst_o (dut_if.illegal_inst_o),
-        .cpu_halt_o     (dut_if.cpu_halt_o)
+        .mem_addr_o     (duv_if.mem_addr_o),
+        .mem_data_o     (duv_if.mem_data_o),
+        .mem_data_i     (duv_if.mem_data_i),
+        .mem_ce_no      (duv_if.mem_ce_no),
+        .mem_oe_no      (duv_if.mem_oe_no),
+        .mem_we_no      (duv_if.mem_we_no),
+        .illegal_inst_o (duv_if.illegal_inst_o),
+        .cpu_halt_o     (duv_if.cpu_halt_o)
     );
 
     // Testbench
-    test TheTest(dut_if.tb, rst);
+    test TheTest(duv_if.tb, rst);
 endmodule
 
-program test (cpu_if.tb dut_if, output logic rst);
+program test (cpu_if.tb duv_if, output logic rst);
 
-    static Prol16Model model = new;
-
-    static Generator generator = new;
-    static Driver driver = new(dut_if);
-    static Checker check = new(model);
-    static Agent agent = new(model, driver, dut_if);
-    static Monitor monitor = new(dut_if);
+    Prol16Model model;
 
 
     initial begin : stimuli
-        while generator.hasTests() begin
+        static Generator generator = new;
+        static Driver driver = new(duv_if);
+        static Agent agent = new(model, driver, duv_if);
+        static Prol16Opcode opc;
+
+        #2ns;
+        agent.model.execute(Prol16Opcode::create(LOADI, 3, 16'h1234));
+        agent.model.print();
+        #10ns;
+
+        while (generator.hasTests()) begin
             opc = generator.nextTest();
             agent.runTest(opc);
         end
@@ -53,9 +57,19 @@ program test (cpu_if.tb dut_if, output logic rst);
     end : stimuli
 
     initial begin : monitor_checker
-        while true begin
-            state = monitor.wait();
-            checker.checkResult(state);
+        static Checker check = new(model);
+        static Monitor monitor = new(duv_if);
+        static Prol16State state;
+
+        check.model.print();
+        #10ns;
+        check.model.print();
+
+
+        while (1) begin
+            monitor.waitForTest(state);
+            check.checkResult(state);
         end
     end : monitor_checker
+
 endprogram

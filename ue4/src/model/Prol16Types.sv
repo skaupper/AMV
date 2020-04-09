@@ -11,6 +11,14 @@ typedef class Prol16Opcode;
 typedef Prol16Opcode Prol16OpcodeQueue[$];
 
 
+class Prol16State;
+    data_v regs[gRegs];
+    bit zero;
+    bit carry;
+    int pc;
+endclass
+
+
 `include "Prol16Opcode.sv"
 
 `endif

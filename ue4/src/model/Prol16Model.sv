@@ -5,13 +5,6 @@
 `include "Prol16Opcode.sv"
 
 
-class Prol16State;
-    data_v regs[gRegs];
-    bit zero;
-    bit carry;
-    int pc;
-endclass
-
 
 class Prol16Model;
     Prol16State state;

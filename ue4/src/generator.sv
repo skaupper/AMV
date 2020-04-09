@@ -4,7 +4,24 @@
 `include "model/Prol16Opcode.sv"
 
 class Generator;
-    function Prol16OpcodeQueue generateTests();
+    Prol16OpcodeQueue testQueue;
+
+    function new();
+      testQueue = generateTests();
+    endfunction
+
+    function bit hasTests();
+      return testQueue.size() > 0;
+    endfunction
+
+    function Prol16Opcode nextTest();
+      assert(hasTests());
+      return testQueue.pop_front();
+    endfunction
+
+
+
+    local function Prol16OpcodeQueue generateTests();
       Prol16OpcodeQueue tests;
 
       for (int i = 0; i < gRegs; ++i) begin
