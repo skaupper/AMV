@@ -95,13 +95,13 @@ program test (cpu_if.tb duv_if, output logic rst);
 
     initial begin : monitor_checker
         static Checker check = new(model);
-        static Monitor monitor = new(duv_if, cpu_prefix, duv_state);
+        static Monitor monitor = new(duv_if, cpu_prefix);
         static Prol16State state;
 
         @(negedge rst);
 
         forever begin
-            monitor.waitForTest(state);
+            monitor.waitForTest(state, duv_state);
             state.print();
             check.checkResult(state);
             ->executeNextOpc;
