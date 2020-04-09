@@ -19,6 +19,22 @@ class Prol16State;
     bit carry;
     int pc;
 
+    function automatic bit equals(ref Prol16State state);
+        bit zeroEqual = (zero == state.zero);
+        bit carryEqual = (carry == state.carry);
+        bit pcEqual = (pc == state.pc);
+        bit regsEqual = 1;
+
+        foreach(regs[i]) begin
+            if (regs[i] != state.regs[i]) begin
+                regsEqual = 0;
+                break;
+            end
+        end
+
+        return zeroEqual && carryEqual && pcEqual && regsEqual;
+    endfunction
+
     function void print;
         $write("Prol16Model State: {");
         $write("PC: %0d, ", pc);

@@ -60,9 +60,6 @@ class Prol16Opcode;
         binary[15:10] = cmd;
         binary[9:5] = ra;
         binary[4:0] = rb;
-
-        // print;
-        // $display("Binary 0x%4h", binary);
         return binary;
     endfunction
 
