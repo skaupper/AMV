@@ -5,6 +5,8 @@
 localparam int gRegs        = 8;
 localparam int gDataWidth   = 16;
 
+const int UNUSED = 0;
+
 typedef logic[gDataWidth-1 : 0] data_v;
 
 typedef class Prol16Opcode;

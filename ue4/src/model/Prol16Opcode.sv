@@ -31,8 +31,6 @@ typedef enum int {
     SHRC    = 31
 } Prol16Command;
 
-const int UNUSED = -1;
-
 
 class Prol16Opcode;
     int ra;
