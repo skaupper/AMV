@@ -56,11 +56,14 @@ class Prol16Opcode;
     endfunction
 
     function data_v toBinary();
-        data_v data = 0;
-        data[15:10] = cmd;
-        data[9:5] = ra;
-        data[4:0] = rb;
-        return data;
+        data_v binary = 0;
+        binary[15:10] = cmd;
+        binary[9:5] = ra;
+        binary[4:0] = rb;
+
+        // print;
+        // $display("Binary 0x%4h", binary);
+        return binary;
     endfunction
 
     function void print;

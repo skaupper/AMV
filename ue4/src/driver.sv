@@ -27,6 +27,12 @@ class Driver;
   task setOpcode(Prol16Opcode opc);
     @(negedge duv_if.cb.mem_oe_no);
     duv_if.cb.mem_data_i <= opc.toBinary();
+
+    // The LOADI command consists of two input words
+    if (opc.cmd == LOADI) begin
+      @(negedge duv_if.cb.mem_oe_no);
+      duv_if.cb.mem_data_i <= opc.data;
+    end
   endtask
 
 endclass
