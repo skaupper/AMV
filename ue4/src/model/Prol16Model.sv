@@ -131,19 +131,7 @@ class Prol16Model;
 
 
     function void print;
-        $write("Prol16Model State: {");
-        $write("PC: %0d, ", state.pc);
-        $write("Zero: %b, ", state.zero);
-        $write("Carry: %b, ", state.carry);
-
-        $write("(");
-        for (int i = 0; i < gRegs; i++) begin
-            if (i != 0) begin
-                $write(", ");
-            end
-            $write("[%2d]: 0x%4h", i, state.regs[i]);
-        end
-        $write(")}\n");
+        state.print();
     endfunction
 
 endclass

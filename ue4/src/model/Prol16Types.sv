@@ -16,6 +16,22 @@ class Prol16State;
     bit zero;
     bit carry;
     int pc;
+
+    function void print;
+        $write("Prol16Model State: {");
+        $write("PC: %0d, ", pc);
+        $write("Zero: %b, ", zero);
+        $write("Carry: %b, ", carry);
+
+        $write("(");
+        for (int i = 0; i < gRegs; i++) begin
+            if (i != 0) begin
+                $write(", ");
+            end
+            $write("[%2d]: 0x%4h", i, regs[i]);
+        end
+        $write(")}\n");
+    endfunction
 endclass
 
 
