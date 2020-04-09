@@ -28,17 +28,17 @@ class Monitor;
     endfunction
 
     local function void setupSignalSpy();
-      $init_signal_spy({cpu_prefix, "/datapath_inst/thereg_file/registers(0)"},  "/top/TheTest/monitor_checker/monitor.cpu_reg_0");
-      $init_signal_spy({cpu_prefix, "/datapath_inst/thereg_file/registers(1)"},  "/top/TheTest/monitor_checker/monitor.cpu_reg_1");
-      $init_signal_spy({cpu_prefix, "/datapath_inst/thereg_file/registers(2)"},  "/top/TheTest/monitor_checker/monitor.cpu_reg_2");
-      $init_signal_spy({cpu_prefix, "/datapath_inst/thereg_file/registers(3)"},  "/top/TheTest/monitor_checker/monitor.cpu_reg_3");
-      $init_signal_spy({cpu_prefix, "/datapath_inst/thereg_file/registers(4)"},  "/top/TheTest/monitor_checker/monitor.cpu_reg_4");
-      $init_signal_spy({cpu_prefix, "/datapath_inst/thereg_file/registers(5)"},  "/top/TheTest/monitor_checker/monitor.cpu_reg_5");
-      $init_signal_spy({cpu_prefix, "/datapath_inst/thereg_file/registers(6)"},  "/top/TheTest/monitor_checker/monitor.cpu_reg_6");
-      $init_signal_spy({cpu_prefix, "/datapath_inst/thereg_file/registers(7)"},  "/top/TheTest/monitor_checker/monitor.cpu_reg_7");
-      $init_signal_spy({cpu_prefix, "/datapath_inst/RegPC"},                     "/top/TheTest/monitor_checker/monitor.cpu_pc");
-      $init_signal_spy({cpu_prefix, "/control_inst/zero"},                       "/top/TheTest/monitor_checker/monitor.cpu_zero");
-      $init_signal_spy({cpu_prefix, "/control_inst/carry"},                      "/top/TheTest/monitor_checker/monitor.cpu_carry");
+      $init_signal_spy("/top/duv/datapath_inst/thereg_file/registers(0)",  "/top/TheTest/monitor_checker/monitor.cpu_reg_0");
+      $init_signal_spy("/top/duv/datapath_inst/thereg_file/registers(1)",  "/top/TheTest/monitor_checker/monitor.cpu_reg_1");
+      $init_signal_spy("/top/duv/datapath_inst/thereg_file/registers(2)",  "/top/TheTest/monitor_checker/monitor.cpu_reg_2");
+      $init_signal_spy("/top/duv/datapath_inst/thereg_file/registers(3)",  "/top/TheTest/monitor_checker/monitor.cpu_reg_3");
+      $init_signal_spy("/top/duv/datapath_inst/thereg_file/registers(4)",  "/top/TheTest/monitor_checker/monitor.cpu_reg_4");
+      $init_signal_spy("/top/duv/datapath_inst/thereg_file/registers(5)",  "/top/TheTest/monitor_checker/monitor.cpu_reg_5");
+      $init_signal_spy("/top/duv/datapath_inst/thereg_file/registers(6)",  "/top/TheTest/monitor_checker/monitor.cpu_reg_6");
+      $init_signal_spy("/top/duv/datapath_inst/thereg_file/registers(7)",  "/top/TheTest/monitor_checker/monitor.cpu_reg_7");
+      $init_signal_spy("/top/duv/datapath_inst/RegPC",                     "/top/TheTest/monitor_checker/monitor.cpu_pc");
+      $init_signal_spy("/top/duv/control_inst/zero",                       "/top/TheTest/monitor_checker/monitor.cpu_zero");
+      $init_signal_spy("/top/duv/control_inst/carry",                      "/top/TheTest/monitor_checker/monitor.cpu_carry");
     endfunction
 
     task waitForTest (output Prol16State state);

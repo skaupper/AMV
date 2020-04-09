@@ -36,7 +36,7 @@ program test (cpu_if.tb duv_if, output logic rst);
 
     event executeNextOpc;
 
-    const string cpu_prefix = "/top/duv/";
+    const string cpu_prefix = "/top/duv";
     Prol16Model model = new;
 
 
