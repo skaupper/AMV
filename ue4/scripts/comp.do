@@ -20,10 +20,10 @@ set LIB_NAME                work
 
 # source path and filenames to compile (relative to the sim/ directory!)
 set SOURCE_PATH             ../src
-set SOURCES                 [list   ram.sv                  \
-                                    wishbone_bfm.sv]
-
-set STOP_SIGNAL             /WishboneBFM_tb/finished
+set SOURCES                 [list   model/Types.sv                \
+                                    model/Prol16Opcode.sv         \
+                                    model/Prol16Model.sv          \
+                                    Prol16Tb.sv]
 
 # the patterns to identify VHDL and Verilog files
 set VHDL_REGEX              {\.vhd$}
