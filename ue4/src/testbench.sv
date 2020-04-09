@@ -75,9 +75,9 @@ program test (cpu_if.tb duv_if, output logic rst);
         static Prol16Opcode opc;
 
         // Generate reset
-        rst <= 1;
-        #123ns;
         rst <= 0;
+        #123ns;
+        rst <= 1;
 
         setupSignalSpy();
         driver.resetCpuRegs();
