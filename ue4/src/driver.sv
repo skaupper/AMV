@@ -28,7 +28,7 @@ class Driver;
     @(negedge duv_if.cb.mem_oe_no);
     duv_if.cb.mem_data_i <= opc.toBinary();
     @(posedge duv_if.cb.mem_oe_no);
-    duv_if.cb.mem_data_i <= 'X;
+    // duv_if.cb.mem_data_i <= 'X;
 
     ->commandStart;
 
@@ -36,8 +36,8 @@ class Driver;
     if (opc.cmd == LOADI) begin
       @(negedge duv_if.cb.mem_oe_no);
       duv_if.cb.mem_data_i <= opc.data;
-      @(posedge duv_if.cb.mem_oe_no);
-      duv_if.cb.mem_data_i <= 'X;
+      // @(posedge duv_if.cb.mem_oe_no);
+      // duv_if.cb.mem_data_i <= 'X;
     end
 
   endtask
