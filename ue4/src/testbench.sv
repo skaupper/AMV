@@ -84,6 +84,9 @@ program test (cpu_if.tb duv_if, output logic rst);
         driver.resetCpuRegs();
         setupSignalSpy();
 
+        @(negedge duv_if.mem_oe_no);
+        @(posedge duv_if.mem_oe_no);
+
 
         // Run all test cases
         while (generator.hasTests()) begin
