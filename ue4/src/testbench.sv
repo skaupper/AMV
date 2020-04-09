@@ -34,7 +34,7 @@ endmodule
 
 program test (cpu_if.tb duv_if, output logic rst);
 
-    Prol16Model model;
+    Prol16Model model = new;
 
 
     initial begin : stimuli
