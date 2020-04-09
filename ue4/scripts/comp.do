@@ -20,10 +20,19 @@ set LIB_NAME                work
 
 # source path and filenames to compile (relative to the sim/ directory!)
 set SOURCE_PATH             ../src
-set SOURCES                 [list   model/Types.sv                \
+set SOURCES                 [list   duv_prol16/prol16_pack.vhd    \
+                                    duv_prol16/alu.vhd            \
+                                    duv_prol16/control.vhd        \
+                                    duv_prol16/cpu.vhd            \
+                                    duv_prol16/datapath.vhd       \
+                                    duv_prol16/reg_file.vhd       \
                                     model/Prol16Opcode.sv         \
                                     model/Prol16Model.sv          \
-                                    Prol16Tb.sv]
+                                    model/Prol16Types.sv          \
+                                    types.sv                      \
+                                    driver.sv                     \
+                                    generator.sv                  \
+                                    testbench.sv]
 
 # the patterns to identify VHDL and Verilog files
 set VHDL_REGEX              {\.vhd$}

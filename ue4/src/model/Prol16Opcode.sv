@@ -2,7 +2,7 @@
 `define PROL16_OPCODE
 
 
-`include "Types.sv"
+`include "Prol16Types.sv"
 
 typedef enum int {
     NOP     = 0,
@@ -32,6 +32,7 @@ typedef enum int {
 } Prol16Command;
 
 const int UNUSED = -1;
+
 
 class Prol16Opcode;
     int ra;

@@ -1,11 +1,10 @@
 `ifndef _GENERATOR_
 `define _GENERATOR_
 
+`include "model/Prol16Opcode.sv"
 
 class Generator;
-    typedef Prol16Opcode Prol16OpcodeQueue[$];
-
-    task Prol16OpcodeQueue generateTests();
+    function Prol16OpcodeQueue generateTests();
       Prol16OpcodeQueue tests;
 
       for (int i = 0; i < gRegs; ++i) begin
@@ -49,7 +48,7 @@ class Generator;
       tests.push_back(Prol16Opcode::create(SHRC, 6));
 
       return tests;
-    endtask
+    endfunction
 
 endclass
 
