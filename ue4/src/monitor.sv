@@ -20,7 +20,7 @@ class Monitor;
     logic cpu_zero;
     logic cpu_carry;
 
-    local function void setupSignalSpy();
+    function void setupSignalSpy();
       $init_signal_spy("/top/duv/datapath_inst/thereg_file/registers(0)",  "/top/TheTest/monitor_checker/monitor.cpu_reg_0");
       $init_signal_spy("/top/duv/datapath_inst/thereg_file/registers(1)",  "/top/TheTest/monitor_checker/monitor.cpu_reg_1");
       $init_signal_spy("/top/duv/datapath_inst/thereg_file/registers(2)",  "/top/TheTest/monitor_checker/monitor.cpu_reg_2");
@@ -37,8 +37,6 @@ class Monitor;
     function new (virtual cpu_if.tb _duv_if, string _cpu_prefix);
         duv_if      = _duv_if;
         cpu_prefix  = _cpu_prefix;
-
-        setupSignalSpy();
     endfunction
 
     task waitForTest (output Prol16State state);
