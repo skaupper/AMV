@@ -24,15 +24,22 @@ class Driver;
     $signal_force({duv_prefix, "/datapath_inst/thereg_file/registers(7)"}, "16#0000", 0, 1);
   endfunction
 
-  task setOpcode(Prol16Opcode opc);
+  task setOpcode(Prol16Opcode opc, ref event commandStart);
     @(negedge duv_if.cb.mem_oe_no);
     duv_if.cb.mem_data_i <= opc.toBinary();
+    @(posedge duv_if.cb.mem_oe_no);
+    duv_if.cb.mem_data_i <= 'X;
+
+    ->commandStart;
 
     // The LOADI command consists of two input words
     if (opc.cmd == LOADI) begin
       @(negedge duv_if.cb.mem_oe_no);
       duv_if.cb.mem_data_i <= opc.data;
+      @(posedge duv_if.cb.mem_oe_no);
+      duv_if.cb.mem_data_i <= 'X;
     end
+
   endtask
 
 endclass

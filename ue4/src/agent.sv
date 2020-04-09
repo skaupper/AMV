@@ -18,9 +18,9 @@ class Agent;
       duv_if = _duv_if;
   endfunction
 
-  task runTest(Prol16Opcode opc);
+  task runTest(Prol16Opcode opc, ref event commandStart);
     model.setOpcode(opc);
-    driver.setOpcode(opc);
+    driver.setOpcode(opc, commandStart);
   endtask
 
 endclass

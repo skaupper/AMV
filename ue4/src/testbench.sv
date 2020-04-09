@@ -35,6 +35,7 @@ endmodule
 program test (cpu_if.tb duv_if, output logic rst);
 
     event executeNextOpc;
+    event commandStart;
 
     const string cpu_prefix = "/top/duv";
 
@@ -88,8 +89,10 @@ program test (cpu_if.tb duv_if, output logic rst);
         while (generator.hasTests()) begin
             opc = generator.nextTest();
             opc.print();
-            agent.runTest(opc);
+            agent.runTest(opc, commandStart);
         end
+
+        agent.runTest(Prol16Opcode::create(NOP), commandStart);
 
         $finish;
     end : stimuli
@@ -100,10 +103,10 @@ program test (cpu_if.tb duv_if, output logic rst);
         static Prol16State state;
 
         @(posedge rst);
-
+        @(commandStart);
 
         forever begin
-            monitor.waitForTest(state, duv_state);
+            monitor.waitForTest(state, duv_state, commandStart);
             state.print();
             check.checkResult(state);
             ->executeNextOpc;
