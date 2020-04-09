@@ -14,7 +14,7 @@ class Monitor;
     endfunction
 
     task waitForTest (output Prol16State state, ref duv_state_t duv_state, ref event commandStart);
-        @(commandStart);
+        @(commandStart.triggered);
         state = new;
         state.regs[0] = duv_state.cpu_reg_0;
         state.regs[1] = duv_state.cpu_reg_1;

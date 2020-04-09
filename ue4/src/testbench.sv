@@ -103,7 +103,7 @@ program test (cpu_if.tb duv_if, output logic rst);
         static Prol16State state;
 
         @(posedge rst);
-        @(commandStart);
+        @(commandStart.triggered);
 
         forever begin
             monitor.waitForTest(state, duv_state, commandStart);
