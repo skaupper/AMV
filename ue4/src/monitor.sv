@@ -4,7 +4,7 @@
 `include "types.sv"
 
 class Monitor;
-    virtual cpu_if.tb dut_if;
+    virtual cpu_if.tb duv_if;
     string cpu_prefix;
 
     // DUV state
@@ -20,8 +20,8 @@ class Monitor;
     logic cpu_zero;
     logic cpu_carry;
 
-    function new (virtual cpu_if.tb _dut_if, string _cpu_prefix);
-        dut_if      = _dut_if;
+    function new (virtual cpu_if.tb _duv_if, string _cpu_prefix);
+        duv_if      = _duv_if;
         cpu_prefix  = _cpu_prefix;
 
         setupSignalSpy();
