@@ -41,7 +41,7 @@ program test (cpu_if.tb duv_if, output logic rst);
 
 
     Prol16Model model = new;
-    virtual duv_state_t duv_state;
+    duv_state_t duv_state;
 
 
     function void setupSignalSpy();
