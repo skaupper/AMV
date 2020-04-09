@@ -3,6 +3,19 @@
 
 `include "model/Prol16Types.sv"
 
+typedef struct {
+    data_v cpu_reg_0;
+    data_v cpu_reg_1;
+    data_v cpu_reg_2;
+    data_v cpu_reg_3;
+    data_v cpu_reg_4;
+    data_v cpu_reg_5;
+    data_v cpu_reg_6;
+    data_v cpu_reg_7;
+    data_v cpu_pc;
+    logic cpu_zero;
+    logic cpu_carry;
+} duv_state_t;
 
 interface cpu_if(input bit clk);
     logic[gDataWidth-1:0] mem_addr_o;

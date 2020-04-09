@@ -37,9 +37,26 @@ program test (cpu_if.tb duv_if, output logic rst);
     event executeNextOpc;
 
     const string cpu_prefix = "/top/duv";
-    Prol16Model model = new;
 
-    logic test_zero;
+
+
+    Prol16Model model = new;
+    virtual duv_state_t duv_state;
+
+
+    function void setupSignalSpy();
+      $init_signal_spy("/top/duv/datapath_inst/thereg_file/registers(0)",  "/top/TheTest/duv_state.cpu_reg_0");
+      $init_signal_spy("/top/duv/datapath_inst/thereg_file/registers(1)",  "/top/TheTest/duv_state.cpu_reg_1");
+      $init_signal_spy("/top/duv/datapath_inst/thereg_file/registers(2)",  "/top/TheTest/duv_state.cpu_reg_2");
+      $init_signal_spy("/top/duv/datapath_inst/thereg_file/registers(3)",  "/top/TheTest/duv_state.cpu_reg_3");
+      $init_signal_spy("/top/duv/datapath_inst/thereg_file/registers(4)",  "/top/TheTest/duv_state.cpu_reg_4");
+      $init_signal_spy("/top/duv/datapath_inst/thereg_file/registers(5)",  "/top/TheTest/duv_state.cpu_reg_5");
+      $init_signal_spy("/top/duv/datapath_inst/thereg_file/registers(6)",  "/top/TheTest/duv_state.cpu_reg_6");
+      $init_signal_spy("/top/duv/datapath_inst/thereg_file/registers(7)",  "/top/TheTest/duv_state.cpu_reg_7");
+      $init_signal_spy("/top/duv/datapath_inst/RegPC",                     "/top/TheTest/duv_state.cpu_pc");
+      $init_signal_spy("/top/duv/control_inst/zero",                       "/top/TheTest/duv_state.cpu_zero");
+      $init_signal_spy("/top/duv/control_inst/carry",                      "/top/TheTest/duv_state.cpu_carry");
+    endfunction
 
 
     initial begin
@@ -62,8 +79,7 @@ program test (cpu_if.tb duv_if, output logic rst);
         #123ns;
         rst <= 0;
 
-        $init_signal_spy("/top/duv/control_inst/zero", "/top/TheTest/test_zero");
-
+        setupSignalSpy();
         driver.resetCpuRegs();
 
         // Run all test cases
@@ -78,11 +94,10 @@ program test (cpu_if.tb duv_if, output logic rst);
 
     initial begin : monitor_checker
         static Checker check = new(model);
-        static Monitor monitor = new(duv_if, cpu_prefix);
+        static Monitor monitor = new(duv_if, duv_state, cpu_prefix);
         static Prol16State state;
 
         @(negedge rst);
-        monitor.setupSignalSpy();
 
         forever begin
             monitor.waitForTest(state);
