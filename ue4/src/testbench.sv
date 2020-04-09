@@ -17,7 +17,7 @@ module top;
     // DUV
     cpu duv (
         .clk_i          (clk),
-        .rst_i          (reset),
+        .res_i          (reset),
         .mem_addr_o     (duv_if.mem_addr_o),
         .mem_data_o     (duv_if.mem_data_o),
         .mem_data_i     (duv_if.mem_data_i),
