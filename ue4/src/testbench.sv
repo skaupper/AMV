@@ -36,16 +36,15 @@ program test (cpu_if.tb duv_if, output logic rst);
 
     // Declare events for 2 cases:
     // 1) when a new command started/the old one finished
-    // 2) when the model may execute the next opc
     event commandStart;
-    event executeNextOpc;
 
 
-
+    // Declare the golden model and the DUV state struct
     Prol16Model model = new;
     duv_state_t duv_state;
 
 
+    // Signal spy and signal force functions
     function void setupSignalSpy();
         $init_signal_spy("/top/duv/datapath_inst/thereg_file/registers(0)",  "/top/TheTest/duv_state.cpu_reg_0");
         $init_signal_spy("/top/duv/datapath_inst/thereg_file/registers(1)",  "/top/TheTest/duv_state.cpu_reg_1");
@@ -72,13 +71,9 @@ program test (cpu_if.tb duv_if, output logic rst);
     endfunction
 
 
-    initial begin
-        forever begin
-            @(executeNextOpc);
-            model.executeNext();
-        end
-    end
 
+    // Entrypoint of simulation
+    // Generates the reset, initializes DUV and model and asserts test cases
     initial begin : stimuli
         static Generator generator = new;
         static Driver driver = new(duv_if, commandStart);
@@ -109,22 +104,20 @@ program test (cpu_if.tb duv_if, output logic rst);
         $finish;
     end : stimuli
 
+
+    // Process which is used to verify testcases
     initial begin : monitor_checker
         static Checker check = new(model);
         static Monitor monitor = new(duv_if, commandStart);
         static Prol16State state;
 
-        @(posedge rst);
-
         // Ignore the first commandStart since it validates the output of the last (non-existent) command
         @(commandStart);
-        // Make the model execute the first command
-        ->executeNextOpc;
 
         forever begin
+            model.executeNext();
             monitor.waitForTest(state, duv_state);
             check.checkResult(state);
-            ->executeNextOpc;
         end
     end : monitor_checker
 

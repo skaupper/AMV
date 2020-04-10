@@ -13,9 +13,9 @@ class Agent;
   function new (Prol16Model _model,
                 Driver _driver,
                 virtual cpu_if.tb _duv_if);
-      model  = _model;
-      driver = _driver;
-      duv_if = _duv_if;
+    model  = _model;
+    driver = _driver;
+    duv_if = _duv_if;
   endfunction
 
   task runTest(Prol16Opcode opc);
