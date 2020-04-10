@@ -5,16 +5,14 @@
 
 class Monitor;
     virtual cpu_if.tb duv_if;
-    string cpu_prefix;
 
 
-    function new (virtual cpu_if.tb _duv_if, string _cpu_prefix);
+    function new (virtual cpu_if.tb _duv_if);
         duv_if      = _duv_if;
-        cpu_prefix  = _cpu_prefix;
     endfunction
 
     task waitForTest (output Prol16State state, ref duv_state_t duv_state, ref event commandStart);
-        wait(commandStart);
+        @(commandStart);
         state = new;
         state.regs[0] = duv_state.cpu_reg_0;
         state.regs[1] = duv_state.cpu_reg_1;

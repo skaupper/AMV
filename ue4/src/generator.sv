@@ -30,6 +30,7 @@ class Generator;
       end
 
       tests.push_back(Prol16Opcode::create(NOP));
+      // These commands are not supported by the model
       // tests.push_back(Prol16Opcode::create(SLEEP));
       // tests.push_back(Prol16Opcode::create(LOAD, 1, 0));
       // tests.push_back(Prol16Opcode::create(STORE, 2, 3));

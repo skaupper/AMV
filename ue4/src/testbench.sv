@@ -34,10 +34,11 @@ endmodule
 
 program test (cpu_if.tb duv_if, output logic rst);
 
-    event executeNextOpc;
+    // Declare events for 2 cases:
+    // 1) when a new command started/the old one finished
+    // 2) when the model may execute the next opc
     event commandStart;
-
-    const string cpu_prefix = "/top/duv";
+    event executeNextOpc;
 
 
 
@@ -46,17 +47,28 @@ program test (cpu_if.tb duv_if, output logic rst);
 
 
     function void setupSignalSpy();
-      $init_signal_spy("/top/duv/datapath_inst/thereg_file/registers(0)",  "/top/TheTest/duv_state.cpu_reg_0");
-      $init_signal_spy("/top/duv/datapath_inst/thereg_file/registers(1)",  "/top/TheTest/duv_state.cpu_reg_1");
-      $init_signal_spy("/top/duv/datapath_inst/thereg_file/registers(2)",  "/top/TheTest/duv_state.cpu_reg_2");
-      $init_signal_spy("/top/duv/datapath_inst/thereg_file/registers(3)",  "/top/TheTest/duv_state.cpu_reg_3");
-      $init_signal_spy("/top/duv/datapath_inst/thereg_file/registers(4)",  "/top/TheTest/duv_state.cpu_reg_4");
-      $init_signal_spy("/top/duv/datapath_inst/thereg_file/registers(5)",  "/top/TheTest/duv_state.cpu_reg_5");
-      $init_signal_spy("/top/duv/datapath_inst/thereg_file/registers(6)",  "/top/TheTest/duv_state.cpu_reg_6");
-      $init_signal_spy("/top/duv/datapath_inst/thereg_file/registers(7)",  "/top/TheTest/duv_state.cpu_reg_7");
-      $init_signal_spy("/top/duv/datapath_inst/RegPC",                     "/top/TheTest/duv_state.cpu_pc");
-      $init_signal_spy("/top/duv/control_inst/zero",                       "/top/TheTest/duv_state.cpu_zero");
-      $init_signal_spy("/top/duv/control_inst/carry",                      "/top/TheTest/duv_state.cpu_carry");
+        $init_signal_spy("/top/duv/datapath_inst/thereg_file/registers(0)",  "/top/TheTest/duv_state.cpu_reg_0");
+        $init_signal_spy("/top/duv/datapath_inst/thereg_file/registers(1)",  "/top/TheTest/duv_state.cpu_reg_1");
+        $init_signal_spy("/top/duv/datapath_inst/thereg_file/registers(2)",  "/top/TheTest/duv_state.cpu_reg_2");
+        $init_signal_spy("/top/duv/datapath_inst/thereg_file/registers(3)",  "/top/TheTest/duv_state.cpu_reg_3");
+        $init_signal_spy("/top/duv/datapath_inst/thereg_file/registers(4)",  "/top/TheTest/duv_state.cpu_reg_4");
+        $init_signal_spy("/top/duv/datapath_inst/thereg_file/registers(5)",  "/top/TheTest/duv_state.cpu_reg_5");
+        $init_signal_spy("/top/duv/datapath_inst/thereg_file/registers(6)",  "/top/TheTest/duv_state.cpu_reg_6");
+        $init_signal_spy("/top/duv/datapath_inst/thereg_file/registers(7)",  "/top/TheTest/duv_state.cpu_reg_7");
+        $init_signal_spy("/top/duv/datapath_inst/RegPC",                     "/top/TheTest/duv_state.cpu_pc");
+        $init_signal_spy("/top/duv/control_inst/zero",                       "/top/TheTest/duv_state.cpu_zero");
+        $init_signal_spy("/top/duv/control_inst/carry",                      "/top/TheTest/duv_state.cpu_carry");
+    endfunction
+
+    function void resetCpuRegs();
+        $signal_force("/top/duv/datapath_inst/thereg_file/registers(0)", "16#0000", 0, 1);
+        $signal_force("/top/duv/datapath_inst/thereg_file/registers(1)", "16#0000", 0, 1);
+        $signal_force("/top/duv/datapath_inst/thereg_file/registers(2)", "16#0000", 0, 1);
+        $signal_force("/top/duv/datapath_inst/thereg_file/registers(3)", "16#0000", 0, 1);
+        $signal_force("/top/duv/datapath_inst/thereg_file/registers(4)", "16#0000", 0, 1);
+        $signal_force("/top/duv/datapath_inst/thereg_file/registers(5)", "16#0000", 0, 1);
+        $signal_force("/top/duv/datapath_inst/thereg_file/registers(6)", "16#0000", 0, 1);
+        $signal_force("/top/duv/datapath_inst/thereg_file/registers(7)", "16#0000", 0, 1);
     endfunction
 
 
@@ -69,7 +81,7 @@ program test (cpu_if.tb duv_if, output logic rst);
 
     initial begin : stimuli
         static Generator generator = new;
-        static Driver driver = new(duv_if, cpu_prefix);
+        static Driver driver = new(duv_if);
         static Agent agent = new(model, driver, duv_if);
         static Prol16Opcode opc;
 
@@ -78,8 +90,9 @@ program test (cpu_if.tb duv_if, output logic rst);
         #123ns;
         rst <= 1;
 
+
         // Initialize signal spy and reset CPU regs
-        driver.resetCpuRegs();
+        resetCpuRegs();
         setupSignalSpy();
 
 
@@ -90,6 +103,8 @@ program test (cpu_if.tb duv_if, output logic rst);
             agent.runTest(opc, commandStart);
         end
 
+        // Since the monitor and checker are triggered with the next command
+        // this dummy opc is needed or otherwise the last test cases would not be checked
         agent.runTest(Prol16Opcode::create(NOP), commandStart);
 
         $finish;
@@ -97,11 +112,14 @@ program test (cpu_if.tb duv_if, output logic rst);
 
     initial begin : monitor_checker
         static Checker check = new(model);
-        static Monitor monitor = new(duv_if, cpu_prefix);
+        static Monitor monitor = new(duv_if);
         static Prol16State state;
 
         @(posedge rst);
-        wait(commandStart.triggered);
+
+        // Ignore the first commandStart since it validates the output of the last (non-existent) command
+        @(commandStart);
+        // Make the model execute the first command
         ->executeNextOpc;
 
         forever begin
