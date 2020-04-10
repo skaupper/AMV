@@ -27,6 +27,7 @@ class Prol16Model;
     endfunction
 
     function void executeNext();
+        nextOpc.print();
         execute(nextOpc);
     endfunction
 
@@ -84,8 +85,11 @@ class Prol16Model;
             SHRC:   begin res = (ra >> 1) | (state.carry << (gDataWidth-1)); end
 
 
-            NOP: begin end
+            NOP: begin
+                setZero = 0;
+            end
             LOAD, STORE, SLEEP: begin
+                setZero = 0;
                 $display("Unsupported opcode");
             end
 

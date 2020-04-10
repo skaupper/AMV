@@ -99,7 +99,6 @@ program test (cpu_if.tb duv_if, output logic rst);
         // Run all test cases
         while (generator.hasTests()) begin
             opc = generator.nextTest();
-            opc.print();
             agent.runTest(opc);
         end
 
