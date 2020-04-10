@@ -34,8 +34,7 @@ endmodule
 
 program test (cpu_if.tb duv_if, output logic rst);
 
-    // Declare events for 2 cases:
-    // 1) when a new command started/the old one finished
+    // Declare commandStart event which triggers when a new command started/the old one finished
     event commandStart;
 
 
