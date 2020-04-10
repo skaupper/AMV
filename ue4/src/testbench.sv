@@ -81,7 +81,7 @@ program test (cpu_if.tb duv_if, output logic rst);
 
     initial begin : stimuli
         static Generator generator = new;
-        static Driver driver = new(duv_if);
+        static Driver driver = new(duv_if, commandStart);
         static Agent agent = new(model, driver, duv_if);
         static Prol16Opcode opc;
 
@@ -100,19 +100,19 @@ program test (cpu_if.tb duv_if, output logic rst);
         while (generator.hasTests()) begin
             opc = generator.nextTest();
             opc.print();
-            agent.runTest(opc, commandStart);
+            agent.runTest(opc);
         end
 
         // Since the monitor and checker are triggered with the next command
         // this dummy opc is needed or otherwise the last test cases would not be checked
-        agent.runTest(Prol16Opcode::create(NOP), commandStart);
+        agent.runTest(Prol16Opcode::create(NOP));
 
         $finish;
     end : stimuli
 
     initial begin : monitor_checker
         static Checker check = new(model);
-        static Monitor monitor = new(duv_if);
+        static Monitor monitor = new(duv_if, commandStart);
         static Prol16State state;
 
         @(posedge rst);
@@ -123,7 +123,7 @@ program test (cpu_if.tb duv_if, output logic rst);
         ->executeNextOpc;
 
         forever begin
-            monitor.waitForTest(state, duv_state, commandStart);
+            monitor.waitForTest(state, duv_state);
             check.checkResult(state);
             ->executeNextOpc;
         end

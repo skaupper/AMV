@@ -5,14 +5,16 @@
 
 class Driver;
   virtual cpu_if.tb duv_if;
+  event commandStart;
 
 
-  function new (virtual cpu_if.tb _duv_if);
-    duv_if = _duv_if;
+  function new (virtual cpu_if.tb _duv_if, event _commandStart);
+    duv_if       = _duv_if;
+    commandStart = _commandStart;
   endfunction
 
 
-  task setOpcode(Prol16Opcode opc, ref event commandStart);
+  task setOpcode(Prol16Opcode opc);
     assignWord(opc.toBinary());
     ->commandStart;
 
