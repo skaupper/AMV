@@ -25,13 +25,13 @@ class Prol16Model;
     endfunction
 
     function void setOpcode(Prol16Opcode opc);
+        lastOpc = nextOpc;
         nextOpc = opc;
     endfunction
 
     function void executeNext();
         nextOpc.print();
         execute(nextOpc);
-        lastOpc = nextOpc;
     endfunction
 
     function void execute (Prol16Opcode opc);
