@@ -37,7 +37,7 @@ program test (cpu_if.tb duv_if, output logic rst);
     // Declare commandStart event which triggers when a new command started/the old one finished
     event commandStart;
 
-//    Prol16Opcode opc;
+    Prol16Opcode opc;
 
     // Declare the golden model and the DUV state struct
     Prol16Model model = new;
@@ -108,7 +108,6 @@ program test (cpu_if.tb duv_if, output logic rst);
         static Generator generator = new;
         static Driver driver = new(duv_if, commandStart);
         static Agent agent = new(model, driver, duv_if);
-        static Prol16Opcode opc;
 
 //        static cov_grp cov_grp_inst = new;
 
