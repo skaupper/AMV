@@ -78,6 +78,8 @@ program test (cpu_if.tb duv_if, output logic rst);
     covergroup cov_grp @(commandStart);
         option.per_instance = 1;
 
+        // Define bins for all opcodes as well as bins for the unused operations
+        // Invalid opcodes should cause the coverage to fail!
         pt_cmd : coverpoint reg_op_code {
             bins op_nop          = {NOP};
             bins op_loadi        = {LOADI};
@@ -106,21 +108,52 @@ program test (cpu_if.tb duv_if, output logic rst);
             illegal_bins invalid = default;
         }
 
-        pt_carry : coverpoint duv_state.cpu_carry;
-        pt_zero  : coverpoint duv_state.cpu_zero;
-
-        pt_rega_idx : coverpoint reg_a_idx {
-            bins reg_a[] = {[0:7]};
-            bins invalid = default;
-        }
-        pt_regb_idx : coverpoint reg_b_idx {
-            bins reg_b[] = {[0:7]};
-            bins invalid = default;
+        // Define coverpoints for carry and zero bit.
+        // These include all possible transitions as well.
+        pt_carry : coverpoint duv_state.cpu_carry {
+            bins val[] = {[0:1]};
+            bins trans = (0, 1 => 0, 1);
         }
 
-        cross_op_and_regs : cross reg_op_code, reg_a_idx, reg_b_idx {
-            illegal_bins no_reg  = binsof(reg_op_code) intersect{NOP} with (reg_a_idx != 0 || reg_b_idx != 0);
+        pt_zero  : coverpoint duv_state.cpu_zero {
+            bins val[] = {[0:1]};
+            bins trans = (0, 1 => 0, 1);
         }
+
+        // Define coverpoints for all possible register indices
+        pt_reg_a_idx : coverpoint reg_a_idx {
+            bins reg_a[]         = {[0:7]};
+            illegal_bins invalid = default;
+        }
+
+        pt_reg_b_idx : coverpoint reg_b_idx {
+            bins reg_b[]         = {[0:7]};
+            illegal_bins invalid = default;
+        }
+
+
+        // Cross coverage
+        // 1.) Each opcode should be executed with each possible combinations of registers
+        // Operations which do not use either of the registers must have those register indices set to 0!
+        cross_op_and_regs : cross pt_cmd, pt_reg_a_idx, pt_reg_b_idx {
+            illegal_bins no_reg  = binsof(pt_cmd) intersect {
+                NOP, SLEEP
+            } with (pt_reg_a_idx != 0 || pt_reg_b_idx != 0);
+
+            illegal_bins one_reg = binsof(pt_cmd) intersect {
+                JUMP, JUMPC, JUMPZ, NOT, INC, DEC, SHL, SHR, SHLC, SHRC
+            } with (pt_reg_b_idx != 0);
+        }
+
+        // 2a.) Which operations has been called with what status flags set.
+        // 2b.) Which operation caused which state transitions.
+        // cross_op_and_sf : cross pt_cmd, pt_carry, pt_zero {
+        //     illegal_bins no_zero_change = binsof(pt_cmd) intersect {
+        //         NOP
+        //     } && binsof(pt_zero) intersect (0 => 1, 1 => 0);
+        // }
+
+
     endgroup
 
     // Entrypoint of simulation
