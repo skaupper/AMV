@@ -70,10 +70,10 @@ program test (cpu_if.tb duv_if, output logic rst);
         $signal_force("/top/duv/datapath_inst/thereg_file/registers(7)", "16#0000", 0, 1);
     endfunction
 
-/*    covergroup cov_grp @(commandStart);
+    covergroup cov_grp @(commandStart);
         option.per_instance = 1;
 
-        pt_cmd : coverpoint opc {
+/*        pt_cmd : coverpoint opc {
             bins bin_op_nop   = {NOP};
             bins bin_op_nop   = {NOP};
             bins bin_op_sleep = {SLEEP};
@@ -100,8 +100,8 @@ program test (cpu_if.tb duv_if, output logic rst);
             bins bin_op_shlc  = {SHLC};
             bins bin_op_shrc  = {SHRC};
         }
-    endgroup
 */
+    endgroup
     // Entrypoint of simulation
     // Generates the reset, initializes DUV and model and asserts test cases
     initial begin : stimuli
