@@ -3,10 +3,10 @@ COVERGROUP COVERAGE:
 Covergroup                                             Metric       Goal    Status               
                                                                                               
 -----------------------------------------------------------------------------------------------
- TYPE /top/TheTest/cov_grp                              62.8%        100    Uncovered            
-    covered/total bins:                                   149       1042                      
-    missing/total bins:                                   893       1042                      
-    % Hit:                                              14.2%        100                      
+ TYPE /top/TheTest/cov_grp                              63.1%        100    Uncovered            
+    covered/total bins:                                   142        988                      
+    missing/total bins:                                   846        988                      
+    % Hit:                                              14.3%        100                      
     Coverpoint cov_grp::pt_cmd                         100.0%        100    Covered              
         covered/total bins:                                21         21                      
         missing/total bins:                                 0         21                      
@@ -31,15 +31,15 @@ Covergroup                                             Metric       Goal    Stat
         covered/total bins:                                36        665                      
         missing/total bins:                               629        665                      
         % Hit:                                           5.4%        100                      
-    Cross cov_grp::cross_op_and_sf                      22.2%        100    Uncovered            
-        covered/total bins:                                74        332                      
-        missing/total bins:                               258        332                      
-        % Hit:                                          22.2%        100                      
+    Cross cov_grp::cross_op_and_sf                      24.1%        100    Uncovered            
+        covered/total bins:                                67        278                      
+        missing/total bins:                               211        278                      
+        % Hit:                                          24.1%        100                      
  Covergroup instance \/top/TheTest/stimuli/cov_grp_inst  
-                                                        62.8%        100    Uncovered            
-    covered/total bins:                                   149       1042                      
-    missing/total bins:                                   893       1042                      
-    % Hit:                                              14.2%        100                      
+                                                        63.1%        100    Uncovered            
+    covered/total bins:                                   142        988                      
+    missing/total bins:                                   846        988                      
+    % Hit:                                              14.3%        100                      
     Coverpoint pt_cmd                                  100.0%        100    Covered              
         covered/total bins:                                21         21                      
         missing/total bins:                                 0         21                      
@@ -73,16 +73,16 @@ Covergroup                                             Metric       Goal    Stat
         covered/total bins:                                 4          4                      
         missing/total bins:                                 0          4                      
         % Hit:                                         100.0%        100                      
-        bin val[0]                                        187          1    Covered              
-        bin val[1]                                        114          1    Covered              
+        bin carry[0]                                      187          1    Covered              
+        bin carry[1]                                      114          1    Covered              
         bin trans_change                                    3          1    Covered              
         bin trans_no_change                                32          1    Covered              
     Coverpoint pt_zero                                  75.0%        100    Uncovered            
         covered/total bins:                                 3          4                      
         missing/total bins:                                 1          4                      
         % Hit:                                          75.0%        100                      
-        bin val[0]                                        105          1    Covered              
-        bin val[1]                                        196          1    Covered              
+        bin zero[0]                                       105          1    Covered              
+        bin zero[1]                                       196          1    Covered              
         bin trans_change                                    0          1    ZERO                 
         bin trans_no_change                                35          1    Covered              
     Coverpoint pt_reg_a_idx                             87.5%        100    Uncovered            
@@ -782,235 +782,198 @@ Covergroup                                             Metric       Goal    Stat
         bin <op_shrc,reg_a[7],reg_b[0]>                     0          1    ZERO                 
         illegal_bin no_reg                                  0               ZERO                 
         illegal_bin only_reg_a                              0               ZERO                 
-    Cross cross_op_and_sf                               22.2%        100    Uncovered            
-        covered/total bins:                                74        332                      
-        missing/total bins:                               258        332                      
-        % Hit:                                          22.2%        100                      
-        bin <op_nop,val[0],val[0]>                          2          1    Covered              
-        bin <op_nop,val[1],val[0]>                          1          1    Covered              
-        bin <op_xor,val[0],val[0]>                          1          1    Covered              
-        bin <op_jumpz,val[0],val[0]>                       10          1    Covered              
-        bin <op_jumpz,val[1],val[0]>                        9          1    Covered              
-        bin <op_sub,val[0],val[0]>                          1          1    Covered              
-        bin <op_sub,val[1],val[0]>                          1          1    Covered              
-        bin <op_jump,val[1],val[0]>                        11          1    Covered              
-        bin <op_add,val[0],val[0]>                          1          1    Covered              
-        bin <op_and,val[0],val[0]>                          1          1    Covered              
-        bin <op_and,val[1],val[0]>                          1          1    Covered              
-        bin <op_comp,val[0],val[0]>                         8          1    Covered              
-        bin <op_comp,val[1],val[0]>                         5          1    Covered              
-        bin <op_loadi,val[0],val[0]>                        8          1    Covered              
-        bin <op_loadi,val[1],val[0]>                       14          1    Covered              
-        bin <op_not,val[1],val[0]>                          1          1    Covered              
-        bin <op_move,val[1],val[0]>                         2          1    Covered              
-        bin <op_subc,val[0],val[0]>                         1          1    Covered              
-        bin <op_subc,val[1],val[0]>                         1          1    Covered              
-        bin <op_jumpc,val[0],val[0]>                       10          1    Covered              
-        bin <op_jumpc,val[1],val[0]>                        9          1    Covered              
-        bin <op_addc,val[0],val[0]>                         1          1    Covered              
-        bin <op_addc,val[1],val[0]>                         1          1    Covered              
-        bin <op_or,val[1],val[0]>                           1          1    Covered              
-        bin <op_inc,val[0],val[0]>                          1          1    Covered              
-        bin <op_shl,val[1],val[0]>                          1          1    Covered              
-        bin <op_shlc,val[0],val[0]>                         1          1    Covered              
-        bin <op_shrc,val[0],val[0]>                         1          1    Covered              
-        bin <op_jumpz,val[1],trans_no_change>               1          1    Covered              
-        bin <op_loadi,val[0],trans_no_change>              15          1    Covered              
-        bin <op_loadi,val[1],trans_no_change>               2          1    Covered              
-        bin <op_jumpc,val[0],trans_no_change>              15          1    Covered              
-        bin <op_jumpc,val[1],trans_no_change>               2          1    Covered              
-        bin <op_xor,val[0],val[1]>                          1          1    Covered              
-        bin <op_jumpz,val[0],val[1]>                       20          1    Covered              
-        bin <op_jumpz,val[1],val[1]>                        8          1    Covered              
-        bin <op_sub,val[0],val[1]>                          3          1    Covered              
-        bin <op_jump,val[0],val[1]>                        20          1    Covered              
-        bin <op_jump,val[1],val[1]>                        14          1    Covered              
-        bin <op_add,val[0],val[1]>                          1          1    Covered              
-        bin <op_add,val[1],val[1]>                          1          1    Covered              
-        bin <op_and,val[0],val[1]>                          1          1    Covered              
-        bin <op_comp,val[0],val[1]>                         6          1    Covered              
-        bin <op_comp,val[1],val[1]>                         2          1    Covered              
-        bin <op_loadi,val[0],val[1]>                       56          1    Covered              
-        bin <op_loadi,val[1],val[1]>                       21          1    Covered              
-        bin <op_not,val[0],val[1]>                          1          1    Covered              
-        bin <op_move,val[0],val[1]>                         3          1    Covered              
-        bin <op_jumpc,val[0],val[1]>                       20          1    Covered              
-        bin <op_jumpc,val[1],val[1]>                        6          1    Covered              
-        bin <op_or,val[0],val[1]>                           1          1    Covered              
-        bin <op_inc,val[0],val[1]>                          1          1    Covered              
-        bin <op_dec,val[0],val[1]>                          2          1    Covered              
-        bin <op_dec,val[1],val[1]>                          1          1    Covered              
-        bin <op_shr,val[0],val[1]>                          2          1    Covered              
-        bin <op_shr,val[1],val[1]>                          1          1    Covered              
-        bin <op_shl,val[0],val[1]>                          1          1    Covered              
-        bin <op_shlc,val[0],val[1]>                         1          1    Covered              
-        bin <op_shlc,val[1],val[1]>                         1          1    Covered              
-        bin <op_shrc,val[1],val[1]>                         1          1    Covered              
-        bin <op_jumpc,trans_change,val[0]>                  3          1    Covered              
-        bin <op_jumpz,trans_no_change,val[0]>               5          1    Covered              
-        bin <op_loadi,trans_no_change,val[0]>               8          1    Covered              
-        bin <op_not,trans_no_change,val[0]>                 1          1    Covered              
-        bin <op_subc,trans_no_change,val[0]>                1          1    Covered              
-        bin <op_jumpc,trans_no_change,val[0]>               1          1    Covered              
-        bin <op_addc,trans_no_change,val[0]>                1          1    Covered              
-        bin <op_or,trans_no_change,val[0]>                  1          1    Covered              
-        bin <op_jumpz,trans_no_change,trans_no_change> 
-                                                            1          1    Covered              
+    Cross cross_op_and_sf                               24.1%        100    Uncovered            
+        covered/total bins:                                67        278                      
+        missing/total bins:                               211        278                      
+        % Hit:                                          24.1%        100                      
+        bin <op_nop,carry[0],zero[0]>                       2          1    Covered              
+        bin <op_loadi,carry[0],zero[0]>                     8          1    Covered              
+        bin <op_jumpc,carry[0],zero[0]>                    10          1    Covered              
+        bin <op_jump,carry[0],zero[1]>                     20          1    Covered              
+        bin <op_loadi,carry[0],zero[1]>                    56          1    Covered              
+        bin <op_jumpc,carry[0],zero[1]>                    20          1    Covered              
+        bin <op_loadi,carry[0],trans_no_change>            15          1    Covered              
+        bin <op_jumpc,carry[0],trans_no_change>            15          1    Covered              
+        bin <op_jumpz,carry[0],zero[0]>                    10          1    Covered              
+        bin <op_jumpz,carry[0],zero[1]>                    20          1    Covered              
+        bin <op_move,carry[0],zero[1]>                      3          1    Covered              
+        bin <op_add,carry[0],zero[0]>                       1          1    Covered              
+        bin <op_addc,carry[0],zero[0]>                      1          1    Covered              
+        bin <op_add,carry[0],zero[1]>                       1          1    Covered              
+        bin <op_sub,carry[0],zero[0]>                       1          1    Covered              
+        bin <op_comp,carry[0],zero[0]>                      8          1    Covered              
+        bin <op_subc,carry[0],zero[0]>                      1          1    Covered              
+        bin <op_inc,carry[0],zero[0]>                       1          1    Covered              
+        bin <op_sub,carry[0],zero[1]>                       3          1    Covered              
+        bin <op_comp,carry[0],zero[1]>                      6          1    Covered              
+        bin <op_inc,carry[0],zero[1]>                       1          1    Covered              
+        bin <op_shlc,carry[0],zero[0]>                      1          1    Covered              
+        bin <op_dec,carry[0],zero[1]>                       2          1    Covered              
+        bin <op_shr,carry[0],zero[1]>                       2          1    Covered              
+        bin <op_shl,carry[0],zero[1]>                       1          1    Covered              
+        bin <op_shlc,carry[0],zero[1]>                      1          1    Covered              
+        bin <op_shrc,carry[0],zero[0]>                      1          1    Covered              
+        bin <op_nop,carry[1],zero[0]>                       1          1    Covered              
+        bin <op_jump,carry[1],zero[0]>                     11          1    Covered              
+        bin <op_loadi,carry[1],zero[0]>                    14          1    Covered              
+        bin <op_jumpc,carry[1],zero[0]>                     9          1    Covered              
+        bin <op_jump,carry[1],zero[1]>                     14          1    Covered              
+        bin <op_loadi,carry[1],zero[1]>                    21          1    Covered              
+        bin <op_jumpc,carry[1],zero[1]>                     6          1    Covered              
+        bin <op_loadi,carry[1],trans_no_change>             2          1    Covered              
+        bin <op_jumpc,carry[1],trans_no_change>             2          1    Covered              
+        bin <op_jumpz,carry[1],zero[0]>                     9          1    Covered              
+        bin <op_move,carry[1],zero[0]>                      2          1    Covered              
+        bin <op_jumpz,carry[1],zero[1]>                     8          1    Covered              
+        bin <op_jumpz,carry[1],trans_no_change>             1          1    Covered              
+        bin <op_and,carry[1],zero[0]>                       1          1    Covered              
+        bin <op_or,carry[1],zero[0]>                        1          1    Covered              
+        bin <op_sub,carry[1],zero[0]>                       1          1    Covered              
+        bin <op_comp,carry[1],zero[0]>                      5          1    Covered              
+        bin <op_not,carry[1],zero[0]>                       1          1    Covered              
+        bin <op_subc,carry[1],zero[0]>                      1          1    Covered              
+        bin <op_addc,carry[1],zero[0]>                      1          1    Covered              
+        bin <op_add,carry[1],zero[1]>                       1          1    Covered              
+        bin <op_comp,carry[1],zero[1]>                      2          1    Covered              
+        bin <op_shl,carry[1],zero[0]>                       1          1    Covered              
+        bin <op_dec,carry[1],zero[1]>                       1          1    Covered              
+        bin <op_shr,carry[1],zero[1]>                       1          1    Covered              
+        bin <op_shlc,carry[1],zero[1]>                      1          1    Covered              
+        bin <op_shrc,carry[1],zero[1]>                      1          1    Covered              
+        bin <op_loadi,trans_no_change,zero[0]>              8          1    Covered              
+        bin <op_jumpc,trans_no_change,zero[0]>              1          1    Covered              
+        bin <op_loadi,trans_no_change,zero[1]>              7          1    Covered              
+        bin <op_jumpc,trans_no_change,zero[1]>              6          1    Covered              
         bin <op_loadi,trans_no_change,trans_no_change> 
                                                             2          1    Covered              
         bin <op_jumpc,trans_no_change,trans_no_change> 
                                                             2          1    Covered              
-        bin <op_jumpz,trans_no_change,val[1]>               1          1    Covered              
-        bin <op_loadi,trans_no_change,val[1]>               7          1    Covered              
-        bin <op_jumpc,trans_no_change,val[1]>               6          1    Covered              
+        bin <op_jumpz,trans_no_change,zero[0]>              5          1    Covered              
+        bin <op_jumpz,trans_no_change,zero[1]>              1          1    Covered              
+        bin <op_jumpz,trans_no_change,trans_no_change> 
+                                                            1          1    Covered              
+        bin <op_or,trans_no_change,zero[0]>                 1          1    Covered              
+        bin <op_not,trans_no_change,zero[0]>                1          1    Covered              
+        bin <op_subc,trans_no_change,zero[0]>               1          1    Covered              
+        bin <op_addc,trans_no_change,zero[0]>               1          1    Covered              
         illegal_bin no_zero_change                          0               ZERO                 
-        bin <op_jump,val[0],val[0]>                         0          1    ZERO                 
-        bin <op_move,val[0],val[0]>                         0          1    ZERO                 
-        bin <op_or,val[0],val[0]>                           0          1    ZERO                 
-        bin <op_not,val[0],val[0]>                          0          1    ZERO                 
-        bin <op_dec,val[0],val[0]>                          0          1    ZERO                 
-        bin <op_shl,val[0],val[0]>                          0          1    ZERO                 
-        bin <op_shr,val[0],val[0]>                          0          1    ZERO                 
-        bin <op_xor,val[1],val[0]>                          0          1    ZERO                 
-        bin <op_add,val[1],val[0]>                          0          1    ZERO                 
-        bin <op_inc,val[1],val[0]>                          0          1    ZERO                 
-        bin <op_dec,val[1],val[0]>                          0          1    ZERO                 
-        bin <op_shr,val[1],val[0]>                          0          1    ZERO                 
-        bin <op_shlc,val[1],val[0]>                         0          1    ZERO                 
-        bin <op_shrc,val[1],val[0]>                         0          1    ZERO                 
-        bin <op_nop,trans_change,val[0]>                    0          1    ZERO                 
-        bin <op_loadi,trans_change,val[0]>                  0          1    ZERO                 
-        bin <op_jump,trans_change,val[0]>                   0          1    ZERO                 
-        bin <op_jumpz,trans_change,val[0]>                  0          1    ZERO                 
-        bin <op_move,trans_change,val[0]>                   0          1    ZERO                 
-        bin <op_and,trans_change,val[0]>                    0          1    ZERO                 
-        bin <op_or,trans_change,val[0]>                     0          1    ZERO                 
-        bin <op_xor,trans_change,val[0]>                    0          1    ZERO                 
-        bin <op_not,trans_change,val[0]>                    0          1    ZERO                 
-        bin <op_add,trans_change,val[0]>                    0          1    ZERO                 
-        bin <op_addc,trans_change,val[0]>                   0          1    ZERO                 
-        bin <op_sub,trans_change,val[0]>                    0          1    ZERO                 
-        bin <op_subc,trans_change,val[0]>                   0          1    ZERO                 
-        bin <op_comp,trans_change,val[0]>                   0          1    ZERO                 
-        bin <op_inc,trans_change,val[0]>                    0          1    ZERO                 
-        bin <op_dec,trans_change,val[0]>                    0          1    ZERO                 
-        bin <op_shl,trans_change,val[0]>                    0          1    ZERO                 
-        bin <op_shr,trans_change,val[0]>                    0          1    ZERO                 
-        bin <op_shlc,trans_change,val[0]>                   0          1    ZERO                 
-        bin <op_shrc,trans_change,val[0]>                   0          1    ZERO                 
-        bin <op_nop,trans_no_change,val[0]>                 0          1    ZERO                 
-        bin <op_jump,trans_no_change,val[0]>                0          1    ZERO                 
-        bin <op_move,trans_no_change,val[0]>                0          1    ZERO                 
-        bin <op_and,trans_no_change,val[0]>                 0          1    ZERO                 
-        bin <op_xor,trans_no_change,val[0]>                 0          1    ZERO                 
-        bin <op_add,trans_no_change,val[0]>                 0          1    ZERO                 
-        bin <op_sub,trans_no_change,val[0]>                 0          1    ZERO                 
-        bin <op_comp,trans_no_change,val[0]>                0          1    ZERO                 
-        bin <op_inc,trans_no_change,val[0]>                 0          1    ZERO                 
-        bin <op_dec,trans_no_change,val[0]>                 0          1    ZERO                 
-        bin <op_shl,trans_no_change,val[0]>                 0          1    ZERO                 
-        bin <op_shr,trans_no_change,val[0]>                 0          1    ZERO                 
-        bin <op_shlc,trans_no_change,val[0]>                0          1    ZERO                 
-        bin <op_shrc,trans_no_change,val[0]>                0          1    ZERO                 
-        bin <op_nop,val[0],val[1]>                          0          1    ZERO                 
-        bin <op_addc,val[0],val[1]>                         0          1    ZERO                 
-        bin <op_subc,val[0],val[1]>                         0          1    ZERO                 
-        bin <op_shrc,val[0],val[1]>                         0          1    ZERO                 
-        bin <op_nop,val[1],val[1]>                          0          1    ZERO                 
-        bin <op_move,val[1],val[1]>                         0          1    ZERO                 
-        bin <op_and,val[1],val[1]>                          0          1    ZERO                 
-        bin <op_or,val[1],val[1]>                           0          1    ZERO                 
-        bin <op_xor,val[1],val[1]>                          0          1    ZERO                 
-        bin <op_not,val[1],val[1]>                          0          1    ZERO                 
-        bin <op_addc,val[1],val[1]>                         0          1    ZERO                 
-        bin <op_sub,val[1],val[1]>                          0          1    ZERO                 
-        bin <op_subc,val[1],val[1]>                         0          1    ZERO                 
-        bin <op_inc,val[1],val[1]>                          0          1    ZERO                 
-        bin <op_shl,val[1],val[1]>                          0          1    ZERO                 
-        bin <op_nop,trans_change,val[1]>                    0          1    ZERO                 
-        bin <op_loadi,trans_change,val[1]>                  0          1    ZERO                 
-        bin <op_jump,trans_change,val[1]>                   0          1    ZERO                 
-        bin <op_jumpc,trans_change,val[1]>                  0          1    ZERO                 
-        bin <op_jumpz,trans_change,val[1]>                  0          1    ZERO                 
-        bin <op_move,trans_change,val[1]>                   0          1    ZERO                 
-        bin <op_and,trans_change,val[1]>                    0          1    ZERO                 
-        bin <op_or,trans_change,val[1]>                     0          1    ZERO                 
-        bin <op_xor,trans_change,val[1]>                    0          1    ZERO                 
-        bin <op_not,trans_change,val[1]>                    0          1    ZERO                 
-        bin <op_add,trans_change,val[1]>                    0          1    ZERO                 
-        bin <op_addc,trans_change,val[1]>                   0          1    ZERO                 
-        bin <op_sub,trans_change,val[1]>                    0          1    ZERO                 
-        bin <op_subc,trans_change,val[1]>                   0          1    ZERO                 
-        bin <op_comp,trans_change,val[1]>                   0          1    ZERO                 
-        bin <op_inc,trans_change,val[1]>                    0          1    ZERO                 
-        bin <op_dec,trans_change,val[1]>                    0          1    ZERO                 
-        bin <op_shl,trans_change,val[1]>                    0          1    ZERO                 
-        bin <op_shr,trans_change,val[1]>                    0          1    ZERO                 
-        bin <op_shlc,trans_change,val[1]>                   0          1    ZERO                 
-        bin <op_shrc,trans_change,val[1]>                   0          1    ZERO                 
-        bin <op_nop,trans_no_change,val[1]>                 0          1    ZERO                 
-        bin <op_jump,trans_no_change,val[1]>                0          1    ZERO                 
-        bin <op_move,trans_no_change,val[1]>                0          1    ZERO                 
-        bin <op_and,trans_no_change,val[1]>                 0          1    ZERO                 
-        bin <op_or,trans_no_change,val[1]>                  0          1    ZERO                 
-        bin <op_xor,trans_no_change,val[1]>                 0          1    ZERO                 
-        bin <op_not,trans_no_change,val[1]>                 0          1    ZERO                 
-        bin <op_add,trans_no_change,val[1]>                 0          1    ZERO                 
-        bin <op_addc,trans_no_change,val[1]>                0          1    ZERO                 
-        bin <op_sub,trans_no_change,val[1]>                 0          1    ZERO                 
-        bin <op_subc,trans_no_change,val[1]>                0          1    ZERO                 
-        bin <op_comp,trans_no_change,val[1]>                0          1    ZERO                 
-        bin <op_inc,trans_no_change,val[1]>                 0          1    ZERO                 
-        bin <op_dec,trans_no_change,val[1]>                 0          1    ZERO                 
-        bin <op_shl,trans_no_change,val[1]>                 0          1    ZERO                 
-        bin <op_shr,trans_no_change,val[1]>                 0          1    ZERO                 
-        bin <op_shlc,trans_no_change,val[1]>                0          1    ZERO                 
-        bin <op_shrc,trans_no_change,val[1]>                0          1    ZERO                 
-        bin <op_loadi,val[0],trans_change>                  0          1    ZERO                 
-        bin <op_jump,val[0],trans_change>                   0          1    ZERO                 
-        bin <op_jumpc,val[0],trans_change>                  0          1    ZERO                 
-        bin <op_jumpz,val[0],trans_change>                  0          1    ZERO                 
-        bin <op_move,val[0],trans_change>                   0          1    ZERO                 
-        bin <op_and,val[0],trans_change>                    0          1    ZERO                 
-        bin <op_or,val[0],trans_change>                     0          1    ZERO                 
-        bin <op_xor,val[0],trans_change>                    0          1    ZERO                 
-        bin <op_not,val[0],trans_change>                    0          1    ZERO                 
-        bin <op_add,val[0],trans_change>                    0          1    ZERO                 
-        bin <op_addc,val[0],trans_change>                   0          1    ZERO                 
-        bin <op_sub,val[0],trans_change>                    0          1    ZERO                 
-        bin <op_subc,val[0],trans_change>                   0          1    ZERO                 
-        bin <op_comp,val[0],trans_change>                   0          1    ZERO                 
-        bin <op_inc,val[0],trans_change>                    0          1    ZERO                 
-        bin <op_dec,val[0],trans_change>                    0          1    ZERO                 
-        bin <op_shl,val[0],trans_change>                    0          1    ZERO                 
-        bin <op_shr,val[0],trans_change>                    0          1    ZERO                 
-        bin <op_shlc,val[0],trans_change>                   0          1    ZERO                 
-        bin <op_shrc,val[0],trans_change>                   0          1    ZERO                 
-        bin <op_loadi,val[1],trans_change>                  0          1    ZERO                 
-        bin <op_jump,val[1],trans_change>                   0          1    ZERO                 
-        bin <op_jumpc,val[1],trans_change>                  0          1    ZERO                 
-        bin <op_jumpz,val[1],trans_change>                  0          1    ZERO                 
-        bin <op_move,val[1],trans_change>                   0          1    ZERO                 
-        bin <op_and,val[1],trans_change>                    0          1    ZERO                 
-        bin <op_or,val[1],trans_change>                     0          1    ZERO                 
-        bin <op_xor,val[1],trans_change>                    0          1    ZERO                 
-        bin <op_not,val[1],trans_change>                    0          1    ZERO                 
-        bin <op_add,val[1],trans_change>                    0          1    ZERO                 
-        bin <op_addc,val[1],trans_change>                   0          1    ZERO                 
-        bin <op_sub,val[1],trans_change>                    0          1    ZERO                 
-        bin <op_subc,val[1],trans_change>                   0          1    ZERO                 
-        bin <op_comp,val[1],trans_change>                   0          1    ZERO                 
-        bin <op_inc,val[1],trans_change>                    0          1    ZERO                 
-        bin <op_dec,val[1],trans_change>                    0          1    ZERO                 
-        bin <op_shl,val[1],trans_change>                    0          1    ZERO                 
-        bin <op_shr,val[1],trans_change>                    0          1    ZERO                 
-        bin <op_shlc,val[1],trans_change>                   0          1    ZERO                 
-        bin <op_shrc,val[1],trans_change>                   0          1    ZERO                 
-        bin <op_loadi,trans_change,trans_change>            0          1    ZERO                 
-        bin <op_jump,trans_change,trans_change>             0          1    ZERO                 
-        bin <op_jumpc,trans_change,trans_change>            0          1    ZERO                 
-        bin <op_jumpz,trans_change,trans_change>            0          1    ZERO                 
-        bin <op_move,trans_change,trans_change>             0          1    ZERO                 
+        illegal_bin no_carry_change                         3               Occurred             
+        illegal_bin carry_not_zero                          6               Occurred             
+        bin <op_jump,carry[0],zero[0]>                      0          1    ZERO                 
+        bin <op_move,carry[0],zero[0]>                      0          1    ZERO                 
+        bin <op_dec,carry[0],zero[0]>                       0          1    ZERO                 
+        bin <op_shl,carry[0],zero[0]>                       0          1    ZERO                 
+        bin <op_shr,carry[0],zero[0]>                       0          1    ZERO                 
+        bin <op_xor,carry[1],zero[0]>                       0          1    ZERO                 
+        bin <op_add,carry[1],zero[0]>                       0          1    ZERO                 
+        bin <op_inc,carry[1],zero[0]>                       0          1    ZERO                 
+        bin <op_dec,carry[1],zero[0]>                       0          1    ZERO                 
+        bin <op_shr,carry[1],zero[0]>                       0          1    ZERO                 
+        bin <op_shlc,carry[1],zero[0]>                      0          1    ZERO                 
+        bin <op_shrc,carry[1],zero[0]>                      0          1    ZERO                 
+        bin <op_and,trans_change,zero[0]>                   0          1    ZERO                 
+        bin <op_or,trans_change,zero[0]>                    0          1    ZERO                 
+        bin <op_xor,trans_change,zero[0]>                   0          1    ZERO                 
+        bin <op_not,trans_change,zero[0]>                   0          1    ZERO                 
+        bin <op_add,trans_change,zero[0]>                   0          1    ZERO                 
+        bin <op_addc,trans_change,zero[0]>                  0          1    ZERO                 
+        bin <op_sub,trans_change,zero[0]>                   0          1    ZERO                 
+        bin <op_subc,trans_change,zero[0]>                  0          1    ZERO                 
+        bin <op_comp,trans_change,zero[0]>                  0          1    ZERO                 
+        bin <op_inc,trans_change,zero[0]>                   0          1    ZERO                 
+        bin <op_dec,trans_change,zero[0]>                   0          1    ZERO                 
+        bin <op_shl,trans_change,zero[0]>                   0          1    ZERO                 
+        bin <op_shr,trans_change,zero[0]>                   0          1    ZERO                 
+        bin <op_shlc,trans_change,zero[0]>                  0          1    ZERO                 
+        bin <op_shrc,trans_change,zero[0]>                  0          1    ZERO                 
+        bin <op_nop,trans_no_change,zero[0]>                0          1    ZERO                 
+        bin <op_jump,trans_no_change,zero[0]>               0          1    ZERO                 
+        bin <op_move,trans_no_change,zero[0]>               0          1    ZERO                 
+        bin <op_and,trans_no_change,zero[0]>                0          1    ZERO                 
+        bin <op_xor,trans_no_change,zero[0]>                0          1    ZERO                 
+        bin <op_add,trans_no_change,zero[0]>                0          1    ZERO                 
+        bin <op_sub,trans_no_change,zero[0]>                0          1    ZERO                 
+        bin <op_comp,trans_no_change,zero[0]>               0          1    ZERO                 
+        bin <op_inc,trans_no_change,zero[0]>                0          1    ZERO                 
+        bin <op_dec,trans_no_change,zero[0]>                0          1    ZERO                 
+        bin <op_shl,trans_no_change,zero[0]>                0          1    ZERO                 
+        bin <op_shr,trans_no_change,zero[0]>                0          1    ZERO                 
+        bin <op_shlc,trans_no_change,zero[0]>               0          1    ZERO                 
+        bin <op_shrc,trans_no_change,zero[0]>               0          1    ZERO                 
+        bin <op_nop,carry[0],zero[1]>                       0          1    ZERO                 
+        bin <op_addc,carry[0],zero[1]>                      0          1    ZERO                 
+        bin <op_subc,carry[0],zero[1]>                      0          1    ZERO                 
+        bin <op_shrc,carry[0],zero[1]>                      0          1    ZERO                 
+        bin <op_nop,carry[1],zero[1]>                       0          1    ZERO                 
+        bin <op_move,carry[1],zero[1]>                      0          1    ZERO                 
+        bin <op_and,carry[1],zero[1]>                       0          1    ZERO                 
+        bin <op_or,carry[1],zero[1]>                        0          1    ZERO                 
+        bin <op_xor,carry[1],zero[1]>                       0          1    ZERO                 
+        bin <op_not,carry[1],zero[1]>                       0          1    ZERO                 
+        bin <op_addc,carry[1],zero[1]>                      0          1    ZERO                 
+        bin <op_sub,carry[1],zero[1]>                       0          1    ZERO                 
+        bin <op_subc,carry[1],zero[1]>                      0          1    ZERO                 
+        bin <op_inc,carry[1],zero[1]>                       0          1    ZERO                 
+        bin <op_shl,carry[1],zero[1]>                       0          1    ZERO                 
+        bin <op_and,trans_change,zero[1]>                   0          1    ZERO                 
+        bin <op_or,trans_change,zero[1]>                    0          1    ZERO                 
+        bin <op_xor,trans_change,zero[1]>                   0          1    ZERO                 
+        bin <op_not,trans_change,zero[1]>                   0          1    ZERO                 
+        bin <op_add,trans_change,zero[1]>                   0          1    ZERO                 
+        bin <op_addc,trans_change,zero[1]>                  0          1    ZERO                 
+        bin <op_sub,trans_change,zero[1]>                   0          1    ZERO                 
+        bin <op_subc,trans_change,zero[1]>                  0          1    ZERO                 
+        bin <op_comp,trans_change,zero[1]>                  0          1    ZERO                 
+        bin <op_inc,trans_change,zero[1]>                   0          1    ZERO                 
+        bin <op_dec,trans_change,zero[1]>                   0          1    ZERO                 
+        bin <op_shl,trans_change,zero[1]>                   0          1    ZERO                 
+        bin <op_shr,trans_change,zero[1]>                   0          1    ZERO                 
+        bin <op_shlc,trans_change,zero[1]>                  0          1    ZERO                 
+        bin <op_shrc,trans_change,zero[1]>                  0          1    ZERO                 
+        bin <op_nop,trans_no_change,zero[1]>                0          1    ZERO                 
+        bin <op_jump,trans_no_change,zero[1]>               0          1    ZERO                 
+        bin <op_move,trans_no_change,zero[1]>               0          1    ZERO                 
+        bin <op_and,trans_no_change,zero[1]>                0          1    ZERO                 
+        bin <op_or,trans_no_change,zero[1]>                 0          1    ZERO                 
+        bin <op_xor,trans_no_change,zero[1]>                0          1    ZERO                 
+        bin <op_not,trans_no_change,zero[1]>                0          1    ZERO                 
+        bin <op_add,trans_no_change,zero[1]>                0          1    ZERO                 
+        bin <op_addc,trans_no_change,zero[1]>               0          1    ZERO                 
+        bin <op_sub,trans_no_change,zero[1]>                0          1    ZERO                 
+        bin <op_subc,trans_no_change,zero[1]>               0          1    ZERO                 
+        bin <op_comp,trans_no_change,zero[1]>               0          1    ZERO                 
+        bin <op_inc,trans_no_change,zero[1]>                0          1    ZERO                 
+        bin <op_dec,trans_no_change,zero[1]>                0          1    ZERO                 
+        bin <op_shl,trans_no_change,zero[1]>                0          1    ZERO                 
+        bin <op_shr,trans_no_change,zero[1]>                0          1    ZERO                 
+        bin <op_shlc,trans_no_change,zero[1]>               0          1    ZERO                 
+        bin <op_shrc,trans_no_change,zero[1]>               0          1    ZERO                 
+        bin <op_add,carry[0],trans_change>                  0          1    ZERO                 
+        bin <op_addc,carry[0],trans_change>                 0          1    ZERO                 
+        bin <op_sub,carry[0],trans_change>                  0          1    ZERO                 
+        bin <op_subc,carry[0],trans_change>                 0          1    ZERO                 
+        bin <op_comp,carry[0],trans_change>                 0          1    ZERO                 
+        bin <op_inc,carry[0],trans_change>                  0          1    ZERO                 
+        bin <op_dec,carry[0],trans_change>                  0          1    ZERO                 
+        bin <op_shl,carry[0],trans_change>                  0          1    ZERO                 
+        bin <op_shr,carry[0],trans_change>                  0          1    ZERO                 
+        bin <op_shlc,carry[0],trans_change>                 0          1    ZERO                 
+        bin <op_shrc,carry[0],trans_change>                 0          1    ZERO                 
+        bin <op_and,carry[1],trans_change>                  0          1    ZERO                 
+        bin <op_or,carry[1],trans_change>                   0          1    ZERO                 
+        bin <op_xor,carry[1],trans_change>                  0          1    ZERO                 
+        bin <op_not,carry[1],trans_change>                  0          1    ZERO                 
+        bin <op_add,carry[1],trans_change>                  0          1    ZERO                 
+        bin <op_addc,carry[1],trans_change>                 0          1    ZERO                 
+        bin <op_sub,carry[1],trans_change>                  0          1    ZERO                 
+        bin <op_subc,carry[1],trans_change>                 0          1    ZERO                 
+        bin <op_comp,carry[1],trans_change>                 0          1    ZERO                 
+        bin <op_inc,carry[1],trans_change>                  0          1    ZERO                 
+        bin <op_dec,carry[1],trans_change>                  0          1    ZERO                 
+        bin <op_shl,carry[1],trans_change>                  0          1    ZERO                 
+        bin <op_shr,carry[1],trans_change>                  0          1    ZERO                 
+        bin <op_shlc,carry[1],trans_change>                 0          1    ZERO                 
+        bin <op_shrc,carry[1],trans_change>                 0          1    ZERO                 
         bin <op_and,trans_change,trans_change>              0          1    ZERO                 
         bin <op_or,trans_change,trans_change>               0          1    ZERO                 
         bin <op_xor,trans_change,trans_change>              0          1    ZERO                 
@@ -1026,14 +989,6 @@ Covergroup                                             Metric       Goal    Stat
         bin <op_shr,trans_change,trans_change>              0          1    ZERO                 
         bin <op_shlc,trans_change,trans_change>             0          1    ZERO                 
         bin <op_shrc,trans_change,trans_change>             0          1    ZERO                 
-        bin <op_loadi,trans_no_change,trans_change> 
-                                                            0          1    ZERO                 
-        bin <op_jump,trans_no_change,trans_change>          0          1    ZERO                 
-        bin <op_jumpc,trans_no_change,trans_change> 
-                                                            0          1    ZERO                 
-        bin <op_jumpz,trans_no_change,trans_change> 
-                                                            0          1    ZERO                 
-        bin <op_move,trans_no_change,trans_change>          0          1    ZERO                 
         bin <op_and,trans_no_change,trans_change>           0          1    ZERO                 
         bin <op_or,trans_no_change,trans_change>            0          1    ZERO                 
         bin <op_xor,trans_no_change,trans_change>           0          1    ZERO                 
@@ -1049,52 +1004,39 @@ Covergroup                                             Metric       Goal    Stat
         bin <op_shr,trans_no_change,trans_change>           0          1    ZERO                 
         bin <op_shlc,trans_no_change,trans_change>          0          1    ZERO                 
         bin <op_shrc,trans_no_change,trans_change>          0          1    ZERO                 
-        bin <op_nop,val[0],trans_no_change>                 0          1    ZERO                 
-        bin <op_jump,val[0],trans_no_change>                0          1    ZERO                 
-        bin <op_jumpz,val[0],trans_no_change>               0          1    ZERO                 
-        bin <op_move,val[0],trans_no_change>                0          1    ZERO                 
-        bin <op_and,val[0],trans_no_change>                 0          1    ZERO                 
-        bin <op_or,val[0],trans_no_change>                  0          1    ZERO                 
-        bin <op_xor,val[0],trans_no_change>                 0          1    ZERO                 
-        bin <op_not,val[0],trans_no_change>                 0          1    ZERO                 
-        bin <op_add,val[0],trans_no_change>                 0          1    ZERO                 
-        bin <op_addc,val[0],trans_no_change>                0          1    ZERO                 
-        bin <op_sub,val[0],trans_no_change>                 0          1    ZERO                 
-        bin <op_subc,val[0],trans_no_change>                0          1    ZERO                 
-        bin <op_comp,val[0],trans_no_change>                0          1    ZERO                 
-        bin <op_inc,val[0],trans_no_change>                 0          1    ZERO                 
-        bin <op_dec,val[0],trans_no_change>                 0          1    ZERO                 
-        bin <op_shl,val[0],trans_no_change>                 0          1    ZERO                 
-        bin <op_shr,val[0],trans_no_change>                 0          1    ZERO                 
-        bin <op_shlc,val[0],trans_no_change>                0          1    ZERO                 
-        bin <op_shrc,val[0],trans_no_change>                0          1    ZERO                 
-        bin <op_nop,val[1],trans_no_change>                 0          1    ZERO                 
-        bin <op_jump,val[1],trans_no_change>                0          1    ZERO                 
-        bin <op_move,val[1],trans_no_change>                0          1    ZERO                 
-        bin <op_and,val[1],trans_no_change>                 0          1    ZERO                 
-        bin <op_or,val[1],trans_no_change>                  0          1    ZERO                 
-        bin <op_xor,val[1],trans_no_change>                 0          1    ZERO                 
-        bin <op_not,val[1],trans_no_change>                 0          1    ZERO                 
-        bin <op_add,val[1],trans_no_change>                 0          1    ZERO                 
-        bin <op_addc,val[1],trans_no_change>                0          1    ZERO                 
-        bin <op_sub,val[1],trans_no_change>                 0          1    ZERO                 
-        bin <op_subc,val[1],trans_no_change>                0          1    ZERO                 
-        bin <op_comp,val[1],trans_no_change>                0          1    ZERO                 
-        bin <op_inc,val[1],trans_no_change>                 0          1    ZERO                 
-        bin <op_dec,val[1],trans_no_change>                 0          1    ZERO                 
-        bin <op_shl,val[1],trans_no_change>                 0          1    ZERO                 
-        bin <op_shr,val[1],trans_no_change>                 0          1    ZERO                 
-        bin <op_shlc,val[1],trans_no_change>                0          1    ZERO                 
-        bin <op_shrc,val[1],trans_no_change>                0          1    ZERO                 
-        bin <op_nop,trans_change,trans_no_change>           0          1    ZERO                 
-        bin <op_loadi,trans_change,trans_no_change> 
-                                                            0          1    ZERO                 
-        bin <op_jump,trans_change,trans_no_change>          0          1    ZERO                 
-        bin <op_jumpc,trans_change,trans_no_change> 
-                                                            0          1    ZERO                 
-        bin <op_jumpz,trans_change,trans_no_change> 
-                                                            0          1    ZERO                 
-        bin <op_move,trans_change,trans_no_change>          0          1    ZERO                 
+        bin <op_nop,carry[0],trans_no_change>               0          1    ZERO                 
+        bin <op_jump,carry[0],trans_no_change>              0          1    ZERO                 
+        bin <op_jumpz,carry[0],trans_no_change>             0          1    ZERO                 
+        bin <op_move,carry[0],trans_no_change>              0          1    ZERO                 
+        bin <op_add,carry[0],trans_no_change>               0          1    ZERO                 
+        bin <op_addc,carry[0],trans_no_change>              0          1    ZERO                 
+        bin <op_sub,carry[0],trans_no_change>               0          1    ZERO                 
+        bin <op_subc,carry[0],trans_no_change>              0          1    ZERO                 
+        bin <op_comp,carry[0],trans_no_change>              0          1    ZERO                 
+        bin <op_inc,carry[0],trans_no_change>               0          1    ZERO                 
+        bin <op_dec,carry[0],trans_no_change>               0          1    ZERO                 
+        bin <op_shl,carry[0],trans_no_change>               0          1    ZERO                 
+        bin <op_shr,carry[0],trans_no_change>               0          1    ZERO                 
+        bin <op_shlc,carry[0],trans_no_change>              0          1    ZERO                 
+        bin <op_shrc,carry[0],trans_no_change>              0          1    ZERO                 
+        bin <op_nop,carry[1],trans_no_change>               0          1    ZERO                 
+        bin <op_jump,carry[1],trans_no_change>              0          1    ZERO                 
+        bin <op_move,carry[1],trans_no_change>              0          1    ZERO                 
+        bin <op_and,carry[1],trans_no_change>               0          1    ZERO                 
+        bin <op_or,carry[1],trans_no_change>                0          1    ZERO                 
+        bin <op_xor,carry[1],trans_no_change>               0          1    ZERO                 
+        bin <op_not,carry[1],trans_no_change>               0          1    ZERO                 
+        bin <op_add,carry[1],trans_no_change>               0          1    ZERO                 
+        bin <op_addc,carry[1],trans_no_change>              0          1    ZERO                 
+        bin <op_sub,carry[1],trans_no_change>               0          1    ZERO                 
+        bin <op_subc,carry[1],trans_no_change>              0          1    ZERO                 
+        bin <op_comp,carry[1],trans_no_change>              0          1    ZERO                 
+        bin <op_inc,carry[1],trans_no_change>               0          1    ZERO                 
+        bin <op_dec,carry[1],trans_no_change>               0          1    ZERO                 
+        bin <op_shl,carry[1],trans_no_change>               0          1    ZERO                 
+        bin <op_shr,carry[1],trans_no_change>               0          1    ZERO                 
+        bin <op_shlc,carry[1],trans_no_change>              0          1    ZERO                 
+        bin <op_shrc,carry[1],trans_no_change>              0          1    ZERO                 
         bin <op_and,trans_change,trans_no_change>           0          1    ZERO                 
         bin <op_or,trans_change,trans_no_change>            0          1    ZERO                 
         bin <op_xor,trans_change,trans_no_change>           0          1    ZERO                 
@@ -1147,4 +1089,4 @@ Covergroup                                             Metric       Goal    Stat
         bin <op_shrc,trans_no_change,trans_no_change> 
                                                             0          1    ZERO                 
 
-TOTAL COVERGROUP COVERAGE: 62.8%  COVERGROUP TYPES: 1
+TOTAL COVERGROUP COVERAGE: 63.1%  COVERGROUP TYPES: 1

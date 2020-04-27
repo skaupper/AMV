@@ -160,7 +160,7 @@ program test (cpu_if.tb duv_if, output logic rst);
 
             illegal_bins carry_not_zero = binsof(pt_cmd) intersect {
                 AND, OR, XOR, NOT
-            } && binsof(pt_carry.carry) intersect {0};
+            } && binsof(pt_carry.carry) intersect {1};
         }
 
     endgroup
