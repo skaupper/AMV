@@ -37,7 +37,7 @@ program test (cpu_if.tb duv_if, output logic rst);
     // Declare commandStart event which triggers when a new command started/the old one finished
     event commandStart;
 
-    Prol16Opcode opc;
+//    Prol16Opcode opc;
 
     // Declare the golden model and the DUV state struct
     Prol16Model model = new;
@@ -70,7 +70,7 @@ program test (cpu_if.tb duv_if, output logic rst);
         $signal_force("/top/duv/datapath_inst/thereg_file/registers(7)", "16#0000", 0, 1);
     endfunction
 
-    covergroup cov_grp @(commandStart);
+/*    covergroup cov_grp @(commandStart);
         option.per_instance = 1;
 
         pt_cmd : coverpoint opc {
@@ -101,15 +101,16 @@ program test (cpu_if.tb duv_if, output logic rst);
             bins bin_op_shrc  = {SHRC};
         }
     endgroup
-
+*/
     // Entrypoint of simulation
     // Generates the reset, initializes DUV and model and asserts test cases
     initial begin : stimuli
         static Generator generator = new;
         static Driver driver = new(duv_if, commandStart);
         static Agent agent = new(model, driver, duv_if);
+        static Prol16Opcode opc;
 
-        static cov_grp cov_grp_inst = new;
+//        static cov_grp cov_grp_inst = new;
 
         // Generate reset
         rst <= 0;
