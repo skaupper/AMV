@@ -21,14 +21,14 @@ Hierbei geht es sowohl darum, wie oft eine FSM in einem bestimmten Zustand war (
 
 ## Lässt sich in jedem HW-Entwurf eine Code Coverage von 100% erreichen?
 
-Es gibt zumindest zwei Möglichkeiten, warum 100% Code Coverage nicht erreicht werde kann:
+Es gibt zumindest zwei Möglichkeiten, warum 100% Code Coverage nicht erreicht werden kann:
 
 1. In Designs die `others`-Zweige (o.Ä.) zur Fehlererkennung in der Simulation einsetzen, werden (idealerweise) keine 100% erreicht werden.
 2. Systeme, die aus mehreren verschachtelten Komponenten bestehen, können unter Umständen gar nicht alle Zustände jeder Subkomponente erreicht werden, da die anderen Komponenten diese Zustände von vornherein ausschließen.
 
 ## Bedeutet 100% Code Coverage, dass der getestete Entwurf fehlerfrei ist?
 
-Code Coverage sagt nichts über die Richtigkeit der Ergebnisse aus. Dementsprechend kann ein Design mit 100% Code Coverage schlicht falsche Ausgaben generieren.
+Code Coverage sagt nichts über die Richtigkeit der Ergebnisse aus. Dementsprechend kann ein Design mit 100% Code Coverage immer noch falsche Ausgaben generieren.
 
 # PROL16-Regression-Test
 
@@ -44,7 +44,7 @@ Weil die Befehle Load/Store/Sleep nicht verwendet werden in den Tests.
 
 ## Gibt es Code-Teile, die zwar in der CHD5-Übung gefordert waren, aber nicht verwendet werden?
 
-Es gibt keinen Befehl, der die ALU Funktion "alu_pass_a_c" verwendet.
+Es gibt z.B. keinen Befehl, der die ALU Funktion "alu_pass_a_c" verwendet.
 
 ## Welche dieser Lücken können geschlossen werden, welche nicht?
 

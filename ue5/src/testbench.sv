@@ -183,7 +183,7 @@ program test (cpu_if.tb duv_if, output logic rst);
 
         // 2a.) Which operations has been called with what status flags set.
         // 2b.) Which operation caused which state transitions.
-        cross_op_and_sf : cross pt_last_cmd, pt_carry, pt_zero {
+        cross_op_and_flags : cross pt_last_cmd, pt_carry, pt_zero {
             illegal_bins no_zero_change = binsof(pt_last_cmd) intersect {
                 NOP, SLEEP, LOADI, LOAD, STORE, JUMP, JUMPC, JUMPZ, MOVE
             } && (binsof(pt_zero.trans_01) || binsof(pt_zero.trans_10));
