@@ -13,6 +13,7 @@ class Prol16Model;
 
     function new;
         state = new;
+        lastOpc = new;
         reset;
     endfunction
 
