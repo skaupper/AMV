@@ -110,8 +110,7 @@ program test (cpu_if.tb duv_if, output logic rst);
         static Agent agent = new(model, driver, duv_if);
         static Prol16Opcode opc;
 
-
-//        static cov_grp cov_grp_inst = new;
+        static cov_grp cov_grp_inst = new;
 
         // Generate reset
         rst <= 0;
