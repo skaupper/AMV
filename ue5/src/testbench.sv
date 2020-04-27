@@ -108,6 +108,36 @@ program test (cpu_if.tb duv_if, output logic rst);
             illegal_bins invalid = default;
         }
 
+        // Define bins for all opcodes as well as bins for the unused operations
+        // Invalid opcodes should cause the coverage to fail!
+        pt_last_cmd : coverpoint model.lastOpc.cmd {
+            bins op_nop          = {NOP};
+            bins op_loadi        = {LOADI};
+            bins op_jump         = {JUMP};
+            bins op_jumpc        = {JUMPC};
+            bins op_jumpz        = {JUMPZ};
+            bins op_move         = {MOVE};
+            bins op_and          = {AND};
+            bins op_or           = {OR};
+            bins op_xor          = {XOR};
+            bins op_not          = {NOT};
+            bins op_add          = {ADD};
+            bins op_addc         = {ADDC};
+            bins op_sub          = {SUB};
+            bins op_subc         = {SUBC};
+            bins op_comp         = {COMP};
+            bins op_inc          = {INC};
+            bins op_dec          = {DEC};
+            bins op_shl          = {SHL};
+            bins op_shr          = {SHR};
+            bins op_shlc         = {SHLC};
+            bins op_shrc         = {SHRC};
+            ignore_bins op_sleep = {SLEEP};
+            ignore_bins op_load  = {LOAD};
+            ignore_bins op_store = {STORE};
+            illegal_bins invalid = default;
+        }
+
         // Define coverpoints for carry and zero bit.
         // These include all possible transitions as well.
         pt_carry : coverpoint duv_state.cpu_carry {
@@ -149,12 +179,12 @@ program test (cpu_if.tb duv_if, output logic rst);
 
         // 2a.) Which operations has been called with what status flags set.
         // 2b.) Which operation caused which state transitions.
-        cross_op_and_sf : cross model.lastOpc.cmd, pt_carry, pt_zero {
-            illegal_bins no_zero_change = binsof(model.lastOpc.cmd) intersect {
+        cross_op_and_sf : cross pt_last_cmd, pt_carry, pt_zero {
+            illegal_bins no_zero_change = binsof(pt_last_cmd) intersect {
                 NOP, SLEEP, LOADI, LOAD, STORE, JUMP, JUMPC, JUMPZ, MOVE
             } && binsof(pt_zero.trans_change);
 
-            illegal_bins no_carry_change = binsof(model.lastOpc.cmd) intersect {
+            illegal_bins no_carry_change = binsof(pt_last_cmd) intersect {
                 NOP, SLEEP, LOADI, LOAD, STORE, JUMP, JUMPC, JUMPZ, MOVE
             } && binsof(pt_carry.trans_change);
 
