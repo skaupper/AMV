@@ -140,18 +140,18 @@ program test (cpu_if.tb duv_if, output logic rst);
                 NOP, SLEEP
             } with (pt_reg_a_idx != 0 || pt_reg_b_idx != 0);
 
-            illegal_bins one_reg = binsof(pt_cmd) intersect {
-                JUMP, JUMPC, JUMPZ, NOT, INC, DEC, SHL, SHR, SHLC, SHRC
+            illegal_bins only_reg_a = binsof(pt_cmd) intersect {
+                LOADI, JUMP, JUMPC, JUMPZ, NOT, INC, DEC, SHL, SHR, SHLC, SHRC
             } with (pt_reg_b_idx != 0);
         }
 
         // 2a.) Which operations has been called with what status flags set.
         // 2b.) Which operation caused which state transitions.
-        // cross_op_and_sf : cross pt_cmd, pt_carry, pt_zero {
-        //     illegal_bins no_zero_change = binsof(pt_cmd) intersect {
-        //         NOP
-        //     } && binsof(pt_zero) intersect (0 => 1, 1 => 0);
-        // }
+        cross_op_and_sf : cross pt_cmd, pt_carry, pt_zero {
+            illegal_bins no_zero_change = binsof(pt_cmd) intersect {
+                NOP
+            } && binsof(pt_zero) intersect {0 => 1, 1 => 0};
+        }
 
 
     endgroup
