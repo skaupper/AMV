@@ -75,7 +75,6 @@ program test (cpu_if.tb duv_if, output logic rst);
 
         pt_cmd : coverpoint opc {
             bins bin_op_nop   = {NOP};
-            bins bin_op_nop   = {NOP};
             bins bin_op_sleep = {SLEEP};
             bins bin_op_loadi = {LOADI};
             bins bin_op_load  = {LOAD};
