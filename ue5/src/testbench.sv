@@ -188,9 +188,9 @@ program test (cpu_if.tb duv_if, output logic rst);
                 NOP, SLEEP, LOADI, LOAD, STORE, JUMP, JUMPC, JUMPZ, MOVE
             } && binsof(pt_carry.trans_change);
 
-            // illegal_bins carry_not_zero = binsof(pt_cmd) intersect {
-            //     AND, OR, XOR, NOT
-            // } && binsof(pt_carry.carry) intersect {1};
+            illegal_bins carry_not_zero = binsof(pt_last_cmd) intersect {
+                AND, OR, XOR, NOT
+            } && binsof(pt_carry.carry) intersect {1};
         }
 
     endgroup
