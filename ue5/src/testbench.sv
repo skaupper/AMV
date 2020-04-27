@@ -142,14 +142,18 @@ program test (cpu_if.tb duv_if, output logic rst);
         // These include all possible transitions as well.
         pt_carry : coverpoint duv_state.cpu_carry {
             bins carry[]            = {[0:1]};
-            bins trans_change       = (0 => 1, 1 => 0);
-            bins trans_no_change    = (0 => 0, 1 => 1);
+            bins trans_00           = (0 => 0);
+            bins trans_01           = (0 => 1);
+            bins trans_10           = (1 => 0);
+            bins trans_11           = (1 => 1);
         }
 
         pt_zero  : coverpoint duv_state.cpu_zero {
             bins zero[]             = {[0:1]};
-            bins trans_change       = (0 => 1, 1 => 0);
-            bins trans_no_change    = (0 => 0, 1 => 1);
+            bins trans_00           = (0 => 0);
+            bins trans_01           = (0 => 1);
+            bins trans_10           = (1 => 0);
+            bins trans_11           = (1 => 1);
         }
 
         // Define coverpoints for all possible register indices
@@ -182,11 +186,11 @@ program test (cpu_if.tb duv_if, output logic rst);
         cross_op_and_sf : cross pt_last_cmd, pt_carry, pt_zero {
             illegal_bins no_zero_change = binsof(pt_last_cmd) intersect {
                 NOP, SLEEP, LOADI, LOAD, STORE, JUMP, JUMPC, JUMPZ, MOVE
-            } && binsof(pt_zero.trans_change);
+            } && (binsof(pt_zero.trans_01) || binsof(pt_zero.trans_10));
 
             illegal_bins no_carry_change = binsof(pt_last_cmd) intersect {
                 NOP, SLEEP, LOADI, LOAD, STORE, JUMP, JUMPC, JUMPZ, MOVE
-            } && binsof(pt_carry.trans_change);
+            } && (binsof(pt_carry.trans_01) || binsof(pt_carry.trans_10));
 
             illegal_bins carry_not_zero = binsof(pt_last_cmd) intersect {
                 AND, OR, XOR, NOT
