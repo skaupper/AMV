@@ -5,7 +5,6 @@
 `include "monitor.sv"
 `include "checker.sv"
 
->
 module top;
     // Signal and interface definitions
     logic clk = 0, rst;

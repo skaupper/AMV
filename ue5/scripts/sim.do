@@ -34,6 +34,7 @@ if {![batch_mode]} {
 
 run -all
 
+coverage report -file "coverage.log" -cvg -verbose
 
 # only exit in batch mode
 if {[batch_mode]} {
