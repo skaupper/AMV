@@ -26,7 +26,7 @@ set WLF_FILE        wave.wlf
 # Start simulation
 #
 
-vsim -coverage $TB_NAME -novopt -wlf $WLF_FILE
+vsim -onfinish stop -coverage $TB_NAME -novopt -wlf $WLF_FILE
 source $WAVE_FILE
 if {![batch_mode]} {
     source $WAVE_UI_FILE
@@ -34,6 +34,7 @@ if {![batch_mode]} {
 
 run -all
 
+puts "######### Generating Coverage Report  ###########"
 coverage report -file "coverage.log" -cvg -verbose
 
 # only exit in batch mode

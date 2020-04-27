@@ -9,10 +9,8 @@ SRC_PATH=$SCRIPT_PATH/../src
 mkdir -p $SIM_PATH
 cd $SIM_PATH
 
-
-
 echo "Run comp.do ..."
-vsim -c -do ../scripts/comp.do
+vsim -c -onfinish stop -do ../scripts/comp.do
 
 if [ "$ARG" == "sim" ]; then
     echo "Run sim.do without GUI ..."
