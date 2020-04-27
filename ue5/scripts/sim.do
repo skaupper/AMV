@@ -5,7 +5,7 @@
 if [batch_mode] {
   eval echo "Detected batch mode"
   eval onerror {quit -f}
-  eval onbreak {quit -f}
+#  eval onbreak {quit -f}
 }
 
 transcript quietly
