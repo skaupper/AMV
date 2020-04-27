@@ -1,0 +1,74 @@
+Coverage Report Summary Data by file
+
+=================================================================================
+=== File: ../src/duv_prol16/alu.vhd
+=================================================================================
+    Enabled Coverage            Active      Hits    Misses % Covered
+    ----------------            ------      ----    ------ ---------
+    Stmts                           52        51         1      98.0
+    Branches                        26        25         1      96.1
+    FEC Condition Terms              0         0         0     100.0
+    FEC Expression Terms             2         2         0     100.0
+    FSMs                                                       100.0
+        States                       0         0         0     100.0
+        Transitions                  0         0         0     100.0
+
+=================================================================================
+=== File: ../src/duv_prol16/control.vhd
+=================================================================================
+    Enabled Coverage            Active      Hits    Misses % Covered
+    ----------------            ------      ----    ------ ---------
+    Stmts                          100        80        20      80.0
+    Branches                        87        77        10      88.5
+    FEC Condition Terms              4         2         2      50.0
+    FEC Expression Terms             0         0         0     100.0
+    FSMs                                                        75.0
+        States                       4         4         0     100.0
+        Transitions                 12         6         6      50.0
+
+=================================================================================
+=== File: ../src/duv_prol16/cpu.vhd
+=================================================================================
+    Enabled Coverage            Active      Hits    Misses % Covered
+    ----------------            ------      ----    ------ ---------
+    Stmts                            4         4         0     100.0
+    Branches                         0         0         0     100.0
+    FEC Condition Terms              0         0         0     100.0
+    FEC Expression Terms             6         3         3      50.0
+    FSMs                                                       100.0
+        States                       0         0         0     100.0
+        Transitions                  0         0         0     100.0
+
+=================================================================================
+=== File: ../src/duv_prol16/datapath.vhd
+=================================================================================
+    Enabled Coverage            Active      Hits    Misses % Covered
+    ----------------            ------      ----    ------ ---------
+    Stmts                           36        33         3      91.6
+    Branches                        25        22         3      88.0
+    FEC Condition Terms              2         1         1      50.0
+    FEC Expression Terms             0         0         0     100.0
+    FSMs                                                       100.0
+        States                       0         0         0     100.0
+        Transitions                  0         0         0     100.0
+
+=================================================================================
+=== File: ../src/duv_prol16/reg_file.vhd
+=================================================================================
+    Enabled Coverage            Active      Hits    Misses % Covered
+    ----------------            ------      ----    ------ ---------
+    Stmts                            4         4         0     100.0
+    Branches                        10         9         1      90.0
+    FEC Condition Terms              0         0         0     100.0
+    FEC Expression Terms             0         0         0     100.0
+    FSMs                                                       100.0
+        States                       0         0         0     100.0
+        Transitions                  0         0         0     100.0
+
+
+TOTAL COVERGROUP COVERAGE: 87.5%  COVERGROUP TYPES: 1
+
+TOTAL ASSERTION COVERAGE: 100.0%  ASSERTIONS: 2
+
+Total Coverage By File (code coverage only, filtered view): 73.0%
+
