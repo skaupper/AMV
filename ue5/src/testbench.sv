@@ -74,31 +74,31 @@ program test (cpu_if.tb duv_if, output logic rst);
         option.per_instance = 1;
 
         pt_cmd : coverpoint opc {
-            bins bin_op_nop   = {Prol16Opcode::Prol16Command::NOP};
-            bins bin_op_nop   = {Prol16Opcode::Prol16Command::NOP};
-            bins bin_op_sleep = {Prol16Opcode::Prol16Command::SLEEP};
-            bins bin_op_loadi = {Prol16Opcode::Prol16Command::LOADI};
-            bins bin_op_load  = {Prol16Opcode::Prol16Command::LOAD};
-            bins bin_op_store = {Prol16Opcode::Prol16Command::STORE};
-            bins bin_op_jump  = {Prol16Opcode::Prol16Command::JUMP};
-            bins bin_op_jumpc = {Prol16Opcode::Prol16Command::JUMPC};
-            bins bin_op_jumpz = {Prol16Opcode::Prol16Command::JUMPZ};
-            bins bin_op_move  = {Prol16Opcode::Prol16Command::MOVE};
-            bins bin_op_and   = {Prol16Opcode::Prol16Command::AND};
-            bins bin_op_or    = {Prol16Opcode::Prol16Command::OR};
-            bins bin_op_xor   = {Prol16Opcode::Prol16Command::XOR};
-            bins bin_op_not   = {Prol16Opcode::Prol16Command::NOT};
-            bins bin_op_add   = {Prol16Opcode::Prol16Command::ADD};
-            bins bin_op_addc  = {Prol16Opcode::Prol16Command::ADDC};
-            bins bin_op_sub   = {Prol16Opcode::Prol16Command::SUB};
-            bins bin_op_subc  = {Prol16Opcode::Prol16Command::SUBC};
-            bins bin_op_comp  = {Prol16Opcode::Prol16Command::COMP};
-            bins bin_op_inc   = {Prol16Opcode::Prol16Command::INC};
-            bins bin_op_dec   = {Prol16Opcode::Prol16Command::DEC};
-            bins bin_op_shl   = {Prol16Opcode::Prol16Command::SHL};
-            bins bin_op_shr   = {Prol16Opcode::Prol16Command::SHR};
-            bins bin_op_shlc  = {Prol16Opcode::Prol16Command::SHLC};
-            bins bin_op_shrc  = {Prol16Opcode::Prol16Command::SHRC};
+            bins bin_op_nop   = {NOP};
+            bins bin_op_nop   = {NOP};
+            bins bin_op_sleep = {SLEEP};
+            bins bin_op_loadi = {LOADI};
+            bins bin_op_load  = {LOAD};
+            bins bin_op_store = {STORE};
+            bins bin_op_jump  = {JUMP};
+            bins bin_op_jumpc = {JUMPC};
+            bins bin_op_jumpz = {JUMPZ};
+            bins bin_op_move  = {MOVE};
+            bins bin_op_and   = {AND};
+            bins bin_op_or    = {OR};
+            bins bin_op_xor   = {XOR};
+            bins bin_op_not   = {NOT};
+            bins bin_op_add   = {ADD};
+            bins bin_op_addc  = {ADDC};
+            bins bin_op_sub   = {SUB};
+            bins bin_op_subc  = {SUBC};
+            bins bin_op_comp  = {COMP};
+            bins bin_op_inc   = {INC};
+            bins bin_op_dec   = {DEC};
+            bins bin_op_shl   = {SHL};
+            bins bin_op_shr   = {SHR};
+            bins bin_op_shlc  = {SHLC};
+            bins bin_op_shrc  = {SHRC};
         }
     endgroup
 
