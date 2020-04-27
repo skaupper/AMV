@@ -67,7 +67,7 @@ class Prol16Model;
                 end
             end
 
-            MOVE:   begin res = rb;                         end
+            MOVE:   begin res = rb;                             setZero = 0; end
             AND:    begin res = ra & rb;                    end
             OR:     begin res = ra | rb;                    end
             XOR:    begin res = ra ^ rb;                    end
@@ -105,12 +105,12 @@ class Prol16Model;
             OR:     begin carry = 0; end
             XOR:    begin carry = 0; end
             NOT:    begin carry = 0; end
-            ADD:    begin carry = (res > (1 << gDataWidth)); end
-            ADDC:   begin carry = (res > (1 << gDataWidth)); end
+            ADD:    begin carry = (res >= (1 << gDataWidth)); end
+            ADDC:   begin carry = (res >= (1 << gDataWidth)); end
             SUB:    begin carry = (res < 0); end
             SUBC:   begin carry = (res < 0); end
             COMP:   begin carry = (res < 0); end
-            INC:    begin carry = (res > (1 << gDataWidth)); end
+            INC:    begin carry = (res >= (1 << gDataWidth)); end
             DEC:    begin carry = (res < 0); end
             SHL:    begin carry = (ra & (1 << (gDataWidth-1))) != 0; end
             SHR:    begin carry = ra & 1; end
@@ -120,6 +120,8 @@ class Prol16Model;
             default: begin end
         endcase
 
+        // Cap the result to gDataWidth bits
+        res %= (1 << gDataWidth);
 
         // Update flags, registers and program counter
         if (setZero) begin
