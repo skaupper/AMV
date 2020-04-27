@@ -42,6 +42,8 @@ program test (cpu_if.tb duv_if, output logic rst);
 
     // Additional spy signals
     logic [5:0] reg_op_code;
+    logic [4:0] reg_a_idx;
+    logic [4:0] reg_b_idx;
 
 
     // Signal spy and signal force functions
@@ -58,6 +60,8 @@ program test (cpu_if.tb duv_if, output logic rst);
         $init_signal_spy("/top/duv/control_inst/zero",                       "/top/TheTest/duv_state.cpu_zero");
         $init_signal_spy("/top/duv/control_inst/carry",                      "/top/TheTest/duv_state.cpu_carry");
         $init_signal_spy("/top/duv/datapath_inst/RegOpCode",                 "/top/TheTest/reg_op_code");
+		$init_signal_spy("/top/duv/datapath_inst/RegAIdx",                   "/top/TheTest/reg_a_idx");
+		$init_signal_spy("/top/duv/datapath_inst/RegBIdx",                   "/top/TheTest/reg_b_idx");
     endfunction
 
     function void resetCpuRegs();
@@ -75,30 +79,47 @@ program test (cpu_if.tb duv_if, output logic rst);
         option.per_instance = 1;
 
         pt_cmd : coverpoint reg_op_code {
-            bins bin_op_nop   = {NOP};
-            bins bin_op_sleep = {SLEEP};
-            bins bin_op_loadi = {LOADI};
-            bins bin_op_load  = {LOAD};
-            bins bin_op_store = {STORE};
-            bins bin_op_jump  = {JUMP};
-            bins bin_op_jumpc = {JUMPC};
-            bins bin_op_jumpz = {JUMPZ};
-            bins bin_op_move  = {MOVE};
-            bins bin_op_and   = {AND};
-            bins bin_op_or    = {OR};
-            bins bin_op_xor   = {XOR};
-            bins bin_op_not   = {NOT};
-            bins bin_op_add   = {ADD};
-            bins bin_op_addc  = {ADDC};
-            bins bin_op_sub   = {SUB};
-            bins bin_op_subc  = {SUBC};
-            bins bin_op_comp  = {COMP};
-            bins bin_op_inc   = {INC};
-            bins bin_op_dec   = {DEC};
-            bins bin_op_shl   = {SHL};
-            bins bin_op_shr   = {SHR};
-            bins bin_op_shlc  = {SHLC};
-            bins bin_op_shrc  = {SHRC};
+            bins op_nop          = {NOP};
+            bins op_loadi        = {LOADI};
+            bins op_jump         = {JUMP};
+            bins op_jumpc        = {JUMPC};
+            bins op_jumpz        = {JUMPZ};
+            bins op_move         = {MOVE};
+            bins op_and          = {AND};
+            bins op_or           = {OR};
+            bins op_xor          = {XOR};
+            bins op_not          = {NOT};
+            bins op_add          = {ADD};
+            bins op_addc         = {ADDC};
+            bins op_sub          = {SUB};
+            bins op_subc         = {SUBC};
+            bins op_comp         = {COMP};
+            bins op_inc          = {INC};
+            bins op_dec          = {DEC};
+            bins op_shl          = {SHL};
+            bins op_shr          = {SHR};
+            bins op_shlc         = {SHLC};
+            bins op_shrc         = {SHRC};
+            ignore_bins op_sleep = {SLEEP};
+            ignore_bins op_load  = {LOAD};
+            ignore_bins op_store = {STORE};
+            illegal_bins invalid = default;
+        }
+
+        pt_carry : coverpoint duv_state.cpu_carry;
+        pt_zero  : coverpoint duv_state.cpu_zero;
+
+        pt_rega_idx : coverpoint reg_a_idx {
+            bins reg_a[] = {[0:7]};
+            bins invalid = default;
+        }
+        pt_regb_idx : coverpoint reg_b_idx {
+            bins reg_b[] = {[0:7]};
+            bins invalid = default;
+        }
+
+        cross_op_and_regs : cross reg_op_code, reg_a_idx, reg_b_idx {
+            illegal_bins no_reg  = binsof(reg_op_code) intersect{NOP} with (reg_a_idx != 0 || reg_b_idx != 0);
         }
     endgroup
 
