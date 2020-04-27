@@ -9,6 +9,7 @@
 class Prol16Model;
     Prol16State state;
     Prol16Opcode nextOpc;
+    Prol16Opcode lastOpc;
 
     function new;
         state = new;
@@ -29,6 +30,7 @@ class Prol16Model;
     function void executeNext();
         nextOpc.print();
         execute(nextOpc);
+        lastOpc = nextOpc;
     endfunction
 
     function void execute (Prol16Opcode opc);
