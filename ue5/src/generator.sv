@@ -25,7 +25,7 @@ class Generator;
     Prol16OpcodeQueue tests;
 
     tests.push_back(Prol16Opcode::create(LOADI, 7, UNUSED, $urandom_range(0, 2**16-1)));
-    tests.push_back(Prol16Opcode::create(NOP, 1));
+    tests.push_back(Prol16Opcode::create(NOP));
     tests.push_back(Prol16Opcode::create(LOADI, 0, UNUSED, 16'hfff0));
     tests.push_back(Prol16Opcode::create(LOADI, 1, UNUSED, 16'h10));
     tests.push_back(Prol16Opcode::create(LOADI, 2, UNUSED, 16'h1));
