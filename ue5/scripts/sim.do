@@ -26,7 +26,7 @@ set WLF_FILE        wave.wlf
 # Start simulation
 #
 
-vsim $TB_NAME -novopt -wlf $WLF_FILE
+vsim -coverage $TB_NAME -novopt -wlf $WLF_FILE
 source $WAVE_FILE
 if {![batch_mode]} {
     source $WAVE_UI_FILE
