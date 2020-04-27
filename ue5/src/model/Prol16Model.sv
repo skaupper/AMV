@@ -13,7 +13,7 @@ class Prol16Model;
 
     function new;
         state = new;
-        lastOpc = Prol16Opcode::create(NOP);
+        nextOpc = Prol16Opcode::create(NOP);
         reset;
     endfunction
 
