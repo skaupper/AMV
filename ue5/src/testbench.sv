@@ -152,7 +152,7 @@ program test (cpu_if.tb duv_if, output logic rst);
         cross_op_and_sf : cross pt_cmd, pt_carry, pt_zero {
             illegal_bins no_zero_change = binsof(pt_cmd) intersect {
                 NOP
-            } && binsof(pt_zero) intersect {trans_change[0]};
+            } && binsof(pt_zero.trans_change);
         }
 
     endgroup
