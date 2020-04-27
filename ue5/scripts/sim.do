@@ -35,8 +35,8 @@ if {![batch_mode]} {
 run -all
 
 puts "######### Generating Coverage Report  ###########"
-#coverage report -file "coverage.log" -cvg -verbose
-coverage report -file "coverage.log"
+coverage report -file "code_coverage.log"
+coverage report -file "cvg_coverage.log" -cvg -verbose
 
 # only exit in batch mode
 if {[batch_mode]} {
