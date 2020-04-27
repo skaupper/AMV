@@ -83,7 +83,6 @@ class Generator;
     tests.push_back(Prol16Opcode::create(MOVE, 3, 0));
     tests.push_back(Prol16Opcode::create(SUB, 3, 2));
     tests.push_back(Prol16Opcode::create(OR, 0, 1));
-    tests.push_back(Prol16Opcode::create(SUB, 0, 1));
     tests.push_back(Prol16Opcode::create(JUMPC, 7));
     tests.push_back(Prol16Opcode::create(JUMPZ, 7));
     tests.push_back(Prol16Opcode::create(COMP, 0, 2));
