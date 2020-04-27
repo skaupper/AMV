@@ -80,7 +80,7 @@ program test (cpu_if.tb duv_if, output logic rst);
 
         // Define bins for all opcodes as well as bins for the unused operations
         // Invalid opcodes should cause the coverage to fail!
-        pt_cmd : coverpoint model.lastOpc.toBinary() {
+        pt_cmd : coverpoint model.lastOpc.cmd {
             bins op_nop          = {NOP};
             bins op_loadi        = {LOADI};
             bins op_jump         = {JUMP};
