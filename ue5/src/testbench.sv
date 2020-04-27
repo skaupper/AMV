@@ -111,13 +111,13 @@ program test (cpu_if.tb duv_if, output logic rst);
         // Define coverpoints for carry and zero bit.
         // These include all possible transitions as well.
         pt_carry : coverpoint duv_state.cpu_carry {
-            bins val[]              = {[0:1]};
+            bins carry[]            = {[0:1]};
             bins trans_change       = (0 => 1, 1 => 0);
             bins trans_no_change    = (0 => 0, 1 => 1);
         }
 
         pt_zero  : coverpoint duv_state.cpu_zero {
-            bins val[]              = {[0:1]};
+            bins zero[]             = {[0:1]};
             bins trans_change       = (0 => 1, 1 => 0);
             bins trans_no_change    = (0 => 0, 1 => 1);
         }
@@ -156,7 +156,11 @@ program test (cpu_if.tb duv_if, output logic rst);
 
             illegal_bins no_carry_change = binsof(pt_cmd) intersect {
                 NOP, SLEEP, LOADI, LOAD, STORE, JUMP, JUMPC, JUMPZ, MOVE
-            } && binsof(pt_zero.trans_change);
+            } && binsof(pt_carry.trans_change);
+
+            illegal_bins carry_not_zero = binsof(pt_cmd) intersect {
+                AND, OR, XOR, NOT
+            } && binsof(pt_carry.carry) intersect {0};
         }
 
     endgroup
