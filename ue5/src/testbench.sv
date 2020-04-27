@@ -5,7 +5,7 @@
 `include "monitor.sv"
 `include "checker.sv"
 
-
+>
 module top;
     // Signal and interface definitions
     logic clk = 0, rst;
@@ -37,11 +37,12 @@ program test (cpu_if.tb duv_if, output logic rst);
     // Declare commandStart event which triggers when a new command started/the old one finished
     event commandStart;
 
-    Prol16Opcode opc;
-
     // Declare the golden model and the DUV state struct
     Prol16Model model = new;
     duv_state_t duv_state;
+
+    // Additional spy signals
+    logic [5:0] reg_op_code;
 
 
     // Signal spy and signal force functions
@@ -57,6 +58,7 @@ program test (cpu_if.tb duv_if, output logic rst);
         $init_signal_spy("/top/duv/datapath_inst/RegPC",                     "/top/TheTest/duv_state.cpu_pc");
         $init_signal_spy("/top/duv/control_inst/zero",                       "/top/TheTest/duv_state.cpu_zero");
         $init_signal_spy("/top/duv/control_inst/carry",                      "/top/TheTest/duv_state.cpu_carry");
+        $init_signal_spy("/top/duv/datapath_inst/RegOpCode",                 "/top/TheTest/reg_op_code");
     endfunction
 
     function void resetCpuRegs();
@@ -73,7 +75,7 @@ program test (cpu_if.tb duv_if, output logic rst);
     covergroup cov_grp @(commandStart);
         option.per_instance = 1;
 
-        pt_cmd : coverpoint opc {
+        pt_cmd : coverpoint reg_op_code {
             bins bin_op_nop   = {NOP};
             bins bin_op_sleep = {SLEEP};
             bins bin_op_loadi = {LOADI};
@@ -107,6 +109,8 @@ program test (cpu_if.tb duv_if, output logic rst);
         static Generator generator = new;
         static Driver driver = new(duv_if, commandStart);
         static Agent agent = new(model, driver, duv_if);
+        static Prol16Opcode opc;
+
 
 //        static cov_grp cov_grp_inst = new;
 
