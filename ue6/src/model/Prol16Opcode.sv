@@ -74,7 +74,7 @@ class Prol16Opcode;
     static function Prol16Opcode createRandomized();
         Prol16Opcode op = new;
         assert(op.randomize());
-        $display("Command: %s, ", op.cmd);
+        op.print();
         return op;
     endfunction
 

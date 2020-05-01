@@ -7,7 +7,7 @@ class Generator;
   Prol16OpcodeQueue testQueue;
 
   function new();
-    testQueue = generateTests();
+    testQueue = generateRandomTests();
   endfunction
 
   function bit hasTests();
