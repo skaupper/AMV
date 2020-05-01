@@ -135,7 +135,7 @@ class Prol16Model;
         if (setResult) begin
             state.regs[opc.ra] = res;
         end
-        state.pc = newPc;
+        state.pc = newPc % (1 << gPcWidth);
     endfunction
 
 
