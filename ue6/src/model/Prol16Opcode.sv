@@ -4,31 +4,31 @@
 
 `include "Prol16Types.sv"
 
-typedef enum bit[5:0] {
-    NOP     = 'd0,
-    SLEEP   = 'd1,
-    LOADI   = 'd2,
-    LOAD    = 'd3,
-    STORE   = 'd4,
-    JUMP    = 'd8,
-    JUMPC   = 'd10,
-    JUMPZ   = 'd11,
-    MOVE    = 'd12,
-    AND     = 'd16,
-    OR      = 'd17,
-    XOR     = 'd18,
-    NOT     = 'd19,
-    ADD     = 'd20,
-    ADDC    = 'd21,
-    SUB     = 'd22,
-    SUBC    = 'd23,
-    COMP    = 'd24,
-    INC     = 'd26,
-    DEC     = 'd27,
-    SHL     = 'd28,
-    SHR     = 'd29,
-    SHLC    = 'd30,
-    SHRC    = 'd31
+typedef enum int {
+    NOP     = 0,
+    SLEEP   = 1,
+    LOADI   = 2,
+    LOAD    = 3,
+    STORE   = 4,
+    JUMP    = 8,
+    JUMPC   = 10,
+    JUMPZ   = 11,
+    MOVE    = 12,
+    AND     = 16,
+    OR      = 17,
+    XOR     = 18,
+    NOT     = 19,
+    ADD     = 20,
+    ADDC    = 21,
+    SUB     = 22,
+    SUBC    = 23,
+    COMP    = 24,
+    INC     = 26,
+    DEC     = 27,
+    SHL     = 28,
+    SHR     = 29,
+    SHLC    = 30,
+    SHRC    = 31
 } Prol16Command;
 
 
@@ -64,6 +64,11 @@ class Prol16Opcode;
         } -> (rb == 0);
     }
 
+    constraint prio_cmd {
+      solve cmd before ra;
+      solve cmd before rb;
+    }
+
 
     function new();
         setAll(NOP);
@@ -81,7 +86,7 @@ class Prol16Opcode;
         if (op.cmd == LOADI) begin
             op.data = $urandom(2**gDataWidth);
         end
-        op.print();
+        // op.print();
         return op;
     endfunction
 
