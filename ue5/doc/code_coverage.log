@@ -1,0 +1,1596 @@
+Coverage Report by file with details
+
+=================================================================================
+=== File: ../src/duv_prol16/alu.vhd
+=================================================================================
+Statement Coverage:
+    Enabled Coverage            Active      Hits    Misses % Covered
+    ----------------            ------      ----    ------ ---------
+    Stmts                           52        51         1      98.0
+
+================================Statement Details================================
+
+Statement Coverage for file ../src/duv_prol16/alu.vhd --
+
+    1                                                -- This file is part of Prol16.
+    2                                                --
+    3                                                -- Copyright (C) 2005-2008 Rainer Findenig
+    4                                                -- Based on work done by Markus Lindorfer
+    5                                                --
+    6                                                -- Prol16 is free software: you can redistribute it and/or modify
+    7                                                -- it under the terms of the GNU General Public License as published by
+    8                                                -- the Free Software Foundation, either version 3 of the License, or
+    9                                                -- (at your option) any later version.
+    10                                               -- 
+    11                                               -- Prol16 is distributed in the hope that it will be useful,
+    12                                               -- but WITHOUT ANY WARRANTY; without even the implied warranty of
+    13                                               -- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    14                                               -- GNU General Public License for more details.
+    15                                               -- 
+    16                                               -- You should have received a copy of the GNU General Public License
+    17                                               -- along with Prol16.  If not, see <http://www.gnu.org/licenses/>.
+    18                                               
+    19                                               library ieee;
+    20                                               use ieee.std_logic_1164.all;
+    21                                               use ieee.numeric_std.all;
+    22                                               
+    23                                               library work;
+    24                                               use work.prol16_pack.all;
+    25                                               
+    26                                               entity alu is
+    27                                               
+    28                                                 -- we do not use data_vec_t to be able to modify the bit width for
+    29                                                 -- functional testing purpose
+    30                                                 generic (
+    31                                                   bit_width_g : integer := 16);
+    32                                               
+    33                                                 port (
+    34                                                   side_a_i   : in std_ulogic_vector(bit_width_g - 1 downto 0);
+    35                                                   side_b_i   : in std_ulogic_vector(bit_width_g - 1 downto 0);
+    36                                                   carry_i    : in std_ulogic;
+    37                                                   alu_func_i : in alu_func_t;
+    38                                               
+    39                                                   result_o : out std_ulogic_vector(bit_width_g - 1 downto 0);
+    40                                                   carry_o  : out std_ulogic;
+    41                                                   zero_o   : out std_ulogic);
+    42                                               
+    43                                               end alu;
+    44                                               
+    45                                               architecture rtl of alu is
+    46                                                 -- results: data
+    47                                                 signal res_or, res_and, res_xor, res_not, res_add, res_shift : std_ulogic_vector(bit_width_g - 1 downto 0);
+    48                                               
+    49                                                 -- results: carry
+    50                                                 signal cout_add, cout_shift : std_ulogic;
+    51                                               
+    52                                                 -- the real result of the alu
+    53                                                 signal result : std_ulogic_vector(bit_width_g - 1 downto 0);
+    54                                               
+    55                                                 -- muxed signals in front of the adder
+    56                                                 signal add_b   : std_ulogic_vector(bit_width_g - 1 downto 0);
+    57                                                 signal add_cin : std_ulogic;
+    58                                               begin  -- rtl
+    59                                               
+    60                                               -------------------------------------------------------------------------------
+    61                                               -- low level stuff
+    62                                               -------------------------------------------------------------------------------
+    63              1                        847       result_o <= result;
+    64                                               
+    65                                                 -----------------------------------------------------------------------------
+    66                                                 -- logical operations
+    67                                                 -----------------------------------------------------------------------------
+    68              1                       1002       res_or  <= side_a_i or side_b_i;
+    69              1                       1002       res_and <= side_a_i and side_b_i;
+    70              1                       1002       res_xor <= side_a_i xor side_b_i;
+    71              1                        926       res_not <= not(side_a_i);
+    72                                               
+    73                                                 -----------------------------------------------------------------------------
+    74                                                 -- arithmetical operations (ie, add ;) )
+    75                                                 -----------------------------------------------------------------------------
+    76                                               
+    77                                                 -- the muxes for the adder
+    78              1                        675       adder_muxes       : process (side_b_i, carry_i, alu_func_i)
+    79                                                   variable side_b : std_ulogic_vector(bit_width_g - 1 downto 0);
+    80                                                   variable carry  : std_ulogic;
+    81                                                 begin  -- process adder_muxes
+    82                                                   case alu_func_i is
+    83                                                     when alu_add_c | alu_sub_c =>
+    84              1                         33             side_b := side_b_i;
+    85              1                         33             carry  := carry_i;
+    86                                                     when alu_inc_c | alu_dec_c =>
+    87              1                        355             side_b := (others      => '0');
+    88              1                        355             carry  := '1';
+    89                                                     when others              =>
+    90              1                        287             side_b := (others      => '-');
+    91              1                        287             carry  := '-';
+    92                                                   end case;
+    93                                               
+    94                                                   case alu_func_i is
+    95                                                     when alu_add_c | alu_inc_c =>
+    96              1                        357             add_b   <= side_b;
+    97              1                        357             add_cin <= carry;
+    98                                                     when alu_sub_c | alu_dec_c =>
+    99              1                         31             add_b   <= not(side_b);
+    100             1                         31             add_cin <= not(carry);
+    101                                                    when others              =>
+    102             1                        287             add_b   <= (others     => '-');
+    103             1                        287             add_cin <= '-';
+    104                                                  end case;
+    105                                                end process adder_muxes;
+    106                                              
+    107             1                       1102       adder            : process (side_a_i, add_b, add_cin)
+    108                                                  variable res_v : unsigned(bit_width_g + 1 downto 0);
+    109                                                begin  -- process adder
+    110             1                       1102         res_v := unsigned('0' & side_a_i & '1') + unsigned('0' & add_b & add_cin);
+    111             1                       1102         res_add  <= std_ulogic_vector(res_v(res_v'high - 1 downto res_v'low + 1));
+    112             1                       1102         cout_add <= res_v(res_v'high);
+    113                                                end process adder;
+    114                                              
+    115                                              -----------------------------------------------------------------------------
+    116                                              -- shifting operations
+    117                                              -----------------------------------------------------------------------------
+    118             1                       1174       shifter : process (alu_func_i, side_a_i, carry_i)
+    119                                                begin  -- process shifter
+    120                                                  case alu_func_i is
+    121                                                    when alu_slc_c           =>
+    122             1                         10             res_shift  <= side_a_i(bit_width_g - 2 downto 0) & carry_i;
+    123             1                         10             cout_shift <= side_a_i(bit_width_g - 1);
+    124                                                    when alu_src_c           =>
+    125             1                         10             res_shift  <= carry_i & side_a_i(bit_width_g - 1 downto 1);
+    126             1                         10             cout_shift <= side_a_i(0);
+    127                                                    when others             =>
+    128             1                       1154             res_shift  <= (others => '-');
+    129             1                       1154             cout_shift <= '-';
+    130                                                  end case;
+    131                                                end process shifter;
+    132                                              
+    133                                              
+    134                                              -------------------------------------------------------------------------------
+    135                                              -- the allmighty muxes
+    136                                              -------------------------------------------------------------------------------
+    137             1                       1996       muxer : process (alu_func_i, res_or, res_and, res_xor, res_not, res_add, cout_add, res_shift, cout_shift, side_a_i, side_b_i)
+    138                                                begin  -- process muxer
+    139             1                       1996         carry_o <= '0';
+    140                                              
+    141                                                  case alu_func_i is
+    142                                                    when alu_add_c | alu_inc_c =>
+    143             1                       1131             result  <= res_add;
+    144             1                       1131             carry_o <= cout_add;
+    145                                                    when alu_sub_c | alu_dec_c =>
+    146             1                         93             result  <= res_add;
+    147             1                         93             carry_o <= not cout_add;
+    148                                                    when alu_pass_a_c         =>
+    149             1                    ***0***             result  <= side_a_i;
+    150                                                    when alu_pass_b_c         =>
+    151             1                         15             result  <= side_b_i;
+    152                                                    when alu_or_c             =>
+    153             1                          6             result  <= res_or;
+    154                                                    when alu_and_c            =>
+    155             1                          9             result  <= res_and;
+    156                                                    when alu_xor_c            =>
+    157             1                          6             result  <= res_xor;
+    158                                                    when alu_not_c            =>
+    159             1                          6             result  <= res_not;
+    160                                                    when alu_src_c | alu_slc_c =>
+    161             1                         30             result  <= res_shift;
+    162             1                         30             carry_o <= cout_shift;
+    163                                                    when others              =>
+    164             1                        700             result  <= (others     => 'X');
+    165             1                        700             carry_o <= 'X';
+    166                                                  end case;
+    167                                                end process muxer;
+    168                                              
+    169                                              -------------------------------------------------------------------------------
+    170                                              -- zero flag assignment
+    171                                              -------------------------------------------------------------------------------
+    172             1                        847       zero_flag         : process (result)
+    173                                                  variable zero_v : std_ulogic;
+    174                                                begin  -- process zero_flag
+    175             1                        847         zero_v := '0';
+    176                                              
+    177             1                        847         for i in result'range loop
+    177             2                      13552     
+    178             1                      13552           zero_v := zero_v or result(i);
+    179             1                      13552         end loop;  -- i
+    180                                              
+    181             1                        847         zero_o <= not zero_v;
+    182                                                end process zero_flag;
+    183                                              
+    184                                              end rtl;
+
+Branch Coverage:
+    Enabled Coverage            Active      Hits    Misses % Covered
+    ----------------            ------      ----    ------ ---------
+    Branches                        26        25         1      96.1
+
+================================Branch Details================================
+
+Branch Coverage for file ../src/duv_prol16/alu.vhd --
+
+------------------------------------CASE Branch------------------------------------
+    82                                       675     Count coming in to CASE
+    83              1                          5           when alu_add_c | alu_sub_c =>
+    83              2                         28     
+    86              1                        352           when alu_inc_c | alu_dec_c =>
+    86              2                          3     
+    89              1                        287           when others              =>
+Branch totals: 5 hits of 5 branches = 100.0%
+
+------------------------------------CASE Branch------------------------------------
+    94                                       675     Count coming in to CASE
+    95              1                          5           when alu_add_c | alu_inc_c =>
+    95              2                        352     
+    98              1                         28           when alu_sub_c | alu_dec_c =>
+    98              2                          3     
+    101             1                        287           when others              =>
+Branch totals: 5 hits of 5 branches = 100.0%
+
+------------------------------------CASE Branch------------------------------------
+    120                                     1174     Count coming in to CASE
+    121             1                         10           when alu_slc_c           =>
+    124             1                         10           when alu_src_c           =>
+    127             1                       1154           when others             =>
+Branch totals: 3 hits of 3 branches = 100.0%
+
+------------------------------------CASE Branch------------------------------------
+    141                                     1996     Count coming in to CASE
+    142             1                         15           when alu_add_c | alu_inc_c =>
+    142             2                       1116     
+    145             1                         84           when alu_sub_c | alu_dec_c =>
+    145             2                          9     
+    148             1                    ***0***           when alu_pass_a_c         =>
+    150             1                         15           when alu_pass_b_c         =>
+    152             1                          6           when alu_or_c             =>
+    154             1                          9           when alu_and_c            =>
+    156             1                          6           when alu_xor_c            =>
+    158             1                          6           when alu_not_c            =>
+    160             1                         15           when alu_src_c | alu_slc_c =>
+    160             2                         15     
+    163             1                        700           when others              =>
+Branch totals: 12 hits of 13 branches = 92.3%
+
+
+Condition Coverage:
+    Enabled Coverage            Active   Covered    Misses % Covered
+    ----------------            ------      ----    ------ ---------
+    FEC Condition Terms              0         0         0     100.0
+Expression Coverage:
+    Enabled Coverage            Active   Covered    Misses % Covered
+    ----------------            ------      ----    ------ ---------
+    FEC Expression Terms             2         2         0     100.0
+
+================================Expression Details================================
+
+Expression Coverage for file ../src/duv_prol16/alu.vhd --
+
+----------------Focused Expression View-----------------
+Line       178 Item    1  (zero_v or result(i))
+Expression totals: 2 of 2 input terms covered = 100.0%
+
+
+FSM Coverage:
+    Enabled Coverage            Active      Hits    Misses % Covered
+    ----------------            ------      ----    ------ ---------
+    FSMs                                                       100.0
+        States                       0         0         0     100.0
+        Transitions                  0         0         0     100.0
+
+=================================================================================
+=== File: ../src/duv_prol16/control.vhd
+=================================================================================
+Statement Coverage:
+    Enabled Coverage            Active      Hits    Misses % Covered
+    ----------------            ------      ----    ------ ---------
+    Stmts                          100        80        20      80.0
+
+================================Statement Details================================
+
+Statement Coverage for file ../src/duv_prol16/control.vhd --
+
+    1                                                -- This file is part of Prol16.
+    2                                                --
+    3                                                -- Copyright (C) 2005-2008 Rainer Findenig
+    4                                                -- Based on work done by Markus Lindorfer
+    5                                                --
+    6                                                -- Prol16 is free software: you can redistribute it and/or modify
+    7                                                -- it under the terms of the GNU General Public License as published by
+    8                                                -- the Free Software Foundation, either version 3 of the License, or
+    9                                                -- (at your option) any later version.
+    10                                               -- 
+    11                                               -- Prol16 is distributed in the hope that it will be useful,
+    12                                               -- but WITHOUT ANY WARRANTY; without even the implied warranty of
+    13                                               -- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    14                                               -- GNU General Public License for more details.
+    15                                               -- 
+    16                                               -- You should have received a copy of the GNU General Public License
+    17                                               -- along with Prol16.  If not, see <http://www.gnu.org/licenses/>.
+    18                                               
+    19                                               library ieee;
+    20                                               use ieee.std_logic_1164.all;
+    21                                               
+    22                                               library work;
+    23                                               use work.prol16_pack.all;
+    24                                               
+    25                                               entity control is
+    26                                               
+    27                                                 port (
+    28                                                   clk_i : in std_ulogic;
+    29                                                   res_i : in std_ulogic;
+    30                                               
+    31                                                   -- datapath
+    32                                                   op_code_i          : in op_code_t;
+    33                                                   reg_decode_error_i : in std_ulogic;
+    34                                               
+    35                                                   sel_pc_o   : out std_ulogic;
+    36                                                   sel_load_o : out std_ulogic;
+    37                                                   sel_addr_o : out std_ulogic;
+    38                                               
+    39                                                   clk_en_pc_o       : out std_ulogic;
+    40                                                   clk_en_reg_file_o : out std_ulogic;
+    41                                                   clk_en_op_code_o  : out std_ulogic;
+    42                                               
+    43                                                   -- alu
+    44                                                   alu_func_o : out alu_func_t;
+    45                                                   carry_o    : out std_ulogic;
+    46                                                   carry_i    : in  std_ulogic;
+    47                                                   zero_i     : in  std_ulogic;
+    48                                               
+    49                                                   -- memory
+    50                                                   mem_rd_stb_o : out std_ulogic;
+    51                                                   mem_wr_stb_o : out std_ulogic;
+    52                                               
+    53                                                   -- error flag (invalid opcode or register decode error)
+    54                                                   illegal_inst_o : out std_ulogic;
+    55                                                   -- sleep instruction encountered
+    56                                                   cpu_halt_o     : out std_ulogic);
+    57                                               
+    58                                               end control;
+    59                                               
+    60                                               architecture Rtl of control is
+    61                                                 signal Cycle, NextCycle : std_ulogic_vector(2 downto 0);
+    62                                               
+    63                                                 constant cCycleReset : std_ulogic_vector(2 downto 0) := "000";
+    64                                                 constant cCycle1     : std_ulogic_vector(2 downto 0) := "001";
+    65                                                 constant cCycle2     : std_ulogic_vector(2 downto 0) := "010";
+    66                                                 constant cCycle3     : std_ulogic_vector(2 downto 0) := "100";
+    67                                               
+    68                                                 signal NextMemRead, NextMemWrite : std_ulogic;
+    69                                               
+    70                                                 signal Carry, Zero             : std_ulogic;
+    71                                                 signal CarryEnable, ZeroEnable : boolean;
+    72                                               
+    73                                                 signal NextCpuHalt, IllegalInst, NextIllegalInst : std_ulogic;
+    74                                               
+    75                                               begin  -- Rtl
+    76                                               
+    77              1                       1417       Reg : process (clk_i, res_i)
+    78                                                 begin  -- process CycleCounter
+    79                                                   if res_i = reset_active_nc then     -- asynchronous reset (active low)
+    80                                                     -- cycle counter
+    81              1                         13           Cycle <= cCycleReset;
+    82                                               
+    83                                                     -- memory interface
+    84              1                         13           mem_rd_stb_o <= '0';
+    85              1                         13           mem_wr_stb_o <= '0';
+    86                                               
+    87                                                     -- Flags
+    88              1                         13           Carry <= '0';
+    89              1                         13           Zero  <= '0';
+    90                                               
+    91              1                         13           cpu_halt_o <= '0';
+    92                                               
+    93              1                         13           IllegalInst <= '0';
+    94                                                   elsif clk_i'event and clk_i = '1' then  -- rising clock edge
+    95                                                     -- cycle counter
+    96              1                        701           Cycle <= NextCycle;
+    97                                               
+    98                                                     -- memory interface 
+    99              1                        701           mem_rd_stb_o <= NextMemRead;
+    100             1                        701           mem_wr_stb_o <= NextMemWrite;
+    101                                              
+    102                                                    if CarryEnable then
+    103             1                         57             Carry <= carry_i;               -- NextCarry;
+    104                                                    end if;
+    105                                              
+    106                                                    if ZeroEnable then
+    107             1                         57             Zero <= zero_i;                 -- NextZero;
+    108                                                    end if;
+    109                                              
+    110             1                        701           cpu_halt_o <= NextCpuHalt;
+    111                                              
+    112             1                        701           IllegalInst <= NextIllegalInst;
+    113                                                  end if;
+    114                                                end process Reg;
+    115                                              
+    116                                                -----------------------------------------------------------------------------
+    117                                              
+    118             1                        982       Comb : process(Cycle, op_code_i, reg_decode_error_i, Carry, Zero, IllegalInst)
+    119                                                begin  -- process Comb
+    120             1                        982         sel_pc_o   <= '0';
+    121             1                        982         sel_load_o <= '0';
+    122             1                        982         sel_addr_o <= '0';
+    123                                              
+    124             1                        982         clk_en_pc_o       <= '0';
+    125             1                        982         clk_en_reg_file_o <= '0';
+    126             1                        982         clk_en_op_code_o  <= '0';
+    127                                              
+    128             1                        982         NextMemRead  <= '0';
+    129             1                        982         NextMemWrite <= '0';
+    130                                              
+    131             1                        982         ZeroEnable  <= false;
+    132             1                        982         CarryEnable <= false;
+    133                                              
+    134             1                        982         carry_o <= '0';
+    135                                              
+    136             1                        982         alu_func_o <= (others => '-');
+    137                                              
+    138             1                        982         NextCpuHalt     <= '0';
+    139             1                        982         NextIllegalInst <= '0';
+    140                                              
+    141             1                        982         NextCycle <= Cycle;
+    142                                              
+    143                                                  case Cycle is
+    144                                                    -------------------------------------------------------------------------
+    145                                                    -- CycleReset
+    146                                                    -------------------------------------------------------------------------
+    147                                                    when cCycleReset =>
+    148             1                          2             NextMemRead <= '1';
+    149             1                          2             NextCycle   <= cCycle3;
+    150                                              
+    151                                                      -------------------------------------------------------------------------
+    152                                                      -- Cycle 1
+    153                                                      -------------------------------------------------------------------------  
+    154                                                    when cCycle1 =>
+    155                                                      -- PC = PC+1
+    156             1                        578             sel_pc_o    <= '1';
+    157             1                        578             alu_func_o  <= alu_inc_c;
+    158             1                        578             clk_en_pc_o <= '1';
+    159             1                        578             NextMemRead <= '1';             -- for loading the next OpCode
+    160                                              
+    161             1                        578             NextCycle <= cCycle2;
+    162                                              
+    163                                                      case op_code_i is
+    164                                                        -- Jumps
+    165                                                        when opc_jump_c =>
+    166                                                          if reg_decode_error_i = '0' then
+    167                                                            -- PC = Ra
+    168             1                         90                   sel_pc_o <= '0';
+    169                                                          end if;
+    170                                              
+    171                                                        when opc_jumpc_c =>
+    172                                                          if reg_decode_error_i = '0' and Carry = '1' then
+    173             1                         30                   sel_pc_o <= '0';
+    174                                                          end if;
+    175                                              
+    176                                                        when opc_jumpz_c =>
+    177                                                          if reg_decode_error_i = '0' and Zero = '1' then
+    178             1                         56                   sel_pc_o <= '0';
+    179                                                          end if;
+    180                                              
+    181                                                          -- Store
+    182                                                        when opc_store_c =>
+    183             1                    ***0***                 NextMemRead  <= '0';
+    184             1                    ***0***                 NextMemWrite <= '1';
+    185                                              
+    186                                                          -- Sleep
+    187                                                        when opc_sleep_c =>
+    188             1                    ***0***                 NextCpuHalt <= '1';
+    189             1                    ***0***                 clk_en_pc_o <= '0';
+    190             1                    ***0***                 NextCycle   <= cCycle1;
+    191                                              
+    192                                                        when opc_nop_c | opc_loadi_c | opc_load_c | opc_move_c | opc_and_c | opc_or_c |
+    193                                                          opc_xor_c | opc_not_c | opc_add_c | opc_addc_c | opc_sub_c | opc_subc_c |
+    194                                                          opc_comp_c | opc_inc_c | opc_dec_c | opc_shl_c | opc_shr_c | opc_shlc_c |
+    195                                                          opc_shrc_c =>
+    196             1                        304                 null;                       -- do nothing, but make the others
+    197                                                                                      -- clause an illegal instruction
+    198                                              
+    199                                                        when others =>
+    200             1                    ***0***                 NextIllegalInst <= '1';
+    201                                              
+    202                                                      end case;
+    203                                              
+    204                                                      if reg_decode_error_i = '1' then
+    205             1                          1               NextIllegalInst <= '1';
+    206                                                      end if;
+    207                                              
+    208                                                      -------------------------------------------------------------------------
+    209                                                      -- Cycle 2
+    210                                                      -------------------------------------------------------------------------
+    211                                                    when cCycle2 =>
+    212                                                      -- load next opcode
+    213             1                        300             clk_en_op_code_o <= '1';
+    214                                              
+    215                                                      -- use alu result to write Ra - standard for ALU opcodes
+    216             1                        300             sel_load_o        <= '0';
+    217             1                        300             clk_en_reg_file_o <= '1';
+    218                                              
+    219                                                      -- enable the carry and zero flag when the alu is used
+    220             1                        300             ZeroEnable  <= true;
+    221             1                        300             CarryEnable <= true;
+    222                                              
+    223                                                      -- for most functions, we will continue with cycle 1
+    224             1                        300             NextCycle <= cCycle1;
+    225                                              
+    226                                                      -- ALU COMMANDS                 ---------------------------------------------------------
+    227                                              
+    228                                                      -- set up the alu commands
+    229                                                      case op_code_i is
+    230             1                          3               when opc_and_c              => alu_func_o <= alu_and_c;
+    231             1                          2               when opc_or_c               => alu_func_o <= alu_or_c;
+    232             1                          2               when opc_xor_c              => alu_func_o <= alu_xor_c;
+    233             1                          2               when opc_not_c              => alu_func_o <= alu_not_c;
+    234             1                          5               when opc_add_c | opc_addc_c => alu_func_o <= alu_add_c;  -- watch for carry!
+    235             1                          7               when opc_sub_c | opc_subc_c => alu_func_o <= alu_sub_c;  -- watch for carry!
+    236             1                         21               when opc_comp_c             => alu_func_o <= alu_sub_c;
+    237             1                          2               when opc_inc_c              => alu_func_o <= alu_inc_c;
+    238             1                          3               when opc_dec_c              => alu_func_o <= alu_dec_c;
+    239             1                          5               when opc_shl_c | opc_shlc_c => alu_func_o <= alu_slc_c;  -- watch for carry!
+    240             1                          5               when opc_shr_c | opc_shrc_c => alu_func_o <= alu_src_c;  -- watch for carry!
+    241             1                          5               when opc_move_c             => alu_func_o <= alu_pass_b_c;
+    242             1                        238               when others                 => null;
+    243                                                      end case;
+    244                                              
+    245                                                      -- carry handling for the above
+    246                                                      case op_code_i is
+    247                                                        when opc_addc_c | opc_subc_c | opc_shlc_c | opc_shrc_c =>  --
+    248             1                          9                 carry_o <= Carry;
+    249             1                        291               when others => null;
+    250                                                      end case;
+    251                                              
+    252                                                      -- LOAD COMMANDS, NOP, JUMPS    --------------------------------------------
+    253                                              
+    254                                                      -- don't set the carry with loads, store and jump
+    255                                                      case op_code_i is
+    256                                                        when opc_load_c | opc_loadi_c | opc_store_c | opc_jump_c |
+    257                                                          opc_jumpc_c | opc_jumpz_c | opc_nop_c | opc_move_c =>
+    258                                              
+    259             1                        243                 CarryEnable <= false;
+    260             1                        243                 ZeroEnable  <= false;
+    261             1                         57               when others => null;
+    262                                                      end case;
+    263                                              
+    264                                                      -- load and store command handling
+    265                                                      case op_code_i is
+    266                                                        when opc_load_c =>
+    267                                                          -- memory address := Rb, read to Ra
+    268             1                    ***0***                 sel_addr_o <= '1';
+    269             1                    ***0***                 sel_load_o <= '1';
+    270                                              
+    271                                                          -- read next OC
+    272             1                    ***0***                 NextMemRead <= '1';
+    273                                              
+    274                                                          -- continue with cycle 3
+    275             1                    ***0***                 NextCycle        <= cCycle3;
+    276             1                    ***0***                 clk_en_op_code_o <= '0';
+    277                                              
+    278                                                        when opc_loadi_c =>
+    279                                                          -- PC=PC+1
+    280             1                         99                 sel_pc_o    <= '1';
+    281             1                         99                 alu_func_o  <= alu_inc_c;
+    282             1                         99                 clk_en_pc_o <= '1';
+    283                                              
+    284                                                          -- read next OC
+    285             1                         99                 NextMemRead <= '1';
+    286                                              
+    287                                                          -- read to Ra (memory address is still PC(+1))
+    288             1                         99                 sel_load_o <= '1';
+    289                                              
+    290                                                          -- continue with cycle 3
+    291             1                         99                 NextCycle        <= cCycle3;
+    292             1                         99                 clk_en_op_code_o <= '0';
+    293                                              
+    294                                                        when opc_store_c =>
+    295                                                          -- memory address := Rb
+    296             1                    ***0***                 sel_addr_o <= '1';
+    297                                              
+    298                                                          -- read next OC
+    299             1                    ***0***                 NextMemRead <= '1';
+    300                                              
+    301                                                          -- continue with cycle 3
+    302             1                    ***0***                 NextCycle        <= cCycle3;
+    303             1                    ***0***                 clk_en_op_code_o <= '0';
+    304                                              
+    305                                                          -- do not enable the reg file for writing
+    306             1                    ***0***                 clk_en_reg_file_o <= '0';
+    307                                              
+    308                                                        when opc_jump_c | opc_jumpc_c | opc_jumpz_c | opc_nop_c | opc_comp_c =>
+    309                                                          -- do not enable the reg file for writing
+    310             1                        160                 clk_en_reg_file_o <= '0';
+    311                                              
+    312             1                         41               when others => null;
+    313                                                      end case;
+    314                                              
+    315                                                      if IllegalInst = '1' then
+    316             1                    ***0***               clk_en_reg_file_o <= '0';
+    317             1                    ***0***               CarryEnable       <= false;
+    318             1                    ***0***               ZeroEnable        <= false;
+    319                                              
+    320                                                        -- continue in cycle 2 if there was an error, even if the opcode was
+    321                                                        -- load(i) or store
+    322             1                    ***0***               NextCycle         <= cCycle2;
+    323                                                      end if;
+    324                                              
+    325                                                      -------------------------------------------------------------------------
+    326                                                      -- Cycle 3
+    327                                                      -------------------------------------------------------------------------  
+    328                                                    when cCycle3 =>
+    329             1                        100             clk_en_op_code_o <= '1';
+    330             1                        100             NextCycle        <= cCycle1;
+    331                                              
+    332             1                          2           when others => null;
+    333                                                  end case;
+    334                                                end process Comb;
+    335                                              
+    336                                                -----------------------------------------------------------------------------
+    337                                              
+    338             1                          2       illegal_inst_o <= IllegalInst;
+    339                                              
+    340                                              end Rtl;
+
+Branch Coverage:
+    Enabled Coverage            Active      Hits    Misses % Covered
+    ----------------            ------      ----    ------ ---------
+    Branches                        87        77        10      88.5
+
+================================Branch Details================================
+
+Branch Coverage for file ../src/duv_prol16/control.vhd --
+
+------------------------------------IF Branch------------------------------------
+    79                                      1417     Count coming in to IF
+    79              1                         13         if res_i = reset_active_nc then     -- asynchronous reset (active low)
+    94              1                        701         elsif clk_i'event and clk_i = '1' then  -- rising clock edge
+                                             703     All False Count
+Branch totals: 3 hits of 3 branches = 100.0%
+
+------------------------------------IF Branch------------------------------------
+    102                                      701     Count coming in to IF
+    102             1                         57           if CarryEnable then
+                                             644     All False Count
+Branch totals: 2 hits of 2 branches = 100.0%
+
+------------------------------------IF Branch------------------------------------
+    106                                      701     Count coming in to IF
+    106             1                         57           if ZeroEnable then
+                                             644     All False Count
+Branch totals: 2 hits of 2 branches = 100.0%
+
+------------------------------------CASE Branch------------------------------------
+    143                                      982     Count coming in to CASE
+    147             1                          2           when cCycleReset =>
+    154             1                        578           when cCycle1 =>
+    211             1                        300           when cCycle2 =>
+    328             1                        100           when cCycle3 =>
+    332             1                          2           when others => null;
+Branch totals: 5 hits of 5 branches = 100.0%
+
+------------------------------------CASE Branch------------------------------------
+    163                                      578     Count coming in to CASE
+    165             1                         90               when opc_jump_c =>
+    171             1                         90               when opc_jumpc_c =>
+    176             1                         94               when opc_jumpz_c =>
+    182             1                    ***0***               when opc_store_c =>
+    187             1                    ***0***               when opc_sleep_c =>
+    192             1                          6               when opc_nop_c | opc_loadi_c | opc_load_c | opc_move_c | opc_and_c | opc_or_c |
+    192             2                        174     
+    192             3                    ***0***     
+    192             4                         10     
+    192             5                          6     
+    192             6                          4     
+    193             1                          4                 opc_xor_c | opc_not_c | opc_add_c | opc_addc_c | opc_sub_c | opc_subc_c |
+    193             2                          4     
+    193             3                          6     
+    193             4                          4     
+    193             5                         10     
+    193             6                          4     
+    194             1                         42                 opc_comp_c | opc_inc_c | opc_dec_c | opc_shl_c | opc_shr_c | opc_shlc_c |
+    194             2                          4     
+    194             3                          6     
+    194             4                          4     
+    194             5                          6     
+    194             6                          6     
+    195             1                          4                 opc_shrc_c =>
+    199             1                    ***0***               when others =>
+Branch totals: 21 hits of 25 branches = 84.0%
+
+------------------------------------IF Branch------------------------------------
+    166                                       90     Count coming in to IF
+    166             1                         90                 if reg_decode_error_i = '0' then
+                                         ***0***     All False Count
+Branch totals: 1 hit of 2 branches = 50.0%
+
+------------------------------------IF Branch------------------------------------
+    172                                       90     Count coming in to IF
+    172             1                         30                 if reg_decode_error_i = '0' and Carry = '1' then
+                                              60     All False Count
+Branch totals: 2 hits of 2 branches = 100.0%
+
+------------------------------------IF Branch------------------------------------
+    177                                       94     Count coming in to IF
+    177             1                         56                 if reg_decode_error_i = '0' and Zero = '1' then
+                                              38     All False Count
+Branch totals: 2 hits of 2 branches = 100.0%
+
+------------------------------------IF Branch------------------------------------
+    204                                      578     Count coming in to IF
+    204             1                          1             if reg_decode_error_i = '1' then
+                                             577     All False Count
+Branch totals: 2 hits of 2 branches = 100.0%
+
+------------------------------------CASE Branch------------------------------------
+    229                                      300     Count coming in to CASE
+    230             1                          3               when opc_and_c              => alu_func_o <= alu_and_c;
+    231             1                          2               when opc_or_c               => alu_func_o <= alu_or_c;
+    232             1                          2               when opc_xor_c              => alu_func_o <= alu_xor_c;
+    233             1                          2               when opc_not_c              => alu_func_o <= alu_not_c;
+    234             1                          3               when opc_add_c | opc_addc_c => alu_func_o <= alu_add_c;  -- watch for carry!
+    234             2                          2     
+    235             1                          5               when opc_sub_c | opc_subc_c => alu_func_o <= alu_sub_c;  -- watch for carry!
+    235             2                          2     
+    236             1                         21               when opc_comp_c             => alu_func_o <= alu_sub_c;
+    237             1                          2               when opc_inc_c              => alu_func_o <= alu_inc_c;
+    238             1                          3               when opc_dec_c              => alu_func_o <= alu_dec_c;
+    239             1                          2               when opc_shl_c | opc_shlc_c => alu_func_o <= alu_slc_c;  -- watch for carry!
+    239             2                          3     
+    240             1                          3               when opc_shr_c | opc_shrc_c => alu_func_o <= alu_src_c;  -- watch for carry!
+    240             2                          2     
+    241             1                          5               when opc_move_c             => alu_func_o <= alu_pass_b_c;
+    242             1                        238               when others                 => null;
+Branch totals: 17 hits of 17 branches = 100.0%
+
+------------------------------------CASE Branch------------------------------------
+    246                                      300     Count coming in to CASE
+    247             1                          2               when opc_addc_c | opc_subc_c | opc_shlc_c | opc_shrc_c =>  --
+    247             2                          2     
+    247             3                          3     
+    247             4                          2     
+    249             1                        291               when others => null;
+Branch totals: 5 hits of 5 branches = 100.0%
+
+------------------------------------CASE Branch------------------------------------
+    255                                      300     Count coming in to CASE
+    256             1                    ***0***               when opc_load_c | opc_loadi_c | opc_store_c | opc_jump_c |
+    256             2                         99     
+    256             3                    ***0***     
+    256             4                         45     
+    257             1                         45                 opc_jumpc_c | opc_jumpz_c | opc_nop_c | opc_move_c =>
+    257             2                         47     
+    257             3                          2     
+    257             4                          5     
+    261             1                         57               when others => null;
+Branch totals: 7 hits of 9 branches = 77.7%
+
+------------------------------------CASE Branch------------------------------------
+    265                                      300     Count coming in to CASE
+    266             1                    ***0***               when opc_load_c =>
+    278             1                         99               when opc_loadi_c =>
+    294             1                    ***0***               when opc_store_c =>
+    308             1                         45               when opc_jump_c | opc_jumpc_c | opc_jumpz_c | opc_nop_c | opc_comp_c =>
+    308             2                         45     
+    308             3                         47     
+    308             4                          2     
+    308             5                         21     
+    312             1                         41               when others => null;
+Branch totals: 7 hits of 9 branches = 77.7%
+
+------------------------------------IF Branch------------------------------------
+    315                                      300     Count coming in to IF
+    315             1                    ***0***             if IllegalInst = '1' then
+                                             300     All False Count
+Branch totals: 1 hit of 2 branches = 50.0%
+
+
+Condition Coverage:
+    Enabled Coverage            Active   Covered    Misses % Covered
+    ----------------            ------      ----    ------ ---------
+    FEC Condition Terms              4         2         2      50.0
+
+================================Condition Details================================
+
+Condition Coverage for file ../src/duv_prol16/control.vhd --
+
+----------------Focused Condition View-------------------
+Line       172 Item    1  ((reg_decode_error_i = '0') and (Carry = '1'))
+Condition totals: 1 of 2 input terms covered = 50.0%
+
+                  Input Term   Covered  Reason for no coverage   Hint
+                 -----------  --------  -----------------------  --------------
+  (reg_decode_error_i = '0')         N  '_0' not hit             Hit '_0'
+               (Carry = '1')         Y
+
+     Rows:       Hits  FEC Target                    Non-masking condition(s)      
+ ---------  ---------  --------------------          -------------------------     
+  Row   1:    ***0***  (reg_decode_error_i = '0')_0  -                             
+  Row   2:          1  (reg_decode_error_i = '0')_1  (Carry = '1')                 
+  Row   3:          1  (Carry = '1')_0               (reg_decode_error_i = '0')    
+  Row   4:          1  (Carry = '1')_1               (reg_decode_error_i = '0')    
+
+----------------Focused Condition View-------------------
+Line       177 Item    1  ((reg_decode_error_i = '0') and (Zero = '1'))
+Condition totals: 1 of 2 input terms covered = 50.0%
+
+                  Input Term   Covered  Reason for no coverage   Hint
+                 -----------  --------  -----------------------  --------------
+  (reg_decode_error_i = '0')         N  '_0' not hit             Hit '_0'
+                (Zero = '1')         Y
+
+     Rows:       Hits  FEC Target                    Non-masking condition(s)      
+ ---------  ---------  --------------------          -------------------------     
+  Row   1:    ***0***  (reg_decode_error_i = '0')_0  -                             
+  Row   2:          1  (reg_decode_error_i = '0')_1  (Zero = '1')                  
+  Row   3:          1  (Zero = '1')_0                (reg_decode_error_i = '0')    
+  Row   4:          1  (Zero = '1')_1                (reg_decode_error_i = '0')    
+
+
+Expression Coverage:
+    Enabled Coverage            Active   Covered    Misses % Covered
+    ----------------            ------      ----    ------ ---------
+    FEC Expression Terms             0         0         0     100.0
+FSM Coverage:
+    Enabled Coverage            Active      Hits    Misses % Covered
+    ----------------            ------      ----    ------ ---------
+    FSMs                                                        75.0
+        States                       4         4         0     100.0
+        Transitions                 12         6         6      50.0
+
+================================FSM Details================================
+
+FSM Coverage for file ../src/duv_prol16/control.vhd --
+
+FSM_ID: Cycle
+    Current State Object : Cycle
+    ----------------------
+    State Value MapInfo :
+    ---------------------
+Line          State Name               Value
+----          ----------               -----
+ 147         cCycleReset                 000
+ 328             cCycle3                 100
+ 154             cCycle1                 001
+ 211             cCycle2                 010
+    Covered States :
+    ----------------
+                   State           Hit_count
+                   -----           ---------
+             cCycleReset                  13
+                 cCycle3                 100
+                 cCycle1                 301
+                 cCycle2                 300
+    Covered Transitions :
+    ---------------------
+Line            Trans_ID           Hit_count          Transition          
+----            --------           ---------          ----------          
+ 149                   0                   1          cCycleReset -> cCycle3
+  81                   1                  12          cCycleReset -> cCycleReset
+ 330                   2                 100          cCycle3 -> cCycle1  
+ 161                   5                 300          cCycle1 -> cCycle2  
+ 224                   8                 201          cCycle2 -> cCycle1  
+ 275                   9                  99          cCycle2 -> cCycle3  
+    Uncovered Transitions :
+    -----------------------
+Line            Trans_ID          Transition          
+----            --------          ----------          
+  81                   3          cCycle3 -> cCycleReset
+ 141                   4          cCycle3 -> cCycle3  
+ 190                   6          cCycle1 -> cCycle1  
+  81                   7          cCycle1 -> cCycleReset
+ 322                  10          cCycle2 -> cCycle2  
+  81                  11          cCycle2 -> cCycleReset
+
+
+    Summary                     Active      Hits    Misses % Covered
+    -------                     ------      ----    ------ ---------
+        States                       4         4         0     100.0
+        Transitions                 12         6         6      50.0
+
+=================================================================================
+=== File: ../src/duv_prol16/cpu.vhd
+=================================================================================
+Statement Coverage:
+    Enabled Coverage            Active      Hits    Misses % Covered
+    ----------------            ------      ----    ------ ---------
+    Stmts                            4         4         0     100.0
+
+================================Statement Details================================
+
+Statement Coverage for file ../src/duv_prol16/cpu.vhd --
+
+    1                                                -- This file is part of Prol16.
+    2                                                --
+    3                                                -- Copyright (C) 2005-2008 Rainer Findenig
+    4                                                -- Based on work done by Markus Lindorfer
+    5                                                --
+    6                                                -- Prol16 is free software: you can redistribute it and/or modify
+    7                                                -- it under the terms of the GNU General Public License as published by
+    8                                                -- the Free Software Foundation, either version 3 of the License, or
+    9                                                -- (at your option) any later version.
+    10                                               -- 
+    11                                               -- Prol16 is distributed in the hope that it will be useful,
+    12                                               -- but WITHOUT ANY WARRANTY; without even the implied warranty of
+    13                                               -- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    14                                               -- GNU General Public License for more details.
+    15                                               -- 
+    16                                               -- You should have received a copy of the GNU General Public License
+    17                                               -- along with Prol16.  If not, see <http://www.gnu.org/licenses/>.
+    18                                               
+    19                                               library ieee;
+    20                                               use ieee.std_logic_1164.all;
+    21                                               
+    22                                               library work;
+    23                                               use work.prol16_pack.all;
+    24                                               
+    25                                               entity cpu is
+    26                                               
+    27                                                 port (
+    28                                                   clk_i : in std_ulogic;
+    29                                                   res_i : in std_ulogic;
+    30                                               
+    31                                                   -- don't use user types (netlist)
+    32                                                   mem_addr_o : out std_ulogic_vector(data_vec_length_c - 1 downto 0);
+    33                                                   mem_data_o : out std_ulogic_vector(data_vec_length_c - 1 downto 0);
+    34                                                   mem_data_i : in  std_ulogic_vector(data_vec_length_c - 1 downto 0);
+    35                                                   mem_ce_no  : out std_ulogic;        -- chip enable (low active)
+    36                                                   mem_oe_no  : out std_ulogic;        -- output enable (low active)
+    37                                                   mem_we_no  : out std_ulogic;        -- write enable (low active)
+    38                                               
+    39                                                   illegal_inst_o : out std_ulogic;
+    40                                                   cpu_halt_o     : out std_ulogic);
+    41                                               
+    42                                               end cpu;
+    43                                               
+    44                                               architecture rtl of cpu is
+    45                                               
+    46                                                 signal op_code          : op_code_t;
+    47                                                 signal reg_decode_error : std_ulogic;
+    48                                                 signal sel_pc           : std_ulogic;
+    49                                                 signal sel_load         : std_ulogic;
+    50                                                 signal sel_addr         : std_ulogic;
+    51                                                 signal clk_en_pc        : std_ulogic;
+    52                                                 signal clk_en_reg_file  : std_ulogic;
+    53                                                 signal clk_en_op_code   : std_ulogic;
+    54                                                 signal alu_func         : alu_func_t;
+    55                                                 signal carry_in         : std_ulogic;
+    56                                                 signal carry_out        : std_ulogic;
+    57                                                 signal zero             : std_ulogic;
+    58                                                 signal mem_rd_stb       : std_ulogic;
+    59                                                 signal mem_wr_stb       : std_ulogic;
+    60                                               
+    61                                                 signal clk_n : std_ulogic;
+    62                                               
+    63                                               begin  -- rtl
+    64                                               
+    65                                                 datapath_inst : datapath
+    66                                                   port map (
+    67                                                     clk_i              => clk_i,
+    68                                                     res_i              => res_i,
+    69                                                     op_code_o          => op_code,
+    70                                                     reg_decode_error_o => reg_decode_error,
+    71                                                     sel_pc_i           => sel_pc,
+    72                                                     sel_load_i         => sel_load,
+    73                                                     sel_addr_i         => sel_addr,
+    74                                                     clk_en_pc_i        => clk_en_pc,
+    75                                                     clk_en_reg_file_i  => clk_en_reg_file,
+    76                                                     clk_en_op_code_i   => clk_en_op_code,
+    77                                                     alu_func_i         => alu_func,
+    78                                                     carry_i            => carry_in,
+    79                                                     carry_o            => carry_out,
+    80                                                     zero_o             => zero,
+    81                                                     mem_addr_o         => mem_addr_o,
+    82                                                     mem_data_o         => mem_data_o,
+    83                                                     mem_data_i         => mem_data_i);
+    84                                               
+    85                                                 control_inst : control
+    86                                                   port map (
+    87                                                     clk_i              => clk_i,
+    88                                                     res_i              => res_i,
+    89                                                     op_code_i          => op_code,
+    90                                                     reg_decode_error_i => reg_decode_error,
+    91                                                     sel_pc_o           => sel_pc,
+    92                                                     sel_load_o         => sel_load,
+    93                                                     sel_addr_o         => sel_addr,
+    94                                                     clk_en_pc_o        => clk_en_pc,
+    95                                                     clk_en_reg_file_o  => clk_en_reg_file,
+    96                                                     clk_en_op_code_o   => clk_en_op_code,
+    97                                                     alu_func_o         => alu_func,
+    98                                                     carry_o            => carry_in,
+    99                                                     carry_i            => carry_out,
+    100                                                    zero_i             => zero,
+    101                                                    mem_rd_stb_o       => mem_rd_stb,
+    102                                                    mem_wr_stb_o       => mem_wr_stb,
+    103                                                    illegal_inst_o     => illegal_inst_o,
+    104                                                    cpu_halt_o         => cpu_halt_o);
+    105                                              
+    106             1                       1415       clk_n <= not clk_i;
+    107                                              
+    108             1                        604       mem_ce_no <= mem_rd_stb nor mem_wr_stb;
+    109             1                       1417       mem_oe_no <= mem_rd_stb nand clk_n;
+    110             1                       1417       mem_we_no <= mem_wr_stb nand clk_n;
+    111                                              
+    112                                              end rtl;
+
+Branch Coverage:
+    Enabled Coverage            Active      Hits    Misses % Covered
+    ----------------            ------      ----    ------ ---------
+    Branches                         0         0         0     100.0
+Condition Coverage:
+    Enabled Coverage            Active   Covered    Misses % Covered
+    ----------------            ------      ----    ------ ---------
+    FEC Condition Terms              0         0         0     100.0
+Expression Coverage:
+    Enabled Coverage            Active   Covered    Misses % Covered
+    ----------------            ------      ----    ------ ---------
+    FEC Expression Terms             6         3         3      50.0
+
+================================Expression Details================================
+
+Expression Coverage for file ../src/duv_prol16/cpu.vhd --
+
+----------------Focused Expression View-----------------
+Line       108 Item    1  (mem_rd_stb nor mem_wr_stb)
+Expression totals: 1 of 2 input terms covered = 50.0%
+
+  Input Term   Covered  Reason for no coverage   Hint
+ -----------  --------  -----------------------  --------------
+  mem_rd_stb         Y
+  mem_wr_stb         N  '_1' not hit             Hit '_1'
+
+     Rows:       Hits  FEC Target            Non-masking condition(s)      
+ ---------  ---------  --------------------  -------------------------     
+  Row   1:          1  mem_rd_stb_0          not mem_wr_stb                
+  Row   2:          1  mem_rd_stb_1          not mem_wr_stb                
+  Row   3:          1  mem_wr_stb_0          not mem_rd_stb                
+  Row   4:    ***0***  mem_wr_stb_1          not mem_rd_stb                
+
+----------------Focused Expression View-----------------
+Line       109 Item    1  (mem_rd_stb nand clk_n)
+Expression totals: 2 of 2 input terms covered = 100.0%
+
+----------------Focused Expression View-----------------
+Line       110 Item    1  (mem_wr_stb nand clk_n)
+Expression totals: 0 of 2 input terms covered = 0.0%
+
+  Input Term   Covered  Reason for no coverage   Hint
+ -----------  --------  -----------------------  --------------
+  mem_wr_stb         N  '_1' not hit             Hit '_1'
+       clk_n         N  No hits                  Hit '_0' and '_1'
+
+     Rows:       Hits  FEC Target            Non-masking condition(s)      
+ ---------  ---------  --------------------  -------------------------     
+  Row   1:          1  mem_wr_stb_0          clk_n                         
+  Row   2:    ***0***  mem_wr_stb_1          clk_n                         
+  Row   3:    ***0***  clk_n_0               mem_wr_stb                    
+  Row   4:    ***0***  clk_n_1               mem_wr_stb                    
+
+
+FSM Coverage:
+    Enabled Coverage            Active      Hits    Misses % Covered
+    ----------------            ------      ----    ------ ---------
+    FSMs                                                       100.0
+        States                       0         0         0     100.0
+        Transitions                  0         0         0     100.0
+
+=================================================================================
+=== File: ../src/duv_prol16/datapath.vhd
+=================================================================================
+Statement Coverage:
+    Enabled Coverage            Active      Hits    Misses % Covered
+    ----------------            ------      ----    ------ ---------
+    Stmts                           36        33         3      91.6
+
+================================Statement Details================================
+
+Statement Coverage for file ../src/duv_prol16/datapath.vhd --
+
+    1                                                -- This file is part of Prol16.
+    2                                                --
+    3                                                -- Copyright (C) 2005-2008 Rainer Findenig
+    4                                                -- Based on work done by Markus Lindorfer
+    5                                                --
+    6                                                -- Prol16 is free software: you can redistribute it and/or modify
+    7                                                -- it under the terms of the GNU General Public License as published by
+    8                                                -- the Free Software Foundation, either version 3 of the License, or
+    9                                                -- (at your option) any later version.
+    10                                               -- 
+    11                                               -- Prol16 is distributed in the hope that it will be useful,
+    12                                               -- but WITHOUT ANY WARRANTY; without even the implied warranty of
+    13                                               -- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    14                                               -- GNU General Public License for more details.
+    15                                               -- 
+    16                                               -- You should have received a copy of the GNU General Public License
+    17                                               -- along with Prol16.  If not, see <http://www.gnu.org/licenses/>.
+    18                                               
+    19                                               library ieee;
+    20                                               use ieee.std_logic_1164.all;
+    21                                               use ieee.numeric_std.all;
+    22                                               
+    23                                               library work;
+    24                                               use work.prol16_pack.all;
+    25                                               
+    26                                               entity datapath is
+    27                                               
+    28                                                 port (
+    29                                                   clk_i : in std_ulogic;
+    30                                                   res_i : in std_ulogic;
+    31                                               
+    32                                                   -- control
+    33                                                   op_code_o          : out op_code_t;
+    34                                                   -- asserted on register index decode error    
+    35                                                   reg_decode_error_o : out std_ulogic;
+    36                                               
+    37                                                   sel_pc_i   : in std_ulogic;
+    38                                                   sel_load_i : in std_ulogic;
+    39                                                   sel_addr_i : in std_ulogic;
+    40                                               
+    41                                                   clk_en_pc_i       : in std_ulogic;
+    42                                                   clk_en_reg_file_i : in std_ulogic;
+    43                                                   clk_en_op_code_i  : in std_ulogic;
+    44                                               
+    45                                                   -- alu
+    46                                                   alu_func_i : in  alu_func_t;
+    47                                                   carry_i    : in  std_ulogic;
+    48                                                   carry_o    : out std_ulogic;
+    49                                                   zero_o     : out std_ulogic;
+    50                                               
+    51                                                   -- memory
+    52                                                   mem_addr_o : out data_vec_t;
+    53                                                   mem_data_o : out data_vec_t;
+    54                                                   mem_data_i : in  data_vec_t);
+    55                                               
+    56                                               end datapath;
+    57                                               
+    58                                               architecture rtl of datapath is
+    59                                                 signal RegTmpA, RegTmpB, RegPC : data_vec_t;
+    60                                                 signal RegOpcode               : op_code_t;
+    61                                               
+    62                                                 signal RegAIdx, RegBIdx : reg_idx_t;
+    63                                               
+    64                                                 signal AluSideA, Load, RaValue, RbValue, Pc, AluResult : data_vec_t;
+    65                                               begin
+    66                                               
+    67                                                 -----------------------------------------------------------------------------
+    68                                                 -- ALU instantiation
+    69                                                 -----------------------------------------------------------------------------
+    70                                                 thealu : alu
+    71                                                   generic map (
+    72                                                     bit_width_g => data_vec_length_c)
+    73                                                   port map (
+    74                                                     side_a_i    => AluSideA,
+    75                                                     side_b_i    => RegTmpB,
+    76                                                     carry_i     => carry_i,
+    77                                                     alu_func_i  => alu_func_i,
+    78                                                     result_o    => AluResult,
+    79                                                     carry_o     => carry_o,
+    80                                                     zero_o      => zero_o);
+    81                                               
+    82                                                 -----------------------------------------------------------------------------
+    83                                                 -- Regfile instantiation
+    84                                                 -----------------------------------------------------------------------------
+    85                                                 thereg_file : reg_file
+    86                                                   generic map (
+    87                                                     registers_g       => registers_c,
+    88                                                     is_fpga_g         => tech_is_fpga_c)
+    89                                                   port map (
+    90                                                     clk_i             => clk_i,
+    91                                                     reg_a_idx_i       => RegAIdx,
+    92                                                     reg_b_idx_i       => RegBIdx,
+    93                                                     clk_en_reg_file_i => clk_en_reg_file_i,
+    94                                                     reg_i             => Load,
+    95                                                     reg_a_o           => RaValue,
+    96                                                     reg_b_o           => RbValue);
+    97                                               
+    98                                                 -----------------------------------------------------------------------------
+    99                                                 -- registers
+    100                                                -----------------------------------------------------------------------------
+    101             1                       1417       registers : process (clk_i, res_i)
+    102                                              
+    103                                                  variable reg_a_idx_v, reg_b_idx_v : integer;
+    104                                              
+    105                                                begin  -- process registers
+    106                                                  if res_i = reset_active_nc then                     -- asynchronous reset (active low)
+    107             1                         13           RegTmpA   <= (others => '-');
+    108             1                         13           RegTmpB   <= (others => '-');
+    109             1                         13           RegPC     <= (others => '0');
+    110             1                         13           RegOpcode <= opc_nop_c;
+    111             1                         13           RegAIdx   <= -1;
+    112             1                         13           RegBIdx   <= -1;
+    113                                                  elsif clk_i'event and clk_i = '1' then  -- rising clock edge
+    114                                              
+    115             1                        701           RegTmpA <= RaValue;
+    116             1                        701           RegTmpB <= RbValue;
+    117                                              
+    118                                                    if clk_en_pc_i = '1' then
+    119             1                        399             RegPC <= Pc;
+    120                                                    end if;
+    121                                              
+    122                                                    if clk_en_op_code_i = '1' then
+    123             1                        301             RegOpcode <= mem_data_i(op_code_range_t'left downto op_code_range_t'right);
+    124                                              
+    125                                                      -- register values
+    126             1                        301             reg_a_idx_v := to_integer(unsigned(mem_data_i(ra_range_t)));
+    127             1                        301             reg_b_idx_v := to_integer(unsigned(mem_data_i(rb_range_t)));
+    128                                              
+    129                                                      -- negative values for reg_X_idx_v can't occur since they are converted
+    130                                                      -- using signed(...)
+    131                                                      if (reg_a_idx_v < registers_c) then
+    132             1                        301               RegAIdx <= reg_a_idx_v;
+    133                                                      else
+    134             1                    ***0***               RegAIdx <= -1;
+    135                                                        -- pragma synthesis_off
+    136             1                          E               report "Data Path : Register A index decode error!" severity note;
+    137                                                        -- pragma synthesis_on
+    138                                                      end if;
+    139                                              
+    140                                                      if (reg_b_idx_v < registers_c) then
+    141             1                        301               RegBIdx <= reg_b_idx_v;
+    142                                                      else
+    143             1                    ***0***               RegBIdx <= -1;
+    144                                                        -- pragma synthesis_off
+    145             1                          E               report "Data Path : Register B index decode error!" severity note;
+    146                                                        -- pragma synthesis_on
+    147                                                      end if;
+    148                                              
+    149                                                    end if;
+    150                                              
+    151                                                  end if;
+    152                                                end process registers;
+    153                                              
+    154                                                -----------------------------------------------------------------------------
+    155                                                -- multiplexers
+    156                                                -----------------------------------------------------------------------------
+    157             1                       1846       LoadMux : process (mem_data_i, AluResult, sel_load_i)
+    158                                                begin
+    159                                                  case sel_load_i is
+    160             1                       1548           when '0'    => Load <= AluResult;
+    161             1                        297           when '1'    => Load <= mem_data_i;
+    162             1                          1           when others => Load <= (others => 'X');
+    163                                                  end case;
+    164                                                end process LoadMux;
+    165                                              
+    166             1                       1015       AluSideAMux : process (RegTmpA, RegPC, sel_pc_i)
+    167                                                begin
+    168                                                  case sel_pc_i is
+    169             1                        444           when '0'    => AluSideA <= RegTmpA;
+    170             1                        570           when '1'    => AluSideA <= RegPC;
+    171             1                          1           when others => AluSideA <= (others => 'X');
+    172                                                  end case;
+    173                                                end process AluSideAMux;
+    174                                              
+    175             1                        424       AddrMux : process (RegPC, RegTmpB, sel_addr_i)
+    176                                                begin
+    177                                                  case sel_addr_i is
+    178             1                        423           when '0'    => mem_addr_o <= RegPC;
+    179             1                    ***0***           when '1'    => mem_addr_o <= RegTmpB;
+    180             1                          1           when others => mem_addr_o <= (others => 'X');
+    181                                                  end case;
+    182                                                end process AddrMux;
+    183                                              
+    184             1                       1451       PcMux : process (RaValue, AluResult, sel_pc_i)
+    185                                                begin
+    186                                                  case sel_pc_i is
+    187             1                        855           when '0'    => Pc <= RaValue;
+    188             1                        595           when '1'    => Pc <= AluResult;
+    189             1                          1           when others => Pc <= (others => 'X');
+    190                                                  end case;
+    191                                                end process PcMux;
+    192                                              
+    193                                                -----------------------------------------------------------------------------
+    194                                                -- outputs
+    195                                                -----------------------------------------------------------------------------
+    196             1                        279       op_code_o  <= RegOpcode;
+    197             1                        321       mem_data_o <= RegTmpA;
+    198             1                        232       reg_decode_error_o <= '1' when (RegAIdx = -1 or RegBIdx = -1) else '0';
+    199                                              
+    200                                              end rtl;
+
+Branch Coverage:
+    Enabled Coverage            Active      Hits    Misses % Covered
+    ----------------            ------      ----    ------ ---------
+    Branches                        25        22         3      88.0
+
+================================Branch Details================================
+
+Branch Coverage for file ../src/duv_prol16/datapath.vhd --
+
+------------------------------------IF Branch------------------------------------
+    106                                     1417     Count coming in to IF
+    106             1                         13         if res_i = reset_active_nc then                     -- asynchronous reset (active low)
+    113             1                        701         elsif clk_i'event and clk_i = '1' then  -- rising clock edge
+                                             703     All False Count
+Branch totals: 3 hits of 3 branches = 100.0%
+
+------------------------------------IF Branch------------------------------------
+    118                                      701     Count coming in to IF
+    118             1                        399           if clk_en_pc_i = '1' then
+                                             302     All False Count
+Branch totals: 2 hits of 2 branches = 100.0%
+
+------------------------------------IF Branch------------------------------------
+    122                                      701     Count coming in to IF
+    122             1                        301           if clk_en_op_code_i = '1' then
+                                             400     All False Count
+Branch totals: 2 hits of 2 branches = 100.0%
+
+------------------------------------IF Branch------------------------------------
+    131                                      301     Count coming in to IF
+    131             1                        301             if (reg_a_idx_v < registers_c) then
+    133             1                    ***0***             else
+Branch totals: 1 hit of 2 branches = 50.0%
+
+------------------------------------IF Branch------------------------------------
+    140                                      301     Count coming in to IF
+    140             1                        301             if (reg_b_idx_v < registers_c) then
+    142             1                    ***0***             else
+Branch totals: 1 hit of 2 branches = 50.0%
+
+------------------------------------CASE Branch------------------------------------
+    159                                     1846     Count coming in to CASE
+    160             1                       1548           when '0'    => Load <= AluResult;
+    161             1                        297           when '1'    => Load <= mem_data_i;
+    162             1                          1           when others => Load <= (others => 'X');
+Branch totals: 3 hits of 3 branches = 100.0%
+
+------------------------------------CASE Branch------------------------------------
+    168                                     1015     Count coming in to CASE
+    169             1                        444           when '0'    => AluSideA <= RegTmpA;
+    170             1                        570           when '1'    => AluSideA <= RegPC;
+    171             1                          1           when others => AluSideA <= (others => 'X');
+Branch totals: 3 hits of 3 branches = 100.0%
+
+------------------------------------CASE Branch------------------------------------
+    177                                      424     Count coming in to CASE
+    178             1                        423           when '0'    => mem_addr_o <= RegPC;
+    179             1                    ***0***           when '1'    => mem_addr_o <= RegTmpB;
+    180             1                          1           when others => mem_addr_o <= (others => 'X');
+Branch totals: 2 hits of 3 branches = 66.6%
+
+------------------------------------CASE Branch------------------------------------
+    186                                     1451     Count coming in to CASE
+    187             1                        855           when '0'    => Pc <= RaValue;
+    188             1                        595           when '1'    => Pc <= AluResult;
+    189             1                          1           when others => Pc <= (others => 'X');
+Branch totals: 3 hits of 3 branches = 100.0%
+
+------------------------------------IF Branch------------------------------------
+    198                                      232     Count coming in to IF
+    198             1                          1       reg_decode_error_o <= '1' when (RegAIdx = -1 or RegBIdx = -1) else '0';
+    198             2                        231       reg_decode_error_o <= '1' when (RegAIdx = -1 or RegBIdx = -1) else '0';
+Branch totals: 2 hits of 2 branches = 100.0%
+
+
+Condition Coverage:
+    Enabled Coverage            Active   Covered    Misses % Covered
+    ----------------            ------      ----    ------ ---------
+    FEC Condition Terms              2         1         1      50.0
+
+================================Condition Details================================
+
+Condition Coverage for file ../src/duv_prol16/datapath.vhd --
+
+----------------Focused Condition View-------------------
+Line       198 Item    1  ((RegAIdx =  - 1) or (RegBIdx =  - 1))
+Condition totals: 1 of 2 input terms covered = 50.0%
+
+        Input Term   Covered  Reason for no coverage   Hint
+       -----------  --------  -----------------------  --------------
+  (RegAIdx =  - 1)         Y
+  (RegBIdx =  - 1)         N  '_1' not hit             Hit '_1'
+
+     Rows:       Hits  FEC Target            Non-masking condition(s)      
+ ---------  ---------  --------------------  -------------------------     
+  Row   1:          1  (RegAIdx =  - 1)_0    not (RegBIdx =  - 1)          
+  Row   2:          1  (RegAIdx =  - 1)_1    -                             
+  Row   3:          1  (RegBIdx =  - 1)_0    not (RegAIdx =  - 1)          
+  Row   4:    ***0***  (RegBIdx =  - 1)_1    not (RegAIdx =  - 1)          
+
+
+Expression Coverage:
+    Enabled Coverage            Active   Covered    Misses % Covered
+    ----------------            ------      ----    ------ ---------
+    FEC Expression Terms             0         0         0     100.0
+FSM Coverage:
+    Enabled Coverage            Active      Hits    Misses % Covered
+    ----------------            ------      ----    ------ ---------
+    FSMs                                                       100.0
+        States                       0         0         0     100.0
+        Transitions                  0         0         0     100.0
+
+=================================================================================
+=== File: ../src/duv_prol16/reg_file.vhd
+=================================================================================
+Statement Coverage:
+    Enabled Coverage            Active      Hits    Misses % Covered
+    ----------------            ------      ----    ------ ---------
+    Stmts                            4         4         0     100.0
+
+================================Statement Details================================
+
+Statement Coverage for file ../src/duv_prol16/reg_file.vhd --
+
+    1                                                -- This file is part of Prol16.
+    2                                                --
+    3                                                -- Copyright (C) 2005-2008 Rainer Findenig
+    4                                                -- Based on work done by Markus Lindorfer
+    5                                                --
+    6                                                -- Prol16 is free software: you can redistribute it and/or modify
+    7                                                -- it under the terms of the GNU General Public License as published by
+    8                                                -- the Free Software Foundation, either version 3 of the License, or
+    9                                                -- (at your option) any later version.
+    10                                               -- 
+    11                                               -- Prol16 is distributed in the hope that it will be useful,
+    12                                               -- but WITHOUT ANY WARRANTY; without even the implied warranty of
+    13                                               -- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    14                                               -- GNU General Public License for more details.
+    15                                               -- 
+    16                                               -- You should have received a copy of the GNU General Public License
+    17                                               -- along with Prol16.  If not, see <http://www.gnu.org/licenses/>.
+    18                                               
+    19                                               library ieee;
+    20                                               use ieee.std_logic_1164.all;
+    21                                               
+    22                                               library work;
+    23                                               use work.prol16_pack.all;
+    24                                               
+    25                                               entity reg_file is
+    26                                               
+    27                                                 generic (
+    28                                                   registers_g : integer := registers_c;
+    29                                                   is_fpga_g   : integer := tech_is_fpga_c);
+    30                                               
+    31                                                 port (
+    32                                                   clk_i : in std_ulogic;
+    33                                                   -- no reset (efficient FPGA implementation)
+    34                                               
+    35                                                   reg_a_idx_i       : in reg_idx_t;
+    36                                                   reg_b_idx_i       : in reg_idx_t;
+    37                                                   clk_en_reg_file_i : in std_ulogic;
+    38                                               
+    39                                                   reg_i   : in  data_vec_t;
+    40                                                   reg_a_o : out data_vec_t;
+    41                                                   reg_b_o : out data_vec_t);
+    42                                               
+    43                                               end reg_file;
+    44                                               
+    45                                               architecture rtl of reg_file is
+    46                                                 type registers_t is array (registers_g-1 downto 0) of data_vec_t;
+    47                                               
+    48                                                 signal registers : registers_t;
+    49                                               begin  -- rtl
+    50                                               
+    51                                                 -----------------------------------------------------------------------------
+    52                                                 -- read ports
+    53                                                 -----------------------------------------------------------------------------
+    54              1                        327       reg_a_o <= registers(reg_a_idx_i) when reg_a_idx_i /= -1 else (others => 'X');
+    55              1                        187       reg_b_o <= registers(reg_b_idx_i) when reg_b_idx_i /= -1 else (others => 'X');
+    56                                               
+    57                                                 -----------------------------------------------------------------------------
+    58                                                 -- write ports
+    59                                                 -----------------------------------------------------------------------------
+    60              1                       1415       reg_write : process (clk_i)
+    61                                                 begin  -- process reg_write
+    62                                                   if clk_i'event and clk_i = '1' then  -- rising clock edge
+    63                                                     if clk_en_reg_file_i = '1' then
+    64                                               		if reg_a_idx_i /= -1 then
+    65              1                        140               registers(reg_a_idx_i) <= reg_i;
+    66                                                       end if;
+    67                                                     end if;
+    68                                                   end if;
+    69                                                 end process reg_write;
+    70                                               end rtl;
+
+Branch Coverage:
+    Enabled Coverage            Active      Hits    Misses % Covered
+    ----------------            ------      ----    ------ ---------
+    Branches                        10         9         1      90.0
+
+================================Branch Details================================
+
+Branch Coverage for file ../src/duv_prol16/reg_file.vhd --
+
+------------------------------------IF Branch------------------------------------
+    54                                       327     Count coming in to IF
+    54              1                        325       reg_a_o <= registers(reg_a_idx_i) when reg_a_idx_i /= -1 else (others => 'X');
+    54              2                          2       reg_a_o <= registers(reg_a_idx_i) when reg_a_idx_i /= -1 else (others => 'X');
+Branch totals: 2 hits of 2 branches = 100.0%
+
+------------------------------------IF Branch------------------------------------
+    55                                       187     Count coming in to IF
+    55              1                        185       reg_b_o <= registers(reg_b_idx_i) when reg_b_idx_i /= -1 else (others => 'X');
+    55              2                          2       reg_b_o <= registers(reg_b_idx_i) when reg_b_idx_i /= -1 else (others => 'X');
+Branch totals: 2 hits of 2 branches = 100.0%
+
+------------------------------------IF Branch------------------------------------
+    62                                      1415     Count coming in to IF
+    62              1                        707         if clk_i'event and clk_i = '1' then  -- rising clock edge
+                                             708     All False Count
+Branch totals: 2 hits of 2 branches = 100.0%
+
+------------------------------------IF Branch------------------------------------
+    63                                       707     Count coming in to IF
+    63              1                        140           if clk_en_reg_file_i = '1' then
+                                             567     All False Count
+Branch totals: 2 hits of 2 branches = 100.0%
+
+------------------------------------IF Branch------------------------------------
+    64                                       140     Count coming in to IF
+    64              1                        140     		if reg_a_idx_i /= -1 then
+                                         ***0***     All False Count
+Branch totals: 1 hit of 2 branches = 50.0%
+
+
+Condition Coverage:
+    Enabled Coverage            Active   Covered    Misses % Covered
+    ----------------            ------      ----    ------ ---------
+    FEC Condition Terms              0         0         0     100.0
+Expression Coverage:
+    Enabled Coverage            Active   Covered    Misses % Covered
+    ----------------            ------      ----    ------ ---------
+    FEC Expression Terms             0         0         0     100.0
+FSM Coverage:
+    Enabled Coverage            Active      Hits    Misses % Covered
+    ----------------            ------      ----    ------ ---------
+    FSMs                                                       100.0
+        States                       0         0         0     100.0
+        Transitions                  0         0         0     100.0
+
+COVERGROUP COVERAGE:
+-----------------------------------------------------------------------------------------------
+Covergroup                                             Metric       Goal    Status               
+                                                                                              
+-----------------------------------------------------------------------------------------------
+ TYPE /top/TheTest/cov_grp                              87.5%        100    Uncovered            
+    covered/total bins:                                    21         24                      
+    missing/total bins:                                     3         24                      
+    % Hit:                                              87.5%        100                      
+    Coverpoint cov_grp::pt_cmd                          87.5%        100    Uncovered            
+        covered/total bins:                                21         24                      
+        missing/total bins:                                 3         24                      
+        % Hit:                                          87.5%        100                      
+ Covergroup instance \/top/TheTest/stimuli/cov_grp_inst  
+                                                        87.5%        100    Uncovered            
+    covered/total bins:                                    21         24                      
+    missing/total bins:                                     3         24                      
+    % Hit:                                              87.5%        100                      
+    Coverpoint pt_cmd                                   87.5%        100    Uncovered            
+        covered/total bins:                                21         24                      
+        missing/total bins:                                 3         24                      
+        % Hit:                                          87.5%        100                      
+        bin bin_op_nop                                      3          1    Covered              
+        bin bin_op_sleep                                    0          1    ZERO                 
+        bin bin_op_loadi                                   99          1    Covered              
+        bin bin_op_load                                     0          1    ZERO                 
+        bin bin_op_store                                    0          1    ZERO                 
+        bin bin_op_jump                                    45          1    Covered              
+        bin bin_op_jumpc                                   45          1    Covered              
+        bin bin_op_jumpz                                   47          1    Covered              
+        bin bin_op_move                                     5          1    Covered              
+        bin bin_op_and                                      3          1    Covered              
+        bin bin_op_or                                       2          1    Covered              
+        bin bin_op_xor                                      2          1    Covered              
+        bin bin_op_not                                      2          1    Covered              
+        bin bin_op_add                                      3          1    Covered              
+        bin bin_op_addc                                     2          1    Covered              
+        bin bin_op_sub                                      5          1    Covered              
+        bin bin_op_subc                                     2          1    Covered              
+        bin bin_op_comp                                    21          1    Covered              
+        bin bin_op_inc                                      2          1    Covered              
+        bin bin_op_dec                                      3          1    Covered              
+        bin bin_op_shl                                      2          1    Covered              
+        bin bin_op_shr                                      3          1    Covered              
+        bin bin_op_shlc                                     3          1    Covered              
+        bin bin_op_shrc                                     2          1    Covered              
+
+TOTAL COVERGROUP COVERAGE: 87.5%  COVERGROUP TYPES: 1
+
+ASSERTION RESULTS:
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Name                 Assertion   Design     Design     Lang File(Line)           Enable  Failure Pass  FPSA   Failure Pass Failure   EOS   Formal       Formal
+                     Type        Unit       UnitType                                     Count   Count Action Log     Log  Limit     Note  Status       Radius
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+/testbench_sv_unit/Generator/nextTest/immed__18
+                     Immediate   testbench_sv_unit Verilog    SVA  ../src/generator.sv(18)   on         0     1  CCCC    -          -  unlimited off                      
+/testbench_sv_unit/Checker/checkResult/immed__15
+                     Immediate   testbench_sv_unit Verilog    SVA  ../src/checker.sv(15)   on         0     1  CCCC    -          -  unlimited off                      
+
+Total Coverage By File (code coverage only, filtered view): 73.0%
+
