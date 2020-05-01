@@ -19,9 +19,18 @@ class Generator;
     return testQueue.pop_front();
   endfunction
 
+  local function Prol16OpcodeQueue generateRandomTests();
+    Prol16OpcodeQueue tests;
+
+    for (int i = 0; i < gTestCount; ++i) begin
+      tests.push_back(Prol16Opcode::createRandomized());
+    end
+
+    return tests;
+  endfunction
 
 
-  local function Prol16OpcodeQueue generateTests();
+  local function Prol16OpcodeQueue generateDirectedTests();
     Prol16OpcodeQueue tests;
 
     tests.push_back(Prol16Opcode::create(LOADI, 7, UNUSED, $urandom_range(0, 2**16-1)));

@@ -33,10 +33,33 @@ typedef enum int {
 
 
 class Prol16Opcode;
-    int ra;
-    int rb;
-    Prol16Command cmd;
-    data_v data;
+    rand int ra;
+    rand int rb;
+    rand Prol16Command cmd;
+    rand data_v data;
+
+    constraint reg_a { ra inside {[0:gRegs-1]}; }
+    constraint reg_b { rb inside {[0:gRegs-1]}; }
+
+    constraint ignore_cmds { !(cmd inside {SLEEP, STORE, LOAD}); }
+
+    constraint no_reg_used {
+        cmd inside {
+            NOP, SLEEP
+        } -> (ra == 0 && rb == 0);
+    }
+
+    constraint only_one_reg_used {
+        cmd inside {
+            LOADI, JUMP, JUMPC, JUMPZ, NOT, INC, DEC, SHL, SHR, SHLC, SHRC
+        } -> (rb == 0);
+    }
+
+    constraint data_zero {
+        cmd != LOADI -> data == 0;
+    }
+
+//    constraint c_cmd { cmd inside {[0:31]}; }
 
     function new();
         setAll(NOP);
@@ -45,6 +68,13 @@ class Prol16Opcode;
     static function Prol16Opcode create(Prol16Command cmd, int ra = UNUSED, int rb = UNUSED, data_v data = '0);
         Prol16Opcode op = new;
         op.setAll(cmd, ra, rb, data);
+        return op;
+    endfunction
+
+    static function Prol16Opcode createRandomized();
+        Prol16Opcode op = new;
+        assert(op.randomize());
+        $display("Command: %s, ", op.cmd);
         return op;
     endfunction
 
