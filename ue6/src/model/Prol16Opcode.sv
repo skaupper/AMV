@@ -48,7 +48,7 @@ class Prol16Opcode;
             NOP, LOADI, JUMP, JUMPC, JUMPZ,
             MOVE, AND, OR, XOR, NOT,
             ADD, ADDC, SUB, SUBC, COMP,
-            INC, DEC, SHL, SHR, SHLC, SHRC,
+            INC, DEC, SHL, SHR, SHLC, SHRC
         };
     }
 
