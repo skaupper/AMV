@@ -35,7 +35,7 @@ typedef enum int {
 class Prol16Opcode;
     rand int ra;
     rand int rb;
-    rand Prol16Command cmd;
+    randc Prol16Command cmd;
     data_v data;
 
     constraint reg_a { ra inside {[0:gRegs-1]}; }
