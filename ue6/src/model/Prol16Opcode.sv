@@ -35,13 +35,22 @@ typedef enum bit[5:0] {
 class Prol16Opcode;
     rand int ra;
     rand int rb;
-    randc Prol16Command cmd;
+    rand Prol16Command cmd;
     data_v data;
 
     constraint reg_a { ra inside {[0:gRegs-1]}; }
     constraint reg_b { rb inside {[0:gRegs-1]}; }
 
     constraint ignore_cmds { !(cmd inside {SLEEP, STORE, LOAD}); }
+
+    constraint valid_cmds {
+        cmd inside {
+            NOP, LOADI, JUMP, JUMPC, JUMPZ,
+            MOVE, AND, OR, XOR, NOT,
+            ADD, ADDC, SUB, SUBC, COMP,
+            INC, DEC, SHL, SHR, SHLC, SHRC,
+        };
+    }
 
     constraint no_reg_used {
         cmd inside {
