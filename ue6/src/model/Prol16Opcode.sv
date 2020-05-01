@@ -43,19 +43,18 @@ class Prol16Opcode;
 
     constraint ignore_cmds { !(cmd inside {SLEEP, STORE, LOAD}); }
 
-    constraint no_reg_used {
-        cmd inside {
-            NOP, SLEEP
-        } -> (ra == 0 && rb == 0);
-    }
+    // constraint no_reg_used {
+    //     cmd inside {
+    //         NOP, SLEEP
+    //     } -> (ra == 0 && rb == 0);
+    // }
 
-    constraint only_one_reg_used {
-        cmd inside {
-            LOADI, JUMP, JUMPC, JUMPZ, NOT, INC, DEC, SHL, SHR, SHLC, SHRC
-        } -> (rb == 0);
-    }
+    // constraint only_one_reg_used {
+    //     cmd inside {
+    //         LOADI, JUMP, JUMPC, JUMPZ, NOT, INC, DEC, SHL, SHR, SHLC, SHRC
+    //     } -> (rb == 0);
+    // }
 
-//    constraint c_cmd { cmd inside {[0:31]}; }
 
     function new();
         setAll(NOP);
