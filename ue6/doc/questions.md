@@ -1,5 +1,20 @@
 # Constrained Random Stimulus
 
+## Sind die randomisierten Werte vorhersehbar? Begründen Sie Ihre Antwort! WelchenVorteil haben/hätten vorhersehbare Werte?
+
+## Welcher mathematischen Funktion folgt die erreichte Functional Coverage in Abhängigkeit der Anzahl der durchgeführten Tests? Begründen Sie diesen Verlauf!
+
+## Wie würden Sie ihre Constraints der Klasse Prol16Opode wählen, wenn:
+
+### 50% der generierten Registeradressen 0 sein sollen?
+
+### Die beiden Registeradressen für NOP immer 0 sein müssen?
+
+## Was ist der Unterschied zwischen rand und randc?
+
+## Wieviele Befehle werden mindestens benötigt, um das folgende Covarage-Ziel zu erreichen (siehe Angabe)?
+
+
 
 # 2 Modellierung
 
