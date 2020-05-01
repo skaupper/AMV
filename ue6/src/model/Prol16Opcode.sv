@@ -49,11 +49,11 @@ class Prol16Opcode;
         } -> (ra == 0 && rb == 0);
     }
 
-    // constraint only_one_reg_used {
-    //     cmd inside {
-    //         LOADI, JUMP, JUMPC, JUMPZ, NOT, INC, DEC, SHL, SHR, SHLC, SHRC
-    //     } -> (rb == 0);
-    // }
+    constraint only_one_reg_used {
+        cmd inside {
+            LOADI, JUMP, JUMPC, JUMPZ, NOT, INC, DEC, SHL, SHR, SHLC, SHRC
+        } -> (rb == 0);
+    }
 
 
     function new();
