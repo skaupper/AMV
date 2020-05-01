@@ -4,7 +4,7 @@
 
 localparam int gRegs        = 8;
 localparam int gDataWidth   = 16;
-localparam int gTestCount   = 100;
+localparam int gTestCount   = 10;
 
 const int UNUSED = 0;
 

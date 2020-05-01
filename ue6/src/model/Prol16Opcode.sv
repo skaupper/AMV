@@ -36,7 +36,7 @@ class Prol16Opcode;
     rand int ra;
     rand int rb;
     rand Prol16Command cmd;
-    rand data_v data;
+    data_v data;
 
     constraint reg_a { ra inside {[0:gRegs-1]}; }
     constraint reg_b { rb inside {[0:gRegs-1]}; }
@@ -55,10 +55,6 @@ class Prol16Opcode;
         } -> (rb == 0);
     }
 
-    constraint data_zero {
-        cmd != LOADI -> data == 0;
-    }
-
 //    constraint c_cmd { cmd inside {[0:31]}; }
 
     function new();
@@ -74,6 +70,9 @@ class Prol16Opcode;
     static function Prol16Opcode createRandomized();
         Prol16Opcode op = new;
         assert(op.randomize());
+        if (op.cmd == LOADI) begin
+            op.data = $urandom(2**gDataWidth);
+        end
         op.print();
         return op;
     endfunction
