@@ -47,15 +47,12 @@ class Prol16Opcode;
         cmd inside {
             NOP, SLEEP
         } -> (ra == 0 && rb == 0);
-        solve cmd before ra;
-        solve cmd before rb;
     }
 
     constraint only_one_reg_used {
         cmd inside {
             LOADI, JUMP, JUMPC, JUMPZ, NOT, INC, DEC, SHL, SHR, SHLC, SHRC
         } -> (rb == 0);
-        solve cmd before rb;
     }
 
 
