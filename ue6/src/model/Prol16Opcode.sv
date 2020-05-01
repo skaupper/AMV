@@ -55,6 +55,11 @@ class Prol16Opcode;
         } -> (rb == 0);
     }
 
+    constraint prio_cmd {
+        solve cmd before ra;
+        solve cmd before rb;
+    }
+
 
     function new();
         setAll(NOP);
