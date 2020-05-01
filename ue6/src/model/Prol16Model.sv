@@ -30,7 +30,7 @@ class Prol16Model;
     endfunction
 
     function void executeNext();
-        nextOpc.print();
+        // nextOpc.print();
         execute(nextOpc);
     endfunction
 
