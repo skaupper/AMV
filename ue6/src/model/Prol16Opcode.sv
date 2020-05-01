@@ -35,7 +35,7 @@ typedef enum bit[5:0] {
 class Prol16Opcode;
     rand int ra;
     rand int rb;
-    randc Prol16Command cmd;
+    rand Prol16Command cmd;
     data_v data;
 
     constraint reg_a { ra inside {[0:gRegs-1]}; }
@@ -53,6 +53,11 @@ class Prol16Opcode;
         cmd inside {
             LOADI, JUMP, JUMPC, JUMPZ, NOT, INC, DEC, SHL, SHR, SHLC, SHRC
         } -> (rb == 0);
+    }
+
+    constraint prio_cmd {
+        solve cmd before ra;
+        solve cmd before rb;
     }
 
 
