@@ -11,10 +11,13 @@ class Checker;
     model = _model;
   endfunction
 
-  function void checkResult (Prol16State duv_state);
-    assert (duv_state.equals(model.state));
+  function automatic bit checkResult (Prol16State duv_state);
+    bit equal = duv_state.equals(model.state);
+    assert (equal);
     // duv_state.print();
     // model.state.print();
+
+    return equal;
   endfunction
 
 endclass

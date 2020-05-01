@@ -246,7 +246,9 @@ program test (cpu_if.tb duv_if, output logic rst);
         forever begin
             model.executeNext();
             monitor.waitForTest(state, duv_state);
-            check.checkResult(state);
+            if (!check.checkResult(state)) begin
+                model.nextOpc.print();
+            end
         end
     end : monitor_checker
 
