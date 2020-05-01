@@ -7,6 +7,7 @@ class Generator;
   Prol16OpcodeQueue testQueue;
 
   function new();
+    $random(gSeed);
     testQueue = generateRandomTests();
   endfunction
 

@@ -14,9 +14,10 @@ class Checker;
   function automatic bit checkResult (Prol16State duv_state);
     bit equal = duv_state.equals(model.state);
     assert (equal);
-    // duv_state.print();
-    // model.state.print();
-
+    if (!equal) begin
+      duv_state.print();
+      model.state.print();
+    end
     return equal;
   endfunction
 

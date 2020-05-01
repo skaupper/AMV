@@ -5,6 +5,7 @@
 localparam int gRegs        = 8;
 localparam int gDataWidth   = 16;
 localparam int gTestCount   = 10;
+localparam int gSeed        = 16'h1234;
 
 const int UNUSED = 0;
 
