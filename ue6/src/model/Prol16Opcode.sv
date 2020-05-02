@@ -36,21 +36,12 @@ class Prol16Opcode;
     rand int ra;
     rand int rb;
     rand Prol16Command cmd;
-    data_v data;
+    rand data_v data;
 
     constraint reg_a { ra inside {[0:gRegs-1]}; }
     constraint reg_b { rb inside {[0:gRegs-1]}; }
 
     constraint ignore_cmds { !(cmd inside {SLEEP, STORE, LOAD}); }
-
-    constraint valid_cmds {
-        cmd inside {
-            NOP, LOADI, JUMP, JUMPC, JUMPZ,
-            MOVE, AND, OR, XOR, NOT,
-            ADD, ADDC, SUB, SUBC, COMP,
-            INC, DEC, SHL, SHR, SHLC, SHRC
-        };
-    }
 
     constraint no_reg_used {
         cmd inside {
@@ -64,9 +55,10 @@ class Prol16Opcode;
         } -> (rb == 0);
     }
 
-    constraint prio_cmd {
-      solve cmd before ra;
-      solve cmd before rb;
+    constraint order {
+        solve cmd before data;
+        solve cmd before ra;
+        solve cmd before rb;
     }
 
 
@@ -83,9 +75,6 @@ class Prol16Opcode;
     static function Prol16Opcode createRandomized();
         Prol16Opcode op = new;
         assert(op.randomize());
-        if (op.cmd == LOADI) begin
-            op.data = $urandom(2**gDataWidth);
-        end
         // op.print();
         return op;
     endfunction
