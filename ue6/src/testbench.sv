@@ -194,7 +194,14 @@ program test (cpu_if.tb duv_if, output logic rst);
 
             illegal_bins carry_not_zero = binsof(pt_last_cmd) intersect {
                 AND, OR, XOR, NOT
-            } && binsof(pt_carry.carry) intersect {1};
+            } && (binsof(pt_carry.carry) intersect {1} || binsof(pt_carry.trans_11) || binsof(pt_carry.trans_01));
+
+            // The status flags of the INC command have following conditions:
+            illegal_bins invalid_carry_zero_combination_inc = binsof(pt_last_cmd) intersect {INC}
+                            && ((binsof(pt_carry.carry) intersect {1} && binsof(pt_zero.zero) intersect {0})      // a) Zero cannot be 0 if Carry is 1
+                                || (binsof(pt_carry.carry) intersect {0} && binsof(pt_zero.zero) intersect {1})   // b) Zero cannot be 1 if Carry is 0
+                                || (binsof(pt_carry.trans_01) ^ binsof(pt_zero.trans_01))                         // c) A carry transition 0->1 must imply a zero transition 0->1
+                                || (binsof(pt_carry.trans_11)) || binsof(pt_zero.trans_11));                      // d) Neither a carry nor a zero transition 1->1 is possible
         }
 
     endgroup
