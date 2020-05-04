@@ -198,6 +198,17 @@ program test (cpu_if.tb duv_if, output logic rst);
 
 
             illegal_bins inc_carry_and_zero = cross_op_and_flags with (pt_last_cmd == INC && (pt_carry.carry != pt_zero.carry));
+
+            illegal_bins test = binsof(pt_last_cmd) intersect { INC } &&
+
+                // carry = 0 && zero = 1
+                (((binsof(pt_carry.trans_00) || binsof(pt_carry.trans_10) || binsof(pt_carry.carry) intersect {0}) &&
+                 (binsof(pt_zero.trans_01) || binsof(pt_zero.trans_11) || binsof(pt_zero.zero) intersect {1})) ||
+
+                // carry = 1 && zero = 0
+                (((binsof(pt_carry.trans_01) || binsof(pt_carry.trans_11) || binsof(pt_carry.carry) intersect {1}) &&
+                 (binsof(pt_zero.trans_00) || binsof(pt_zero.trans_10) || binsof(pt_zero.zero) intersect {0}))
+                );
         }
 
     endgroup
