@@ -39,6 +39,7 @@ class Generator;
 
     // bin <op_add,carry[1],trans_11>
     // bin <op_add,trans_11,trans_11>
+    // bin <op_add,trans_01,trans_11>
     tests.push_back(Prol16Opcode::create(LOADI, 0, UNUSED, 16'hffff));
     tests.push_back(Prol16Opcode::create(LOADI, 1, UNUSED, 16'h0001));
     tests.push_back(Prol16Opcode::create(COMP, 0, 0)); // set zero flag
@@ -48,7 +49,6 @@ class Generator;
 
     // bin <op_subc,carry[1],trans_11>
     // bin <op_shlc,carry[1],trans_11>
-    // bin <op_add,trans_01,trans_11>
     // bin <op_shlc,trans_01,trans_11>
     // bin <op_or,trans_10,trans_11>
     // bin <op_xor,trans_10,trans_11>

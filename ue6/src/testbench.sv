@@ -60,8 +60,8 @@ program test (cpu_if.tb duv_if, output logic rst);
         $init_signal_spy("/top/duv/control_inst/zero",                       "/top/TheTest/duv_state.cpu_zero");
         $init_signal_spy("/top/duv/control_inst/carry",                      "/top/TheTest/duv_state.cpu_carry");
         $init_signal_spy("/top/duv/datapath_inst/RegOpCode",                 "/top/TheTest/reg_op_code");
-		$init_signal_spy("/top/duv/datapath_inst/RegAIdx",                   "/top/TheTest/reg_a_idx");
-		$init_signal_spy("/top/duv/datapath_inst/RegBIdx",                   "/top/TheTest/reg_b_idx");
+        $init_signal_spy("/top/duv/datapath_inst/RegAIdx",                   "/top/TheTest/reg_a_idx");
+        $init_signal_spy("/top/duv/datapath_inst/RegBIdx",                   "/top/TheTest/reg_b_idx");
     endfunction
 
     function void resetCpuRegs();
