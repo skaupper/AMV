@@ -23,6 +23,13 @@ class Generator;
   local function Prol16OpcodeQueue generateRandomTests();
     Prol16OpcodeQueue tests;
 
+    // bin <op_add,carry[1],trans_11>
+    // bin <op_add,trans_11,trans_11>
+    tests.push_back(Prol16Opcode::create(LOADI, 0, UNUSED, 16'hffff));
+    tests.push_back(Prol16Opcode::create(LOADI, 1, UNUSED, 16'h0001));
+    tests.push_back(Prol16Opcode::create(COMP, 0, 0)); // set zero flag
+    tests.push_back(Prol16Opcode::create(ADD, 0, 1));  // produce overflow
+
     for (int i = 0; i < gTestCount; ++i) begin
       tests.push_back(Prol16Opcode::createRandomized());
     end
