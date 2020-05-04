@@ -9,7 +9,9 @@ Zusätzlich hat diese Pseudorandomness den Vorteil, dass durch den gleichen Seed
 
 ## Welcher mathematischen Funktion folgt die erreichte Functional Coverage in Abhängigkeit der Anzahl der durchgeführten Tests? Begründen Sie diesen Verlauf!
 
+Die geplottete Kurve erinnert an eine Variante der e-Funktion (beschränktes exponentielles Wachstum). Dh. am Anfang ist der Anstieg relativ steil und je näher sich die Kurve gegen 100% nähert, desto langsamer wird der Anstieg.
 
+Dieser Effekt tritt auf, da am Anfang alle Bins noch leer sind, und jeder Bin-Treffer sich direkt auf das Ergebnis auswirkt. Am Schluss sind die meisten Bins schon befüllt und es können nur noch Lücken (= unwahrscheinlichere Fälle) aufgefüllt werden.
 
 
 ## Wie würden Sie ihre Constraints der Klasse Prol16Opode wählen, wenn:
@@ -37,7 +39,7 @@ Damit das Constraint erfüllt ist, müssen `ra` und `rb` 0 sein, sobald `cmd` `N
 
 Bei `rand` werden zufällige Werte aus dem gültigen Wertebereich generiert, ohne dass vorhergegangene Werte einen Einfluss auf die nächsten Werte haben.
 
-`randc` generiert zyklisch (und zufällig) jeden möglichen Wert genau 1x bevor sich ein Wert wiederholen darf.
+`randc` generiert zyklisch (und zufällig) jeden möglichen Wert genau 1x bevor sich ein Wert wiederholen darf. ("Ziehen ohne Zurücklegen")
 
 ## Wieviele Befehle werden mindestens benötigt, um das folgende Covarage-Ziel zu erreichen (siehe Angabe)?
 
@@ -46,14 +48,16 @@ Anzahl der Befehle, die:
 - Carry auf 0 setzen und Zero beeinflussen:    `cmd_01 = 4`
 - beide Status Flags setzen:                   `cmd_11 = 11`
 
-Kein Befehl aus `cmd_00` setzt je ein Flag, demnach sind hierfür 5 Testfälle ausreichend.
+Kein Befehl aus `cmd_00` setzt je ein Flag, demnach sind hierfür `5*4=20` Testfälle ausreichend.
 
-Die Befehle aus `cmd_01` können jeweils 2 verschiedene Ausgaben (= Flagkombinationen) generieren, also werden hierfür mindestens 8 Testfälle benötigt.
+Die Befehle aus `cmd_01` können jeweils 2 verschiedene Ausgaben (= Flagkombinationen) generieren, also werden hierfür mindestens `4*2*4=32` Testfälle benötigt.
 
-Die Befehle aus `cmd_11` können jeweils 4 verschiedene Ausgaben (= Flagkombinationen) generieren, also werden hierfür mindestens 44 Testfälle benötigt.
+Die Befehle aus `cmd_11` können jeweils 4 verschiedene Ausgaben (= Flagkombinationen) generieren, also werden hierfür mindestens `4*11*4=176` Testfälle benötigt.
 
-Insgesamt wären also mindestens `44+8+5=57` Testfälle nötig, um die geforderten Bedingungen zu prüfen.
+Insgesamt wären also mindestens `20+32+176=228` Testfälle nötig, um die geforderten Bedingungen zu prüfen.
 
+
+Der vorliegende Test braucht etwas mehr als 10000 Testfälle, um die relevantesten dieser Fälle abzudecken. Das liegt vor allem daran, dass manche Ausgaben höchst unwahrscheinlich sind und dementsprechend selten generiert werden. Damit bspw. der Befehl `SHL` sowohl das Carry- als auch das Zero-Bit setzt, muss der geshiftete Registerwert genau den Wert `0x8000` annehmen.
 
 
 # 2 Modellierung
