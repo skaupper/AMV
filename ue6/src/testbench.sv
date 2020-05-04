@@ -210,7 +210,7 @@ program test (cpu_if.tb duv_if, output logic rst);
                      (binsof(pt_zero.trans_00)  || binsof(pt_zero.trans_10)  || binsof(pt_zero.zero) intersect {0}))
                 );
 
-            illegal_bins sub_carry_and_zero = binsof(pt_last_cmd) intersect { SUB, COMP } &&
+            illegal_bins carry_and_zero_1 = binsof(pt_last_cmd) intersect { SUB, COMP, DEC } &&
                 (
                     // carry = 1 && zero = 1
                     ((binsof(pt_carry.trans_01) || binsof(pt_carry.trans_11) || binsof(pt_carry.carry) intersect {1}) &&
