@@ -216,6 +216,10 @@ program test (cpu_if.tb duv_if, output logic rst);
                     ((binsof(pt_carry.trans_01) || binsof(pt_carry.trans_11) || binsof(pt_carry.carry) intersect {1}) &&
                      (binsof(pt_zero.trans_01)  || binsof(pt_zero.trans_11)  || binsof(pt_zero.zero) intersect {1}))
                 );
+
+            illegal_bins subc = binsof(pt_last_cmd) intersect {SUBC} && binsof(pt_carry.trans_01) &&
+                // Zero = 1
+                (binsof(pt_zero.zero) intersect {1} || binsof(pt_zero.trans_01) || binsof(pt_zero.trans_11));
         }
 
     endgroup
