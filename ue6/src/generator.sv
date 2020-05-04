@@ -8,7 +8,10 @@ class Generator;
 
   function new();
     $random(gSeed);
-    testQueue = generateRandomTests();
+    testQueue = {
+      generateRandomTests(),
+      generateUnlikelyTests()
+    };
   endfunction
 
   function bit hasTests();
