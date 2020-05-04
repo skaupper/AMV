@@ -197,9 +197,7 @@ program test (cpu_if.tb duv_if, output logic rst);
             } && (binsof(pt_carry.carry) intersect {1} || binsof(pt_carry.trans_11) || binsof(pt_carry.trans_01));
 
 
-            illegal_bins inc_carry_and_zero = cross_op_and_flags with (pt_last_cmd == INC && (pt_carry.carry != pt_zero.carry));
-
-            illegal_bins test = binsof(pt_last_cmd) intersect { INC } &&
+            illegal_bins inc_carry_and_zero = binsof(pt_last_cmd) intersect { INC } &&
                 (
                     // carry = 0 && zero = 1
                     ((binsof(pt_carry.trans_00) || binsof(pt_carry.trans_10) || binsof(pt_carry.carry) intersect {0}) &&
