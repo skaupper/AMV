@@ -198,7 +198,8 @@ program test (cpu_if.tb duv_if, output logic rst);
 
             illegal_bins inc_carry_and_zero = binsof(pt_last_cmd) intersect {
                 INC
-            } && binsof(pt_carry.carry) != binsof(pt_zero.zero);
+            } && (binsof(pt_carry.carry) intersect {val_carry} && binsof(pt_zero.zero) intersect {val_zero}
+                    with (val_zero != val_carry));
         }
 
     endgroup
