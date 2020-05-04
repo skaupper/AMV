@@ -9,11 +9,17 @@ Zusätzlich hat diese Pseudorandomness den Vorteil, dass durch den gleichen Seed
 
 ## Welcher mathematischen Funktion folgt die erreichte Functional Coverage in Abhängigkeit der Anzahl der durchgeführten Tests? Begründen Sie diesen Verlauf!
 
+
+
+
 ## Wie würden Sie ihre Constraints der Klasse Prol16Opode wählen, wenn:
 
 ### 50% der generierten Registeradressen 0 sein sollen?
 
+    constraint half_zero { ra dist { 0:=50, [1:gRegs]/=50}; }
 
+Hierbei wird den möglichen Werten für die Variable `ra` jeweils ein Gewicht zugeordnet. Der Wert `0` bekommt das Gewicht,
+alle restlichen Werte (1-`gRegs`) bekommen INSGESAMT (durch den `/=` Operator) ein Gewicht von 50 zugeordnet.
 
 ### Die beiden Registeradressen für NOP immer 0 sein müssen?
 
@@ -40,11 +46,13 @@ Anzahl der Befehle, die:
 - Carry auf 0 setzen und Zero beeinflussen:    `cmd_01 = 4`
 - beide Status Flags setzen:                   `cmd_11 = 11`
 
-Kein Befehl aus `cmd_00` setzt je ein Flag, demnach sind hierführ 5 Testfälle ausreichend.
+Kein Befehl aus `cmd_00` setzt je ein Flag, demnach sind hierfür 5 Testfälle ausreichend.
 
 Die Befehle aus `cmd_01` können jeweils 2 verschiedene Ausgaben (= Flagkombinationen) generieren, also werden hierfür mindestens 8 Testfälle benötigt.
 
 Die Befehle aus `cmd_11` können jeweils 4 verschiedene Ausgaben (= Flagkombinationen) generieren, also werden hierfür mindestens 44 Testfälle benötigt.
+
+Insgesamt wären also mindestens `44+8+5=57` Testfälle nötig, um die geforderten Bedingungen zu prüfen.
 
 
 
