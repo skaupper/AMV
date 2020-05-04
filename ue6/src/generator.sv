@@ -23,6 +23,17 @@ class Generator;
   local function Prol16OpcodeQueue generateRandomTests();
     Prol16OpcodeQueue tests;
 
+    for (int i = 0; i < gTestCount; ++i) begin
+      tests.push_back(Prol16Opcode::createRandomized());
+    end
+
+    return tests;
+  endfunction
+
+
+  local function Prol16OpcodeQueue generateUnlikelyTests();
+    Prol16OpcodeQueue tests;
+
     // bin <op_add,carry[1],trans_11>
     // bin <op_add,trans_11,trans_11>
     tests.push_back(Prol16Opcode::create(LOADI, 0, UNUSED, 16'hffff));
@@ -30,9 +41,20 @@ class Generator;
     tests.push_back(Prol16Opcode::create(COMP, 0, 0)); // set zero flag
     tests.push_back(Prol16Opcode::create(ADD, 0, 1));  // produce overflow
 
-    for (int i = 0; i < gTestCount; ++i) begin
-      tests.push_back(Prol16Opcode::createRandomized());
-    end
+    // TODO: implement tests for the following unlikely cases
+
+    // bin <op_subc,carry[1],trans_11>
+    // bin <op_shlc,carry[1],trans_11>
+    // bin <op_add,trans_01,trans_11>
+    // bin <op_shlc,trans_01,trans_11>
+    // bin <op_or,trans_10,trans_11>
+    // bin <op_xor,trans_10,trans_11>
+    // bin <op_add,trans_10,trans_11>
+    // bin <op_dec,trans_10,trans_11>
+    // bin <op_addc,trans_11,trans_11>
+    // bin <op_subc,trans_11,trans_11>
+    // bin <op_shl,trans_11,trans_11>
+    // bin <op_shr,trans_11,trans_11>
 
     return tests;
   endfunction

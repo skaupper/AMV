@@ -3,10 +3,10 @@ COVERGROUP COVERAGE:
 Covergroup                                             Metric       Goal    Status               
                                                                                               
 -----------------------------------------------------------------------------------------------
- TYPE /top/TheTest/cov_grp                              99.6%        100    Uncovered            
-    covered/total bins:                                  1222       1236                      
-    missing/total bins:                                    14       1236                      
-    % Hit:                                              98.8%        100                      
+ TYPE /top/TheTest/cov_grp                              99.7%        100    Uncovered            
+    covered/total bins:                                  1224       1236                      
+    missing/total bins:                                    12       1236                      
+    % Hit:                                              99.0%        100                      
     Coverpoint cov_grp::pt_cmd                         100.0%        100    Covered              
         covered/total bins:                                21         21                      
         missing/total bins:                                 0         21                      
@@ -35,15 +35,15 @@ Covergroup                                             Metric       Goal    Stat
         covered/total bins:                               665        665                      
         missing/total bins:                                 0        665                      
         % Hit:                                         100.0%        100                      
-    Cross cov_grp::cross_op_and_flags                   97.2%        100    Uncovered            
-        covered/total bins:                               487        501                      
-        missing/total bins:                                14        501                      
-        % Hit:                                          97.2%        100                      
+    Cross cov_grp::cross_op_and_flags                   97.6%        100    Uncovered            
+        covered/total bins:                               489        501                      
+        missing/total bins:                                12        501                      
+        % Hit:                                          97.6%        100                      
  Covergroup instance \/top/TheTest/stimuli/cov_grp_inst  
-                                                        99.6%        100    Uncovered            
-    covered/total bins:                                  1222       1236                      
-    missing/total bins:                                    14       1236                      
-    % Hit:                                              98.8%        100                      
+                                                        99.7%        100    Uncovered            
+    covered/total bins:                                  1224       1236                      
+    missing/total bins:                                    12       1236                      
+    % Hit:                                              99.0%        100                      
     Coverpoint pt_cmd                                  100.0%        100    Covered              
         covered/total bins:                                21         21                      
         missing/total bins:                                 0         21                      
@@ -52,25 +52,25 @@ Covergroup                                             Metric       Goal    Stat
         ignore_bin op_load                                  0               ZERO                 
         ignore_bin op_store                                 0               ZERO                 
         bin op_nop                                       4759          1    Covered              
-        bin op_loadi                                     4736          1    Covered              
+        bin op_loadi                                     4737          1    Covered              
         bin op_jump                                      4778          1    Covered              
-        bin op_jumpc                                     4818          1    Covered              
+        bin op_jumpc                                     4819          1    Covered              
         bin op_jumpz                                     4761          1    Covered              
-        bin op_move                                      4724          1    Covered              
+        bin op_move                                      4723          1    Covered              
         bin op_and                                       4816          1    Covered              
-        bin op_or                                        4720          1    Covered              
-        bin op_xor                                       4811          1    Covered              
+        bin op_or                                        4721          1    Covered              
+        bin op_xor                                       4810          1    Covered              
         bin op_not                                       4829          1    Covered              
-        bin op_add                                       4820          1    Covered              
+        bin op_add                                       4821          1    Covered              
         bin op_addc                                      4726          1    Covered              
         bin op_sub                                       4761          1    Covered              
         bin op_subc                                      4794          1    Covered              
-        bin op_comp                                      4681          1    Covered              
+        bin op_comp                                      4682          1    Covered              
         bin op_inc                                       4801          1    Covered              
         bin op_dec                                       4755          1    Covered              
         bin op_shl                                       4799          1    Covered              
         bin op_shr                                       4707          1    Covered              
-        bin op_shlc                                      4721          1    Covered              
+        bin op_shlc                                      4722          1    Covered              
         bin op_shrc                                      4684          1    Covered              
         illegal_bin invalid                                 0               ZERO                 
     Coverpoint pt_last_cmd                             100.0%        100    Covered              
@@ -81,72 +81,72 @@ Covergroup                                             Metric       Goal    Stat
         ignore_bin op_load                                  0               ZERO                 
         ignore_bin op_store                                 0               ZERO                 
         bin op_nop                                       4759          1    Covered              
-        bin op_loadi                                     4736          1    Covered              
+        bin op_loadi                                     4737          1    Covered              
         bin op_jump                                      4778          1    Covered              
-        bin op_jumpc                                     4818          1    Covered              
+        bin op_jumpc                                     4819          1    Covered              
         bin op_jumpz                                     4761          1    Covered              
-        bin op_move                                      4724          1    Covered              
+        bin op_move                                      4723          1    Covered              
         bin op_and                                       4816          1    Covered              
-        bin op_or                                        4720          1    Covered              
-        bin op_xor                                       4811          1    Covered              
+        bin op_or                                        4721          1    Covered              
+        bin op_xor                                       4810          1    Covered              
         bin op_not                                       4829          1    Covered              
-        bin op_add                                       4820          1    Covered              
+        bin op_add                                       4821          1    Covered              
         bin op_addc                                      4726          1    Covered              
         bin op_sub                                       4761          1    Covered              
         bin op_subc                                      4794          1    Covered              
-        bin op_comp                                      4681          1    Covered              
+        bin op_comp                                      4682          1    Covered              
         bin op_inc                                       4801          1    Covered              
         bin op_dec                                       4755          1    Covered              
         bin op_shl                                       4799          1    Covered              
         bin op_shr                                       4707          1    Covered              
-        bin op_shlc                                      4721          1    Covered              
+        bin op_shlc                                      4722          1    Covered              
         bin op_shrc                                      4684          1    Covered              
         illegal_bin invalid                                 0               ZERO                 
     Coverpoint pt_carry                                100.0%        100    Covered              
         covered/total bins:                                 6          6                      
         missing/total bins:                                 0          6                      
         % Hit:                                         100.0%        100                      
-        bin carry[0]                                    73971          1    Covered              
-        bin carry[1]                                    26030          1    Covered              
-        bin trans_00                                    60471          1    Covered              
-        bin trans_01                                    13499          1    Covered              
-        bin trans_10                                    13499          1    Covered              
-        bin trans_11                                    12531          1    Covered              
+        bin carry[0]                                    73968          1    Covered              
+        bin carry[1]                                    26037          1    Covered              
+        bin trans_00                                    60473          1    Covered              
+        bin trans_01                                    13494          1    Covered              
+        bin trans_10                                    13494          1    Covered              
+        bin trans_11                                    12543          1    Covered              
     Coverpoint pt_zero                                 100.0%        100    Covered              
         covered/total bins:                                 6          6                      
         missing/total bins:                                 0          6                      
         % Hit:                                         100.0%        100                      
-        bin zero[0]                                     93796          1    Covered              
-        bin zero[1]                                      6205          1    Covered              
-        bin trans_00                                    89917          1    Covered              
-        bin trans_01                                     3878          1    Covered              
-        bin trans_10                                     3878          1    Covered              
-        bin trans_11                                     2327          1    Covered              
+        bin zero[0]                                     93797          1    Covered              
+        bin zero[1]                                      6208          1    Covered              
+        bin trans_00                                    89920          1    Covered              
+        bin trans_01                                     3876          1    Covered              
+        bin trans_10                                     3876          1    Covered              
+        bin trans_11                                     2332          1    Covered              
     Coverpoint pt_reg_a_idx                            100.0%        100    Covered              
         covered/total bins:                                 8          8                      
         missing/total bins:                                 0          8                      
         % Hit:                                         100.0%        100                      
-        bin reg_a[0]                                    16539          1    Covered              
-        bin reg_a[1]                                    11873          1    Covered              
+        bin reg_a[0]                                    16542          1    Covered              
+        bin reg_a[1]                                    11874          1    Covered              
         bin reg_a[2]                                    11892          1    Covered              
-        bin reg_a[3]                                    11851          1    Covered              
-        bin reg_a[4]                                    11801          1    Covered              
+        bin reg_a[3]                                    11849          1    Covered              
+        bin reg_a[4]                                    11802          1    Covered              
         bin reg_a[5]                                    11960          1    Covered              
-        bin reg_a[6]                                    12039          1    Covered              
+        bin reg_a[6]                                    12040          1    Covered              
         bin reg_a[7]                                    12046          1    Covered              
         illegal_bin invalid                                 0               ZERO                 
     Coverpoint pt_reg_b_idx                            100.0%        100    Covered              
         covered/total bins:                                 8          8                      
         missing/total bins:                                 0          8                      
         % Hit:                                         100.0%        100                      
-        bin reg_b[0]                                    62561          1    Covered              
-        bin reg_b[1]                                     5436          1    Covered              
+        bin reg_b[0]                                    62565          1    Covered              
+        bin reg_b[1]                                     5437          1    Covered              
         bin reg_b[2]                                     5278          1    Covered              
-        bin reg_b[3]                                     5450          1    Covered              
+        bin reg_b[3]                                     5448          1    Covered              
         bin reg_b[4]                                     5328          1    Covered              
         bin reg_b[5]                                     5250          1    Covered              
         bin reg_b[6]                                     5239          1    Covered              
-        bin reg_b[7]                                     5459          1    Covered              
+        bin reg_b[7]                                     5460          1    Covered              
         illegal_bin invalid                                 0               ZERO                 
     Cross cross_op_and_regs                            100.0%        100    Covered              
         covered/total bins:                               665        665                      
@@ -154,7 +154,7 @@ Covergroup                                             Metric       Goal    Stat
         % Hit:                                         100.0%        100                      
         bin <op_nop,reg_a[0],reg_b[0]>                   4759          1    Covered              
         bin <op_jump,reg_a[0],reg_b[0]>                   590          1    Covered              
-        bin <op_loadi,reg_a[0],reg_b[0]>                  578          1    Covered              
+        bin <op_loadi,reg_a[0],reg_b[0]>                  579          1    Covered              
         bin <op_jumpc,reg_a[0],reg_b[0]>                  571          1    Covered              
         bin <op_jumpz,reg_a[0],reg_b[0]>                  539          1    Covered              
         bin <op_move,reg_a[0],reg_b[0]>                    81          1    Covered              
@@ -163,7 +163,7 @@ Covergroup                                             Metric       Goal    Stat
         bin <op_move,reg_a[0],reg_b[6]>                    64          1    Covered              
         bin <op_move,reg_a[0],reg_b[1]>                    66          1    Covered              
         bin <op_move,reg_a[0],reg_b[5]>                    73          1    Covered              
-        bin <op_move,reg_a[0],reg_b[3]>                    64          1    Covered              
+        bin <op_move,reg_a[0],reg_b[3]>                    63          1    Covered              
         bin <op_move,reg_a[0],reg_b[7]>                    74          1    Covered              
         bin <op_and,reg_a[0],reg_b[0]>                     86          1    Covered              
         bin <op_or,reg_a[0],reg_b[0]>                      77          1    Covered              
@@ -180,7 +180,7 @@ Covergroup                                             Metric       Goal    Stat
         bin <op_and,reg_a[0],reg_b[3]>                     74          1    Covered              
         bin <op_or,reg_a[0],reg_b[3]>                      66          1    Covered              
         bin <op_and,reg_a[0],reg_b[7]>                     75          1    Covered              
-        bin <op_or,reg_a[0],reg_b[7]>                      84          1    Covered              
+        bin <op_or,reg_a[0],reg_b[7]>                      85          1    Covered              
         bin <op_xor,reg_a[0],reg_b[0]>                     73          1    Covered              
         bin <op_xor,reg_a[0],reg_b[4]>                     60          1    Covered              
         bin <op_xor,reg_a[0],reg_b[2]>                     63          1    Covered              
@@ -198,7 +198,7 @@ Covergroup                                             Metric       Goal    Stat
         bin <op_addc,reg_a[0],reg_b[2]>                    80          1    Covered              
         bin <op_add,reg_a[0],reg_b[6]>                     79          1    Covered              
         bin <op_addc,reg_a[0],reg_b[6]>                    90          1    Covered              
-        bin <op_add,reg_a[0],reg_b[1]>                     71          1    Covered              
+        bin <op_add,reg_a[0],reg_b[1]>                     72          1    Covered              
         bin <op_addc,reg_a[0],reg_b[1]>                    86          1    Covered              
         bin <op_add,reg_a[0],reg_b[5]>                     80          1    Covered              
         bin <op_addc,reg_a[0],reg_b[5]>                    72          1    Covered              
@@ -222,7 +222,7 @@ Covergroup                                             Metric       Goal    Stat
         bin <op_subc,reg_a[0],reg_b[3]>                    86          1    Covered              
         bin <op_sub,reg_a[0],reg_b[7]>                     74          1    Covered              
         bin <op_subc,reg_a[0],reg_b[7]>                    77          1    Covered              
-        bin <op_comp,reg_a[0],reg_b[0]>                    82          1    Covered              
+        bin <op_comp,reg_a[0],reg_b[0]>                    83          1    Covered              
         bin <op_comp,reg_a[0],reg_b[4]>                    88          1    Covered              
         bin <op_comp,reg_a[0],reg_b[2]>                    70          1    Covered              
         bin <op_comp,reg_a[0],reg_b[6]>                    63          1    Covered              
@@ -236,7 +236,7 @@ Covergroup                                             Metric       Goal    Stat
         bin <op_shl,reg_a[0],reg_b[0]>                    576          1    Covered              
         bin <op_shlc,reg_a[0],reg_b[0]>                   591          1    Covered              
         bin <op_shrc,reg_a[0],reg_b[0]>                   557          1    Covered              
-        bin <op_loadi,reg_a[1],reg_b[0]>                  596          1    Covered              
+        bin <op_loadi,reg_a[1],reg_b[0]>                  597          1    Covered              
         bin <op_jump,reg_a[1],reg_b[0]>                   546          1    Covered              
         bin <op_jumpc,reg_a[1],reg_b[0]>                  637          1    Covered              
         bin <op_jumpz,reg_a[1],reg_b[0]>                  633          1    Covered              
@@ -320,7 +320,7 @@ Covergroup                                             Metric       Goal    Stat
         bin <op_shlc,reg_a[1],reg_b[0]>                   577          1    Covered              
         bin <op_shrc,reg_a[1],reg_b[0]>                   592          1    Covered              
         bin <op_loadi,reg_a[2],reg_b[0]>                  597          1    Covered              
-        bin <op_loadi,reg_a[3],reg_b[0]>                  592          1    Covered              
+        bin <op_loadi,reg_a[3],reg_b[0]>                  591          1    Covered              
         bin <op_jump,reg_a[2],reg_b[0]>                   579          1    Covered              
         bin <op_jump,reg_a[3],reg_b[0]>                   629          1    Covered              
         bin <op_jumpc,reg_a[2],reg_b[0]>                  583          1    Covered              
@@ -387,12 +387,12 @@ Covergroup                                             Metric       Goal    Stat
         bin <op_xor,reg_a[3],reg_b[1]>                     83          1    Covered              
         bin <op_xor,reg_a[2],reg_b[5]>                     77          1    Covered              
         bin <op_xor,reg_a[3],reg_b[5]>                     61          1    Covered              
-        bin <op_xor,reg_a[2],reg_b[3]>                     83          1    Covered              
+        bin <op_xor,reg_a[2],reg_b[3]>                     82          1    Covered              
         bin <op_xor,reg_a[3],reg_b[3]>                     75          1    Covered              
         bin <op_xor,reg_a[2],reg_b[7]>                     87          1    Covered              
         bin <op_xor,reg_a[3],reg_b[7]>                     73          1    Covered              
         bin <op_not,reg_a[2],reg_b[0]>                    634          1    Covered              
-        bin <op_not,reg_a[3],reg_b[0]>                    591          1    Covered              
+        bin <op_not,reg_a[3],reg_b[0]>                    590          1    Covered              
         bin <op_add,reg_a[2],reg_b[0]>                     85          1    Covered              
         bin <op_add,reg_a[3],reg_b[0]>                     77          1    Covered              
         bin <op_addc,reg_a[2],reg_b[0]>                    81          1    Covered              
@@ -481,7 +481,7 @@ Covergroup                                             Metric       Goal    Stat
         bin <op_shr,reg_a[3],reg_b[0]>                    592          1    Covered              
         bin <op_shl,reg_a[2],reg_b[0]>                    593          1    Covered              
         bin <op_shl,reg_a[3],reg_b[0]>                    572          1    Covered              
-        bin <op_shlc,reg_a[2],reg_b[0]>                   599          1    Covered              
+        bin <op_shlc,reg_a[2],reg_b[0]>                   600          1    Covered              
         bin <op_shlc,reg_a[3],reg_b[0]>                   550          1    Covered              
         bin <op_shrc,reg_a[2],reg_b[0]>                   598          1    Covered              
         bin <op_shrc,reg_a[3],reg_b[0]>                   624          1    Covered              
@@ -494,7 +494,7 @@ Covergroup                                             Metric       Goal    Stat
         bin <op_jump,reg_a[5],reg_b[0]>                   672          1    Covered              
         bin <op_jump,reg_a[7],reg_b[0]>                   547          1    Covered              
         bin <op_jumpc,reg_a[4],reg_b[0]>                  582          1    Covered              
-        bin <op_jumpc,reg_a[6],reg_b[0]>                  587          1    Covered              
+        bin <op_jumpc,reg_a[6],reg_b[0]>                  588          1    Covered              
         bin <op_jumpc,reg_a[5],reg_b[0]>                  584          1    Covered              
         bin <op_jumpc,reg_a[7],reg_b[0]>                  657          1    Covered              
         bin <op_jumpz,reg_a[4],reg_b[0]>                  573          1    Covered              
@@ -629,7 +629,7 @@ Covergroup                                             Metric       Goal    Stat
         bin <op_xor,reg_a[6],reg_b[7]>                     80          1    Covered              
         bin <op_xor,reg_a[5],reg_b[7]>                     71          1    Covered              
         bin <op_xor,reg_a[7],reg_b[7]>                     87          1    Covered              
-        bin <op_not,reg_a[4],reg_b[0]>                    583          1    Covered              
+        bin <op_not,reg_a[4],reg_b[0]>                    584          1    Covered              
         bin <op_not,reg_a[6],reg_b[0]>                    611          1    Covered              
         bin <op_not,reg_a[5],reg_b[0]>                    587          1    Covered              
         bin <op_not,reg_a[7],reg_b[0]>                    606          1    Covered              
@@ -819,166 +819,167 @@ Covergroup                                             Metric       Goal    Stat
         bin <op_shrc,reg_a[7],reg_b[0]>                   604          1    Covered              
         illegal_bin no_reg                                  0               ZERO                 
         illegal_bin only_reg_a                              0               ZERO                 
-    Cross cross_op_and_flags                            97.2%        100    Uncovered            
-        covered/total bins:                               487        501                      
-        missing/total bins:                                14        501                      
-        % Hit:                                          97.2%        100                      
-        bin <op_nop,carry[0],zero[0]>                    3201          1    Covered              
-        bin <op_jump,carry[0],zero[0]>                   3184          1    Covered              
-        bin <op_loadi,carry[0],zero[0]>                  3218          1    Covered              
+    Cross cross_op_and_flags                            97.6%        100    Uncovered            
+        covered/total bins:                               489        501                      
+        missing/total bins:                                12        501                      
+        % Hit:                                          97.6%        100                      
+        bin <op_nop,carry[0],zero[0]>                    3203          1    Covered              
+        bin <op_jump,carry[0],zero[0]>                   3186          1    Covered              
+        bin <op_loadi,carry[0],zero[0]>                  3220          1    Covered              
         bin <op_jumpc,carry[0],zero[0]>                  3265          1    Covered              
         bin <op_nop,carry[0],zero[1]>                     318          1    Covered              
         bin <op_jump,carry[0],zero[1]>                    308          1    Covered              
         bin <op_loadi,carry[0],zero[1]>                   281          1    Covered              
-        bin <op_jumpc,carry[0],zero[1]>                   288          1    Covered              
-        bin <op_nop,carry[0],trans_00>                   3200          1    Covered              
-        bin <op_jump,carry[0],trans_00>                  3184          1    Covered              
-        bin <op_loadi,carry[0],trans_00>                 3218          1    Covered              
+        bin <op_jumpc,carry[0],zero[1]>                   287          1    Covered              
+        bin <op_nop,carry[0],trans_00>                   3202          1    Covered              
+        bin <op_jump,carry[0],trans_00>                  3186          1    Covered              
+        bin <op_loadi,carry[0],trans_00>                 3220          1    Covered              
         bin <op_jumpc,carry[0],trans_00>                 3265          1    Covered              
         bin <op_nop,carry[0],trans_11>                    318          1    Covered              
         bin <op_jump,carry[0],trans_11>                   308          1    Covered              
         bin <op_loadi,carry[0],trans_11>                  281          1    Covered              
-        bin <op_jumpc,carry[0],trans_11>                  288          1    Covered              
+        bin <op_jumpc,carry[0],trans_11>                  287          1    Covered              
         bin <op_jumpz,carry[0],zero[0]>                  3250          1    Covered              
-        bin <op_move,carry[0],zero[0]>                   3237          1    Covered              
+        bin <op_move,carry[0],zero[0]>                   3233          1    Covered              
         bin <op_jumpz,carry[0],zero[1]>                   255          1    Covered              
-        bin <op_move,carry[0],zero[1]>                    269          1    Covered              
+        bin <op_move,carry[0],zero[1]>                    270          1    Covered              
         bin <op_jumpz,carry[0],trans_00>                 3250          1    Covered              
-        bin <op_move,carry[0],trans_00>                  3237          1    Covered              
+        bin <op_move,carry[0],trans_00>                  3233          1    Covered              
         bin <op_jumpz,carry[0],trans_11>                  255          1    Covered              
-        bin <op_move,carry[0],trans_11>                   269          1    Covered              
-        bin <op_and,carry[0],zero[0]>                    4187          1    Covered              
-        bin <op_or,carry[0],zero[0]>                     4658          1    Covered              
-        bin <op_and,carry[0],zero[1]>                     629          1    Covered              
+        bin <op_move,carry[0],trans_11>                   270          1    Covered              
+        bin <op_and,carry[0],zero[0]>                    4188          1    Covered              
+        bin <op_or,carry[0],zero[0]>                     4659          1    Covered              
+        bin <op_and,carry[0],zero[1]>                     628          1    Covered              
         bin <op_or,carry[0],zero[1]>                       62          1    Covered              
-        bin <op_and,carry[0],trans_00>                   4014          1    Covered              
+        bin <op_and,carry[0],trans_00>                   4015          1    Covered              
         bin <op_or,carry[0],trans_00>                    4372          1    Covered              
-        bin <op_and,carry[0],trans_01>                    532          1    Covered              
+        bin <op_and,carry[0],trans_01>                    530          1    Covered              
         bin <op_or,carry[0],trans_01>                      45          1    Covered              
         bin <op_and,carry[0],trans_10>                    173          1    Covered              
-        bin <op_or,carry[0],trans_10>                     286          1    Covered              
-        bin <op_and,carry[0],trans_11>                     97          1    Covered              
+        bin <op_or,carry[0],trans_10>                     287          1    Covered              
+        bin <op_and,carry[0],trans_11>                     98          1    Covered              
         bin <op_or,carry[0],trans_11>                      17          1    Covered              
-        bin <op_xor,carry[0],zero[0]>                    4151          1    Covered              
-        bin <op_add,carry[0],zero[0]>                    2781          1    Covered              
+        bin <op_xor,carry[0],zero[0]>                    4152          1    Covered              
+        bin <op_add,carry[0],zero[0]>                    2778          1    Covered              
         bin <op_not,carry[0],zero[0]>                    4758          1    Covered              
-        bin <op_addc,carry[0],zero[0]>                   2771          1    Covered              
-        bin <op_xor,carry[0],zero[1]>                     660          1    Covered              
+        bin <op_addc,carry[0],zero[0]>                   2768          1    Covered              
+        bin <op_xor,carry[0],zero[1]>                     658          1    Covered              
         bin <op_add,carry[0],zero[1]>                      49          1    Covered              
         bin <op_not,carry[0],zero[1]>                      71          1    Covered              
         bin <op_addc,carry[0],zero[1]>                     35          1    Covered              
-        bin <op_xor,carry[0],trans_00>                   3895          1    Covered              
-        bin <op_add,carry[0],trans_00>                   2589          1    Covered              
+        bin <op_xor,carry[0],trans_00>                   3897          1    Covered              
+        bin <op_add,carry[0],trans_00>                   2586          1    Covered              
         bin <op_not,carry[0],trans_00>                   4454          1    Covered              
-        bin <op_addc,carry[0],trans_00>                  2608          1    Covered              
-        bin <op_xor,carry[0],trans_01>                    613          1    Covered              
+        bin <op_addc,carry[0],trans_00>                  2605          1    Covered              
+        bin <op_xor,carry[0],trans_01>                    610          1    Covered              
         bin <op_add,carry[0],trans_01>                     33          1    Covered              
         bin <op_not,carry[0],trans_01>                     67          1    Covered              
         bin <op_addc,carry[0],trans_01>                    26          1    Covered              
-        bin <op_xor,carry[0],trans_10>                    256          1    Covered              
+        bin <op_xor,carry[0],trans_10>                    255          1    Covered              
         bin <op_add,carry[0],trans_10>                    192          1    Covered              
         bin <op_not,carry[0],trans_10>                    304          1    Covered              
         bin <op_addc,carry[0],trans_10>                   163          1    Covered              
-        bin <op_xor,carry[0],trans_11>                     47          1    Covered              
+        bin <op_xor,carry[0],trans_11>                     48          1    Covered              
         bin <op_add,carry[0],trans_11>                     16          1    Covered              
         bin <op_not,carry[0],trans_11>                      4          1    Covered              
         bin <op_addc,carry[0],trans_11>                     9          1    Covered              
         bin <op_sub,carry[0],zero[0]>                    2072          1    Covered              
-        bin <op_subc,carry[0],zero[0]>                   2011          1    Covered              
+        bin <op_subc,carry[0],zero[0]>                   2008          1    Covered              
         bin <op_sub,carry[0],zero[1]>                     641          1    Covered              
-        bin <op_subc,carry[0],zero[1]>                    533          1    Covered              
-        bin <op_sub,carry[0],trans_00>                   1955          1    Covered              
-        bin <op_subc,carry[0],trans_00>                  1889          1    Covered              
+        bin <op_subc,carry[0],zero[1]>                    534          1    Covered              
+        bin <op_sub,carry[0],trans_00>                   1956          1    Covered              
+        bin <op_subc,carry[0],trans_00>                  1886          1    Covered              
         bin <op_sub,carry[0],trans_01>                    610          1    Covered              
-        bin <op_subc,carry[0],trans_01>                   481          1    Covered              
-        bin <op_sub,carry[0],trans_10>                    117          1    Covered              
+        bin <op_subc,carry[0],trans_01>                   482          1    Covered              
+        bin <op_sub,carry[0],trans_10>                    116          1    Covered              
         bin <op_subc,carry[0],trans_10>                   122          1    Covered              
         bin <op_sub,carry[0],trans_11>                     31          1    Covered              
         bin <op_subc,carry[0],trans_11>                    52          1    Covered              
-        bin <op_comp,carry[0],zero[0]>                   2047          1    Covered              
-        bin <op_comp,carry[0],zero[1]>                    630          1    Covered              
-        bin <op_comp,carry[0],trans_00>                  1928          1    Covered              
-        bin <op_comp,carry[0],trans_01>                   591          1    Covered              
+        bin <op_comp,carry[0],zero[0]>                   2043          1    Covered              
+        bin <op_comp,carry[0],zero[1]>                    632          1    Covered              
+        bin <op_comp,carry[0],trans_00>                  1924          1    Covered              
+        bin <op_comp,carry[0],trans_01>                   593          1    Covered              
         bin <op_comp,carry[0],trans_10>                   119          1    Covered              
         bin <op_comp,carry[0],trans_11>                    39          1    Covered              
         bin <op_inc,carry[0],zero[0]>                    4707          1    Covered              
-        bin <op_inc,carry[0],trans_00>                   4401          1    Covered              
-        bin <op_inc,carry[0],trans_10>                    306          1    Covered              
+        bin <op_inc,carry[0],trans_00>                   4403          1    Covered              
+        bin <op_inc,carry[0],trans_10>                    304          1    Covered              
         bin <op_dec,carry[0],zero[0]>                    4458          1    Covered              
         bin <op_shr,carry[0],zero[0]>                    2417          1    Covered              
-        bin <op_shl,carry[0],zero[0]>                    2567          1    Covered              
-        bin <op_shlc,carry[0],zero[0]>                   2598          1    Covered              
+        bin <op_shl,carry[0],zero[0]>                    2573          1    Covered              
+        bin <op_shlc,carry[0],zero[0]>                   2597          1    Covered              
         bin <op_dec,carry[0],zero[1]>                      38          1    Covered              
         bin <op_shr,carry[0],zero[1]>                     216          1    Covered              
-        bin <op_shl,carry[0],zero[1]>                     257          1    Covered              
-        bin <op_shlc,carry[0],zero[1]>                    202          1    Covered              
+        bin <op_shl,carry[0],zero[1]>                     258          1    Covered              
+        bin <op_shlc,carry[0],zero[1]>                    204          1    Covered              
         bin <op_dec,carry[0],trans_00>                   4231          1    Covered              
         bin <op_shr,carry[0],trans_00>                   2298          1    Covered              
-        bin <op_shl,carry[0],trans_00>                   2419          1    Covered              
-        bin <op_shlc,carry[0],trans_00>                  2467          1    Covered              
+        bin <op_shl,carry[0],trans_00>                   2423          1    Covered              
+        bin <op_shlc,carry[0],trans_00>                  2466          1    Covered              
         bin <op_dec,carry[0],trans_01>                     35          1    Covered              
         bin <op_shr,carry[0],trans_01>                    170          1    Covered              
         bin <op_shl,carry[0],trans_01>                    204          1    Covered              
-        bin <op_shlc,carry[0],trans_01>                   146          1    Covered              
+        bin <op_shlc,carry[0],trans_01>                   147          1    Covered              
         bin <op_dec,carry[0],trans_10>                    227          1    Covered              
         bin <op_shr,carry[0],trans_10>                    119          1    Covered              
-        bin <op_shl,carry[0],trans_10>                    148          1    Covered              
+        bin <op_shl,carry[0],trans_10>                    150          1    Covered              
         bin <op_shlc,carry[0],trans_10>                   131          1    Covered              
         bin <op_dec,carry[0],trans_11>                      3          1    Covered              
         bin <op_shr,carry[0],trans_11>                     46          1    Covered              
-        bin <op_shl,carry[0],trans_11>                     53          1    Covered              
-        bin <op_shlc,carry[0],trans_11>                    56          1    Covered              
-        bin <op_shrc,carry[0],zero[0]>                   2501          1    Covered              
-        bin <op_shrc,carry[0],zero[1]>                    190          1    Covered              
-        bin <op_shrc,carry[0],trans_00>                  2382          1    Covered              
-        bin <op_shrc,carry[0],trans_01>                   149          1    Covered              
-        bin <op_shrc,carry[0],trans_10>                   119          1    Covered              
+        bin <op_shl,carry[0],trans_11>                     54          1    Covered              
+        bin <op_shlc,carry[0],trans_11>                    57          1    Covered              
+        bin <op_shrc,carry[0],zero[0]>                   2499          1    Covered              
+        bin <op_shrc,carry[0],zero[1]>                    189          1    Covered              
+        bin <op_shrc,carry[0],trans_00>                  2378          1    Covered              
+        bin <op_shrc,carry[0],trans_01>                   148          1    Covered              
+        bin <op_shrc,carry[0],trans_10>                   121          1    Covered              
         bin <op_shrc,carry[0],trans_11>                    41          1    Covered              
-        bin <op_nop,carry[1],zero[0]>                    1232          1    Covered              
-        bin <op_jump,carry[1],zero[0]>                   1266          1    Covered              
-        bin <op_loadi,carry[1],zero[0]>                  1224          1    Covered              
-        bin <op_jumpc,carry[1],zero[0]>                  1248          1    Covered              
+        bin <op_nop,carry[1],zero[0]>                    1230          1    Covered              
+        bin <op_jump,carry[1],zero[0]>                   1264          1    Covered              
+        bin <op_loadi,carry[1],zero[0]>                  1223          1    Covered              
+        bin <op_jumpc,carry[1],zero[0]>                  1250          1    Covered              
         bin <op_nop,carry[1],zero[1]>                       8          1    Covered              
         bin <op_jump,carry[1],zero[1]>                     20          1    Covered              
         bin <op_loadi,carry[1],zero[1]>                    13          1    Covered              
         bin <op_jumpc,carry[1],zero[1]>                    17          1    Covered              
-        bin <op_nop,carry[1],trans_00>                   1232          1    Covered              
-        bin <op_jump,carry[1],trans_00>                  1266          1    Covered              
-        bin <op_loadi,carry[1],trans_00>                 1224          1    Covered              
-        bin <op_jumpc,carry[1],trans_00>                 1248          1    Covered              
+        bin <op_nop,carry[1],trans_00>                   1230          1    Covered              
+        bin <op_jump,carry[1],trans_00>                  1264          1    Covered              
+        bin <op_loadi,carry[1],trans_00>                 1223          1    Covered              
+        bin <op_jumpc,carry[1],trans_00>                 1250          1    Covered              
         bin <op_nop,carry[1],trans_11>                      8          1    Covered              
         bin <op_jump,carry[1],trans_11>                    20          1    Covered              
         bin <op_loadi,carry[1],trans_11>                   13          1    Covered              
         bin <op_jumpc,carry[1],trans_11>                   17          1    Covered              
         bin <op_jumpz,carry[1],zero[0]>                  1240          1    Covered              
-        bin <op_move,carry[1],zero[0]>                   1209          1    Covered              
+        bin <op_move,carry[1],zero[0]>                   1211          1    Covered              
         bin <op_jumpz,carry[1],zero[1]>                    16          1    Covered              
         bin <op_move,carry[1],zero[1]>                      9          1    Covered              
         bin <op_jumpz,carry[1],trans_00>                 1240          1    Covered              
-        bin <op_move,carry[1],trans_00>                  1209          1    Covered              
+        bin <op_move,carry[1],trans_00>                  1211          1    Covered              
         bin <op_jumpz,carry[1],trans_11>                   16          1    Covered              
         bin <op_move,carry[1],trans_11>                     9          1    Covered              
-        bin <op_add,carry[1],zero[0]>                    1984          1    Covered              
-        bin <op_addc,carry[1],zero[0]>                   1908          1    Covered              
-        bin <op_add,carry[1],zero[1]>                       6          1    Covered              
+        bin <op_add,carry[1],zero[0]>                    1987          1    Covered              
+        bin <op_addc,carry[1],zero[0]>                   1911          1    Covered              
+        bin <op_add,carry[1],zero[1]>                       7          1    Covered              
         bin <op_addc,carry[1],zero[1]>                     12          1    Covered              
-        bin <op_add,carry[1],trans_00>                   1876          1    Covered              
-        bin <op_addc,carry[1],trans_00>                  1817          1    Covered              
+        bin <op_add,carry[1],trans_00>                   1879          1    Covered              
+        bin <op_addc,carry[1],trans_00>                  1820          1    Covered              
         bin <op_add,carry[1],trans_01>                      6          1    Covered              
         bin <op_addc,carry[1],trans_01>                    10          1    Covered              
         bin <op_add,carry[1],trans_10>                    108          1    Covered              
         bin <op_addc,carry[1],trans_10>                    91          1    Covered              
+        bin <op_add,carry[1],trans_11>                      1          1    Covered              
         bin <op_addc,carry[1],trans_11>                     2          1    Covered              
         bin <op_sub,carry[1],zero[0]>                    2048          1    Covered              
         bin <op_sub,carry[1],trans_00>                   1944          1    Covered              
         bin <op_sub,carry[1],trans_10>                    104          1    Covered              
-        bin <op_subc,carry[1],zero[0]>                   2248          1    Covered              
+        bin <op_subc,carry[1],zero[0]>                   2250          1    Covered              
         bin <op_subc,carry[1],zero[1]>                      2          1    Covered              
-        bin <op_subc,carry[1],trans_00>                  2117          1    Covered              
+        bin <op_subc,carry[1],trans_00>                  2118          1    Covered              
         bin <op_subc,carry[1],trans_01>                     2          1    Covered              
-        bin <op_subc,carry[1],trans_10>                   131          1    Covered              
-        bin <op_comp,carry[1],zero[0]>                   2004          1    Covered              
-        bin <op_comp,carry[1],trans_00>                  1873          1    Covered              
+        bin <op_subc,carry[1],trans_10>                   132          1    Covered              
+        bin <op_comp,carry[1],zero[0]>                   2007          1    Covered              
+        bin <op_comp,carry[1],trans_00>                  1876          1    Covered              
         bin <op_comp,carry[1],trans_10>                   131          1    Covered              
         bin <op_inc,carry[1],zero[1]>                      94          1    Covered              
         bin <op_inc,carry[1],trans_01>                     88          1    Covered              
@@ -986,159 +987,160 @@ Covergroup                                             Metric       Goal    Stat
         bin <op_dec,carry[1],zero[0]>                     259          1    Covered              
         bin <op_dec,carry[1],trans_00>                    207          1    Covered              
         bin <op_dec,carry[1],trans_10>                     52          1    Covered              
-        bin <op_shl,carry[1],zero[0]>                    1968          1    Covered              
+        bin <op_shl,carry[1],zero[0]>                    1961          1    Covered              
         bin <op_shl,carry[1],zero[1]>                       7          1    Covered              
-        bin <op_shl,carry[1],trans_00>                   1842          1    Covered              
+        bin <op_shl,carry[1],trans_00>                   1837          1    Covered              
         bin <op_shl,carry[1],trans_01>                      6          1    Covered              
-        bin <op_shl,carry[1],trans_10>                    126          1    Covered              
+        bin <op_shl,carry[1],trans_10>                    124          1    Covered              
         bin <op_shl,carry[1],trans_11>                      1          1    Covered              
         bin <op_shr,carry[1],zero[0]>                    2036          1    Covered              
         bin <op_shlc,carry[1],zero[0]>                   1916          1    Covered              
         bin <op_shr,carry[1],zero[1]>                      38          1    Covered              
         bin <op_shlc,carry[1],zero[1]>                      5          1    Covered              
         bin <op_shr,carry[1],trans_00>                   1922          1    Covered              
-        bin <op_shlc,carry[1],trans_00>                  1795          1    Covered              
+        bin <op_shlc,carry[1],trans_00>                  1796          1    Covered              
         bin <op_shr,carry[1],trans_01>                     36          1    Covered              
         bin <op_shlc,carry[1],trans_01>                     5          1    Covered              
         bin <op_shr,carry[1],trans_10>                    114          1    Covered              
-        bin <op_shlc,carry[1],trans_10>                   121          1    Covered              
+        bin <op_shlc,carry[1],trans_10>                   120          1    Covered              
         bin <op_shr,carry[1],trans_11>                      2          1    Covered              
-        bin <op_shrc,carry[1],zero[0]>                   1967          1    Covered              
+        bin <op_shrc,carry[1],zero[0]>                   1970          1    Covered              
         bin <op_shrc,carry[1],zero[1]>                     26          1    Covered              
-        bin <op_shrc,carry[1],trans_00>                  1849          1    Covered              
+        bin <op_shrc,carry[1],trans_00>                  1853          1    Covered              
         bin <op_shrc,carry[1],trans_01>                    23          1    Covered              
-        bin <op_shrc,carry[1],trans_10>                   118          1    Covered              
+        bin <op_shrc,carry[1],trans_10>                   117          1    Covered              
         bin <op_shrc,carry[1],trans_11>                     3          1    Covered              
-        bin <op_nop,trans_00,zero[0]>                    3200          1    Covered              
-        bin <op_jump,trans_00,zero[0]>                   3184          1    Covered              
-        bin <op_loadi,trans_00,zero[0]>                  3218          1    Covered              
+        bin <op_nop,trans_00,zero[0]>                    3202          1    Covered              
+        bin <op_jump,trans_00,zero[0]>                   3186          1    Covered              
+        bin <op_loadi,trans_00,zero[0]>                  3220          1    Covered              
         bin <op_jumpc,trans_00,zero[0]>                  3265          1    Covered              
         bin <op_nop,trans_00,zero[1]>                     318          1    Covered              
         bin <op_jump,trans_00,zero[1]>                    308          1    Covered              
         bin <op_loadi,trans_00,zero[1]>                   281          1    Covered              
-        bin <op_jumpc,trans_00,zero[1]>                   288          1    Covered              
-        bin <op_nop,trans_00,trans_00>                   3200          1    Covered              
-        bin <op_jump,trans_00,trans_00>                  3184          1    Covered              
-        bin <op_loadi,trans_00,trans_00>                 3218          1    Covered              
+        bin <op_jumpc,trans_00,zero[1]>                   287          1    Covered              
+        bin <op_nop,trans_00,trans_00>                   3202          1    Covered              
+        bin <op_jump,trans_00,trans_00>                  3186          1    Covered              
+        bin <op_loadi,trans_00,trans_00>                 3220          1    Covered              
         bin <op_jumpc,trans_00,trans_00>                 3265          1    Covered              
         bin <op_nop,trans_00,trans_11>                    318          1    Covered              
         bin <op_jump,trans_00,trans_11>                   308          1    Covered              
         bin <op_loadi,trans_00,trans_11>                  281          1    Covered              
-        bin <op_jumpc,trans_00,trans_11>                  288          1    Covered              
+        bin <op_jumpc,trans_00,trans_11>                  287          1    Covered              
         bin <op_jumpz,trans_00,zero[0]>                  3250          1    Covered              
-        bin <op_move,trans_00,zero[0]>                   3237          1    Covered              
+        bin <op_move,trans_00,zero[0]>                   3233          1    Covered              
         bin <op_jumpz,trans_00,zero[1]>                   255          1    Covered              
-        bin <op_move,trans_00,zero[1]>                    269          1    Covered              
+        bin <op_move,trans_00,zero[1]>                    270          1    Covered              
         bin <op_jumpz,trans_00,trans_00>                 3250          1    Covered              
-        bin <op_move,trans_00,trans_00>                  3237          1    Covered              
+        bin <op_move,trans_00,trans_00>                  3233          1    Covered              
         bin <op_jumpz,trans_00,trans_11>                  255          1    Covered              
-        bin <op_move,trans_00,trans_11>                   269          1    Covered              
-        bin <op_and,trans_00,zero[0]>                    3020          1    Covered              
-        bin <op_or,trans_00,zero[0]>                     3457          1    Covered              
-        bin <op_and,trans_00,zero[1]>                     478          1    Covered              
+        bin <op_move,trans_00,trans_11>                   270          1    Covered              
+        bin <op_and,trans_00,zero[0]>                    3024          1    Covered              
+        bin <op_or,trans_00,zero[0]>                     3459          1    Covered              
+        bin <op_and,trans_00,zero[1]>                     477          1    Covered              
         bin <op_or,trans_00,zero[1]>                       50          1    Covered              
-        bin <op_and,trans_00,trans_00>                   2856          1    Covered              
-        bin <op_or,trans_00,trans_00>                    3186          1    Covered              
-        bin <op_and,trans_00,trans_01>                    387          1    Covered              
+        bin <op_and,trans_00,trans_00>                   2860          1    Covered              
+        bin <op_or,trans_00,trans_00>                    3187          1    Covered              
+        bin <op_and,trans_00,trans_01>                    385          1    Covered              
         bin <op_or,trans_00,trans_01>                      33          1    Covered              
         bin <op_and,trans_00,trans_10>                    164          1    Covered              
-        bin <op_or,trans_00,trans_10>                     271          1    Covered              
-        bin <op_and,trans_00,trans_11>                     91          1    Covered              
+        bin <op_or,trans_00,trans_10>                     272          1    Covered              
+        bin <op_and,trans_00,trans_11>                     92          1    Covered              
         bin <op_or,trans_00,trans_11>                      17          1    Covered              
-        bin <op_xor,trans_00,zero[0]>                    3076          1    Covered              
-        bin <op_add,trans_00,zero[0]>                    2091          1    Covered              
+        bin <op_xor,trans_00,zero[0]>                    3075          1    Covered              
+        bin <op_add,trans_00,zero[0]>                    2087          1    Covered              
         bin <op_not,trans_00,zero[0]>                    3534          1    Covered              
-        bin <op_addc,trans_00,zero[0]>                   2077          1    Covered              
-        bin <op_xor,trans_00,zero[1]>                     490          1    Covered              
+        bin <op_addc,trans_00,zero[0]>                   2074          1    Covered              
+        bin <op_xor,trans_00,zero[1]>                     488          1    Covered              
         bin <op_add,trans_00,zero[1]>                      38          1    Covered              
-        bin <op_not,trans_00,zero[1]>                      47          1    Covered              
+        bin <op_not,trans_00,zero[1]>                      48          1    Covered              
         bin <op_addc,trans_00,zero[1]>                     35          1    Covered              
         bin <op_xor,trans_00,trans_00>                   2828          1    Covered              
-        bin <op_add,trans_00,trans_00>                   1908          1    Covered              
+        bin <op_add,trans_00,trans_00>                   1904          1    Covered              
         bin <op_not,trans_00,trans_00>                   3243          1    Covered              
-        bin <op_addc,trans_00,trans_00>                  1922          1    Covered              
-        bin <op_xor,trans_00,trans_01>                    443          1    Covered              
+        bin <op_addc,trans_00,trans_00>                  1919          1    Covered              
+        bin <op_xor,trans_00,trans_01>                    440          1    Covered              
         bin <op_add,trans_00,trans_01>                     22          1    Covered              
-        bin <op_not,trans_00,trans_01>                     44          1    Covered              
+        bin <op_not,trans_00,trans_01>                     45          1    Covered              
         bin <op_addc,trans_00,trans_01>                    26          1    Covered              
-        bin <op_xor,trans_00,trans_10>                    248          1    Covered              
+        bin <op_xor,trans_00,trans_10>                    247          1    Covered              
         bin <op_add,trans_00,trans_10>                    183          1    Covered              
         bin <op_not,trans_00,trans_10>                    291          1    Covered              
         bin <op_addc,trans_00,trans_10>                   155          1    Covered              
-        bin <op_xor,trans_00,trans_11>                     47          1    Covered              
+        bin <op_xor,trans_00,trans_11>                     48          1    Covered              
         bin <op_add,trans_00,trans_11>                     16          1    Covered              
         bin <op_not,trans_00,trans_11>                      3          1    Covered              
         bin <op_addc,trans_00,trans_11>                     9          1    Covered              
-        bin <op_sub,trans_00,zero[0]>                    1514          1    Covered              
+        bin <op_sub,trans_00,zero[0]>                    1510          1    Covered              
         bin <op_subc,trans_00,zero[0]>                   1487          1    Covered              
-        bin <op_sub,trans_00,zero[1]>                     467          1    Covered              
-        bin <op_subc,trans_00,zero[1]>                    531          1    Covered              
-        bin <op_sub,trans_00,trans_00>                   1398          1    Covered              
+        bin <op_sub,trans_00,zero[1]>                     469          1    Covered              
+        bin <op_subc,trans_00,zero[1]>                    532          1    Covered              
+        bin <op_sub,trans_00,trans_00>                   1395          1    Covered              
         bin <op_subc,trans_00,trans_00>                  1374          1    Covered              
-        bin <op_sub,trans_00,trans_01>                    437          1    Covered              
-        bin <op_subc,trans_00,trans_01>                   480          1    Covered              
-        bin <op_sub,trans_00,trans_10>                    116          1    Covered              
+        bin <op_sub,trans_00,trans_01>                    439          1    Covered              
+        bin <op_subc,trans_00,trans_01>                   481          1    Covered              
+        bin <op_sub,trans_00,trans_10>                    115          1    Covered              
         bin <op_subc,trans_00,trans_10>                   113          1    Covered              
         bin <op_sub,trans_00,trans_11>                     30          1    Covered              
         bin <op_subc,trans_00,trans_11>                    51          1    Covered              
-        bin <op_comp,trans_00,zero[0]>                   1495          1    Covered              
-        bin <op_comp,trans_00,zero[1]>                    475          1    Covered              
-        bin <op_comp,trans_00,trans_00>                  1381          1    Covered              
-        bin <op_comp,trans_00,trans_01>                   437          1    Covered              
+        bin <op_comp,trans_00,zero[0]>                   1491          1    Covered              
+        bin <op_comp,trans_00,zero[1]>                    477          1    Covered              
+        bin <op_comp,trans_00,trans_00>                  1377          1    Covered              
+        bin <op_comp,trans_00,trans_01>                   439          1    Covered              
         bin <op_comp,trans_00,trans_10>                   114          1    Covered              
         bin <op_comp,trans_00,trans_11>                    38          1    Covered              
-        bin <op_inc,trans_00,zero[0]>                    3495          1    Covered              
-        bin <op_inc,trans_00,trans_00>                   3202          1    Covered              
-        bin <op_inc,trans_00,trans_10>                    293          1    Covered              
-        bin <op_dec,trans_00,zero[0]>                    3332          1    Covered              
+        bin <op_inc,trans_00,zero[0]>                    3498          1    Covered              
+        bin <op_inc,trans_00,trans_00>                   3207          1    Covered              
+        bin <op_inc,trans_00,trans_10>                    291          1    Covered              
+        bin <op_dec,trans_00,zero[0]>                    3333          1    Covered              
         bin <op_shr,trans_00,zero[0]>                    1771          1    Covered              
-        bin <op_shl,trans_00,zero[0]>                    1934          1    Covered              
-        bin <op_shlc,trans_00,zero[0]>                   1917          1    Covered              
+        bin <op_shl,trans_00,zero[0]>                    1941          1    Covered              
+        bin <op_shlc,trans_00,zero[0]>                   1916          1    Covered              
         bin <op_dec,trans_00,zero[1]>                      23          1    Covered              
         bin <op_shr,trans_00,zero[1]>                     168          1    Covered              
-        bin <op_shl,trans_00,zero[1]>                     195          1    Covered              
-        bin <op_shlc,trans_00,zero[1]>                    202          1    Covered              
-        bin <op_dec,trans_00,trans_00>                   3111          1    Covered              
+        bin <op_shl,trans_00,zero[1]>                     196          1    Covered              
+        bin <op_shlc,trans_00,zero[1]>                    204          1    Covered              
+        bin <op_dec,trans_00,trans_00>                   3112          1    Covered              
         bin <op_shr,trans_00,trans_00>                   1659          1    Covered              
-        bin <op_shl,trans_00,trans_00>                   1793          1    Covered              
-        bin <op_shlc,trans_00,trans_00>                  1794          1    Covered              
+        bin <op_shl,trans_00,trans_00>                   1798          1    Covered              
+        bin <op_shlc,trans_00,trans_00>                  1793          1    Covered              
         bin <op_dec,trans_00,trans_01>                     20          1    Covered              
         bin <op_shr,trans_00,trans_01>                    124          1    Covered              
         bin <op_shl,trans_00,trans_01>                    144          1    Covered              
-        bin <op_shlc,trans_00,trans_01>                   146          1    Covered              
+        bin <op_shlc,trans_00,trans_01>                   147          1    Covered              
         bin <op_dec,trans_00,trans_10>                    221          1    Covered              
         bin <op_shr,trans_00,trans_10>                    112          1    Covered              
-        bin <op_shl,trans_00,trans_10>                    141          1    Covered              
+        bin <op_shl,trans_00,trans_10>                    143          1    Covered              
         bin <op_shlc,trans_00,trans_10>                   123          1    Covered              
         bin <op_dec,trans_00,trans_11>                      3          1    Covered              
         bin <op_shr,trans_00,trans_11>                     44          1    Covered              
-        bin <op_shl,trans_00,trans_11>                     51          1    Covered              
-        bin <op_shlc,trans_00,trans_11>                    56          1    Covered              
-        bin <op_shrc,trans_00,zero[0]>                   1809          1    Covered              
-        bin <op_shrc,trans_00,zero[1]>                    190          1    Covered              
-        bin <op_shrc,trans_00,trans_00>                  1693          1    Covered              
-        bin <op_shrc,trans_00,trans_01>                   149          1    Covered              
-        bin <op_shrc,trans_00,trans_10>                   116          1    Covered              
+        bin <op_shl,trans_00,trans_11>                     52          1    Covered              
+        bin <op_shlc,trans_00,trans_11>                    57          1    Covered              
+        bin <op_shrc,trans_00,zero[0]>                   1804          1    Covered              
+        bin <op_shrc,trans_00,zero[1]>                    189          1    Covered              
+        bin <op_shrc,trans_00,trans_00>                  1687          1    Covered              
+        bin <op_shrc,trans_00,trans_01>                   148          1    Covered              
+        bin <op_shrc,trans_00,trans_10>                   117          1    Covered              
         bin <op_shrc,trans_00,trans_11>                    41          1    Covered              
-        bin <op_add,trans_01,zero[0]>                    1461          1    Covered              
-        bin <op_addc,trans_01,zero[0]>                   1332          1    Covered              
-        bin <op_add,trans_01,zero[1]>                       5          1    Covered              
+        bin <op_add,trans_01,zero[0]>                    1462          1    Covered              
+        bin <op_addc,trans_01,zero[0]>                   1335          1    Covered              
+        bin <op_add,trans_01,zero[1]>                       6          1    Covered              
         bin <op_addc,trans_01,zero[1]>                      8          1    Covered              
-        bin <op_add,trans_01,trans_00>                   1357          1    Covered              
-        bin <op_addc,trans_01,trans_00>                  1243          1    Covered              
+        bin <op_add,trans_01,trans_00>                   1358          1    Covered              
+        bin <op_addc,trans_01,trans_00>                  1246          1    Covered              
         bin <op_add,trans_01,trans_01>                      5          1    Covered              
         bin <op_addc,trans_01,trans_01>                     6          1    Covered              
         bin <op_add,trans_01,trans_10>                    104          1    Covered              
         bin <op_addc,trans_01,trans_10>                    89          1    Covered              
+        bin <op_add,trans_01,trans_11>                      1          1    Covered              
         bin <op_addc,trans_01,trans_11>                     2          1    Covered              
-        bin <op_sub,trans_01,zero[0]>                    1528          1    Covered              
-        bin <op_subc,trans_01,zero[0]>                   1562          1    Covered              
-        bin <op_sub,trans_01,trans_00>                   1428          1    Covered              
-        bin <op_subc,trans_01,trans_00>                  1439          1    Covered              
+        bin <op_sub,trans_01,zero[0]>                    1524          1    Covered              
+        bin <op_subc,trans_01,zero[0]>                   1568          1    Covered              
+        bin <op_sub,trans_01,trans_00>                   1424          1    Covered              
+        bin <op_subc,trans_01,trans_00>                  1444          1    Covered              
         bin <op_sub,trans_01,trans_10>                    100          1    Covered              
-        bin <op_subc,trans_01,trans_10>                   123          1    Covered              
-        bin <op_comp,trans_01,zero[0]>                   1492          1    Covered              
-        bin <op_comp,trans_01,trans_00>                  1368          1    Covered              
+        bin <op_subc,trans_01,trans_10>                   124          1    Covered              
+        bin <op_comp,trans_01,zero[0]>                   1495          1    Covered              
+        bin <op_comp,trans_01,trans_00>                  1371          1    Covered              
         bin <op_comp,trans_01,trans_10>                   124          1    Covered              
         bin <op_inc,trans_01,zero[1]>                      60          1    Covered              
         bin <op_inc,trans_01,trans_01>                     56          1    Covered              
@@ -1146,55 +1148,55 @@ Covergroup                                             Metric       Goal    Stat
         bin <op_dec,trans_01,zero[0]>                     205          1    Covered              
         bin <op_dec,trans_01,trans_00>                    157          1    Covered              
         bin <op_dec,trans_01,trans_10>                     48          1    Covered              
-        bin <op_shl,trans_01,zero[0]>                    1431          1    Covered              
+        bin <op_shl,trans_01,zero[0]>                    1424          1    Covered              
         bin <op_shl,trans_01,zero[1]>                       4          1    Covered              
-        bin <op_shl,trans_01,trans_00>                   1312          1    Covered              
+        bin <op_shl,trans_01,trans_00>                   1307          1    Covered              
         bin <op_shl,trans_01,trans_01>                      3          1    Covered              
-        bin <op_shl,trans_01,trans_10>                    119          1    Covered              
+        bin <op_shl,trans_01,trans_10>                    117          1    Covered              
         bin <op_shl,trans_01,trans_11>                      1          1    Covered              
-        bin <op_shr,trans_01,zero[0]>                    1517          1    Covered              
-        bin <op_shlc,trans_01,zero[0]>                   1404          1    Covered              
+        bin <op_shr,trans_01,zero[0]>                    1513          1    Covered              
+        bin <op_shlc,trans_01,zero[0]>                   1400          1    Covered              
         bin <op_shr,trans_01,zero[1]>                      30          1    Covered              
         bin <op_shlc,trans_01,zero[1]>                      5          1    Covered              
-        bin <op_shr,trans_01,trans_00>                   1407          1    Covered              
-        bin <op_shlc,trans_01,trans_00>                  1290          1    Covered              
+        bin <op_shr,trans_01,trans_00>                   1403          1    Covered              
+        bin <op_shlc,trans_01,trans_00>                  1287          1    Covered              
         bin <op_shr,trans_01,trans_01>                     28          1    Covered              
         bin <op_shlc,trans_01,trans_01>                     5          1    Covered              
         bin <op_shr,trans_01,trans_10>                    110          1    Covered              
-        bin <op_shlc,trans_01,trans_10>                   114          1    Covered              
+        bin <op_shlc,trans_01,trans_10>                   113          1    Covered              
         bin <op_shr,trans_01,trans_11>                      2          1    Covered              
         bin <op_shrc,trans_01,zero[0]>                   1429          1    Covered              
         bin <op_shrc,trans_01,zero[1]>                     26          1    Covered              
-        bin <op_shrc,trans_01,trans_00>                  1317          1    Covered              
+        bin <op_shrc,trans_01,trans_00>                  1318          1    Covered              
         bin <op_shrc,trans_01,trans_01>                    23          1    Covered              
-        bin <op_shrc,trans_01,trans_10>                   112          1    Covered              
+        bin <op_shrc,trans_01,trans_10>                   111          1    Covered              
         bin <op_shrc,trans_01,trans_11>                     3          1    Covered              
-        bin <op_and,trans_10,zero[0]>                    1167          1    Covered              
-        bin <op_or,trans_10,zero[0]>                     1201          1    Covered              
+        bin <op_and,trans_10,zero[0]>                    1164          1    Covered              
+        bin <op_or,trans_10,zero[0]>                     1200          1    Covered              
         bin <op_and,trans_10,zero[1]>                     151          1    Covered              
         bin <op_or,trans_10,zero[1]>                       12          1    Covered              
-        bin <op_and,trans_10,trans_00>                   1158          1    Covered              
-        bin <op_or,trans_10,trans_00>                    1186          1    Covered              
+        bin <op_and,trans_10,trans_00>                   1155          1    Covered              
+        bin <op_or,trans_10,trans_00>                    1185          1    Covered              
         bin <op_and,trans_10,trans_01>                    145          1    Covered              
         bin <op_or,trans_10,trans_01>                      12          1    Covered              
         bin <op_and,trans_10,trans_10>                      9          1    Covered              
         bin <op_or,trans_10,trans_10>                      15          1    Covered              
         bin <op_and,trans_10,trans_11>                      6          1    Covered              
-        bin <op_xor,trans_10,zero[0]>                    1075          1    Covered              
-        bin <op_sub,trans_10,zero[0]>                     558          1    Covered              
+        bin <op_xor,trans_10,zero[0]>                    1077          1    Covered              
+        bin <op_sub,trans_10,zero[0]>                     562          1    Covered              
         bin <op_not,trans_10,zero[0]>                    1224          1    Covered              
-        bin <op_subc,trans_10,zero[0]>                    524          1    Covered              
+        bin <op_subc,trans_10,zero[0]>                    521          1    Covered              
         bin <op_xor,trans_10,zero[1]>                     170          1    Covered              
-        bin <op_sub,trans_10,zero[1]>                     174          1    Covered              
-        bin <op_not,trans_10,zero[1]>                      24          1    Covered              
+        bin <op_sub,trans_10,zero[1]>                     172          1    Covered              
+        bin <op_not,trans_10,zero[1]>                      23          1    Covered              
         bin <op_subc,trans_10,zero[1]>                      2          1    Covered              
-        bin <op_xor,trans_10,trans_00>                   1067          1    Covered              
-        bin <op_sub,trans_10,trans_00>                    557          1    Covered              
+        bin <op_xor,trans_10,trans_00>                   1069          1    Covered              
+        bin <op_sub,trans_10,trans_00>                    561          1    Covered              
         bin <op_not,trans_10,trans_00>                   1211          1    Covered              
-        bin <op_subc,trans_10,trans_00>                   515          1    Covered              
+        bin <op_subc,trans_10,trans_00>                   512          1    Covered              
         bin <op_xor,trans_10,trans_01>                    170          1    Covered              
-        bin <op_sub,trans_10,trans_01>                    173          1    Covered              
-        bin <op_not,trans_10,trans_01>                     23          1    Covered              
+        bin <op_sub,trans_10,trans_01>                    171          1    Covered              
+        bin <op_not,trans_10,trans_01>                     22          1    Covered              
         bin <op_subc,trans_10,trans_01>                     1          1    Covered              
         bin <op_xor,trans_10,trans_10>                      8          1    Covered              
         bin <op_sub,trans_10,trans_10>                      1          1    Covered              
@@ -1203,11 +1205,11 @@ Covergroup                                             Metric       Goal    Stat
         bin <op_sub,trans_10,trans_11>                      1          1    Covered              
         bin <op_not,trans_10,trans_11>                      1          1    Covered              
         bin <op_subc,trans_10,trans_11>                     1          1    Covered              
-        bin <op_add,trans_10,zero[0]>                     690          1    Covered              
+        bin <op_add,trans_10,zero[0]>                     691          1    Covered              
         bin <op_comp,trans_10,zero[0]>                    552          1    Covered              
         bin <op_add,trans_10,zero[1]>                      11          1    Covered              
         bin <op_comp,trans_10,zero[1]>                    155          1    Covered              
-        bin <op_add,trans_10,trans_00>                    681          1    Covered              
+        bin <op_add,trans_10,trans_00>                    682          1    Covered              
         bin <op_comp,trans_10,trans_00>                   547          1    Covered              
         bin <op_add,trans_10,trans_01>                     11          1    Covered              
         bin <op_comp,trans_10,trans_01>                   154          1    Covered              
@@ -1215,17 +1217,17 @@ Covergroup                                             Metric       Goal    Stat
         bin <op_comp,trans_10,trans_10>                     5          1    Covered              
         bin <op_comp,trans_10,trans_11>                     1          1    Covered              
         bin <op_addc,trans_10,zero[0]>                    694          1    Covered              
-        bin <op_inc,trans_10,zero[0]>                    1212          1    Covered              
+        bin <op_inc,trans_10,zero[0]>                    1209          1    Covered              
         bin <op_addc,trans_10,trans_00>                   686          1    Covered              
-        bin <op_inc,trans_10,trans_00>                   1199          1    Covered              
+        bin <op_inc,trans_10,trans_00>                   1196          1    Covered              
         bin <op_addc,trans_10,trans_10>                     8          1    Covered              
         bin <op_inc,trans_10,trans_10>                     13          1    Covered              
-        bin <op_dec,trans_10,zero[0]>                    1126          1    Covered              
-        bin <op_shl,trans_10,zero[0]>                     633          1    Covered              
+        bin <op_dec,trans_10,zero[0]>                    1125          1    Covered              
+        bin <op_shl,trans_10,zero[0]>                     632          1    Covered              
         bin <op_dec,trans_10,zero[1]>                      15          1    Covered              
         bin <op_shl,trans_10,zero[1]>                      62          1    Covered              
-        bin <op_dec,trans_10,trans_00>                   1120          1    Covered              
-        bin <op_shl,trans_10,trans_00>                    626          1    Covered              
+        bin <op_dec,trans_10,trans_00>                   1119          1    Covered              
+        bin <op_shl,trans_10,trans_00>                    625          1    Covered              
         bin <op_dec,trans_10,trans_01>                     15          1    Covered              
         bin <op_shl,trans_10,trans_01>                     60          1    Covered              
         bin <op_dec,trans_10,trans_10>                      6          1    Covered              
@@ -1240,49 +1242,49 @@ Covergroup                                             Metric       Goal    Stat
         bin <op_shlc,trans_10,zero[0]>                    681          1    Covered              
         bin <op_shlc,trans_10,trans_00>                   673          1    Covered              
         bin <op_shlc,trans_10,trans_10>                     8          1    Covered              
-        bin <op_shrc,trans_10,zero[0]>                    692          1    Covered              
-        bin <op_shrc,trans_10,trans_00>                   689          1    Covered              
-        bin <op_shrc,trans_10,trans_10>                     3          1    Covered              
-        bin <op_nop,trans_11,zero[0]>                    1232          1    Covered              
-        bin <op_jump,trans_11,zero[0]>                   1266          1    Covered              
-        bin <op_loadi,trans_11,zero[0]>                  1224          1    Covered              
-        bin <op_jumpc,trans_11,zero[0]>                  1248          1    Covered              
+        bin <op_shrc,trans_10,zero[0]>                    695          1    Covered              
+        bin <op_shrc,trans_10,trans_00>                   691          1    Covered              
+        bin <op_shrc,trans_10,trans_10>                     4          1    Covered              
+        bin <op_nop,trans_11,zero[0]>                    1230          1    Covered              
+        bin <op_jump,trans_11,zero[0]>                   1264          1    Covered              
+        bin <op_loadi,trans_11,zero[0]>                  1223          1    Covered              
+        bin <op_jumpc,trans_11,zero[0]>                  1250          1    Covered              
         bin <op_nop,trans_11,zero[1]>                       8          1    Covered              
         bin <op_jump,trans_11,zero[1]>                     20          1    Covered              
         bin <op_loadi,trans_11,zero[1]>                    13          1    Covered              
         bin <op_jumpc,trans_11,zero[1]>                    17          1    Covered              
-        bin <op_nop,trans_11,trans_00>                   1232          1    Covered              
-        bin <op_jump,trans_11,trans_00>                  1266          1    Covered              
-        bin <op_loadi,trans_11,trans_00>                 1224          1    Covered              
-        bin <op_jumpc,trans_11,trans_00>                 1248          1    Covered              
+        bin <op_nop,trans_11,trans_00>                   1230          1    Covered              
+        bin <op_jump,trans_11,trans_00>                  1264          1    Covered              
+        bin <op_loadi,trans_11,trans_00>                 1223          1    Covered              
+        bin <op_jumpc,trans_11,trans_00>                 1250          1    Covered              
         bin <op_nop,trans_11,trans_11>                      8          1    Covered              
         bin <op_jump,trans_11,trans_11>                    20          1    Covered              
         bin <op_loadi,trans_11,trans_11>                   13          1    Covered              
         bin <op_jumpc,trans_11,trans_11>                   17          1    Covered              
         bin <op_jumpz,trans_11,zero[0]>                  1240          1    Covered              
-        bin <op_move,trans_11,zero[0]>                   1209          1    Covered              
+        bin <op_move,trans_11,zero[0]>                   1211          1    Covered              
         bin <op_jumpz,trans_11,zero[1]>                    16          1    Covered              
         bin <op_move,trans_11,zero[1]>                      9          1    Covered              
         bin <op_jumpz,trans_11,trans_00>                 1240          1    Covered              
-        bin <op_move,trans_11,trans_00>                  1209          1    Covered              
+        bin <op_move,trans_11,trans_00>                  1211          1    Covered              
         bin <op_jumpz,trans_11,trans_11>                   16          1    Covered              
         bin <op_move,trans_11,trans_11>                     9          1    Covered              
-        bin <op_add,trans_11,zero[0]>                     523          1    Covered              
+        bin <op_add,trans_11,zero[0]>                     525          1    Covered              
         bin <op_addc,trans_11,zero[0]>                    576          1    Covered              
         bin <op_add,trans_11,zero[1]>                       1          1    Covered              
         bin <op_addc,trans_11,zero[1]>                      4          1    Covered              
-        bin <op_add,trans_11,trans_00>                    519          1    Covered              
+        bin <op_add,trans_11,trans_00>                    521          1    Covered              
         bin <op_addc,trans_11,trans_00>                   574          1    Covered              
         bin <op_add,trans_11,trans_01>                      1          1    Covered              
         bin <op_addc,trans_11,trans_01>                     4          1    Covered              
         bin <op_add,trans_11,trans_10>                      4          1    Covered              
         bin <op_addc,trans_11,trans_10>                     2          1    Covered              
-        bin <op_sub,trans_11,zero[0]>                     520          1    Covered              
-        bin <op_sub,trans_11,trans_00>                    516          1    Covered              
+        bin <op_sub,trans_11,zero[0]>                     524          1    Covered              
+        bin <op_sub,trans_11,trans_00>                    520          1    Covered              
         bin <op_sub,trans_11,trans_10>                      4          1    Covered              
-        bin <op_subc,trans_11,zero[0]>                    686          1    Covered              
+        bin <op_subc,trans_11,zero[0]>                    682          1    Covered              
         bin <op_subc,trans_11,zero[1]>                      2          1    Covered              
-        bin <op_subc,trans_11,trans_00>                   678          1    Covered              
+        bin <op_subc,trans_11,trans_00>                   674          1    Covered              
         bin <op_subc,trans_11,trans_01>                     2          1    Covered              
         bin <op_subc,trans_11,trans_10>                     8          1    Covered              
         bin <op_comp,trans_11,zero[0]>                    512          1    Covered              
@@ -1299,16 +1301,16 @@ Covergroup                                             Metric       Goal    Stat
         bin <op_shl,trans_11,trans_00>                    530          1    Covered              
         bin <op_shl,trans_11,trans_01>                      3          1    Covered              
         bin <op_shl,trans_11,trans_10>                      7          1    Covered              
-        bin <op_shr,trans_11,zero[0]>                     519          1    Covered              
+        bin <op_shr,trans_11,zero[0]>                     523          1    Covered              
         bin <op_shr,trans_11,zero[1]>                       8          1    Covered              
-        bin <op_shr,trans_11,trans_00>                    515          1    Covered              
+        bin <op_shr,trans_11,trans_00>                    519          1    Covered              
         bin <op_shr,trans_11,trans_01>                      8          1    Covered              
         bin <op_shr,trans_11,trans_10>                      4          1    Covered              
-        bin <op_shlc,trans_11,zero[0]>                    512          1    Covered              
-        bin <op_shlc,trans_11,trans_00>                   505          1    Covered              
+        bin <op_shlc,trans_11,zero[0]>                    516          1    Covered              
+        bin <op_shlc,trans_11,trans_00>                   509          1    Covered              
         bin <op_shlc,trans_11,trans_10>                     7          1    Covered              
-        bin <op_shrc,trans_11,zero[0]>                    538          1    Covered              
-        bin <op_shrc,trans_11,trans_00>                   532          1    Covered              
+        bin <op_shrc,trans_11,zero[0]>                    541          1    Covered              
+        bin <op_shrc,trans_11,trans_00>                   535          1    Covered              
         bin <op_shrc,trans_11,trans_10>                     6          1    Covered              
         illegal_bin no_zero_change                          0               ZERO                 
         illegal_bin no_carry_change                         0               ZERO                 
@@ -1318,10 +1320,8 @@ Covergroup                                             Metric       Goal    Stat
         illegal_bin subc                                    0               ZERO                 
         illegal_bin addc                                    0               ZERO                 
         illegal_bin shl_shlc                                0               ZERO                 
-        bin <op_add,carry[1],trans_11>                      0          1    ZERO                 
         bin <op_subc,carry[1],trans_11>                     0          1    ZERO                 
         bin <op_shlc,carry[1],trans_11>                     0          1    ZERO                 
-        bin <op_add,trans_01,trans_11>                      0          1    ZERO                 
         bin <op_shlc,trans_01,trans_11>                     0          1    ZERO                 
         bin <op_or,trans_10,trans_11>                       0          1    ZERO                 
         bin <op_xor,trans_10,trans_11>                      0          1    ZERO                 
@@ -1333,4 +1333,4 @@ Covergroup                                             Metric       Goal    Stat
         bin <op_shl,trans_11,trans_11>                      0          1    ZERO                 
         bin <op_shr,trans_11,trans_11>                      0          1    ZERO                 
 
-TOTAL COVERGROUP COVERAGE: 99.6%  COVERGROUP TYPES: 1
+TOTAL COVERGROUP COVERAGE: 99.7%  COVERGROUP TYPES: 1
