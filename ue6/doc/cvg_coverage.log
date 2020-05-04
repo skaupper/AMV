@@ -3,10 +3,10 @@ COVERGROUP COVERAGE:
 Covergroup                                             Metric       Goal    Status               
                                                                                               
 -----------------------------------------------------------------------------------------------
- TYPE /top/TheTest/cov_grp                              98.6%        100    Uncovered            
-    covered/total bins:                                  1222       1281                      
-    missing/total bins:                                    59       1281                      
-    % Hit:                                              95.3%        100                      
+ TYPE /top/TheTest/cov_grp                              98.8%        100    Uncovered            
+    covered/total bins:                                  1222       1272                      
+    missing/total bins:                                    50       1272                      
+    % Hit:                                              96.0%        100                      
     Coverpoint cov_grp::pt_cmd                         100.0%        100    Covered              
         covered/total bins:                                21         21                      
         missing/total bins:                                 0         21                      
@@ -35,15 +35,15 @@ Covergroup                                             Metric       Goal    Stat
         covered/total bins:                               665        665                      
         missing/total bins:                                 0        665                      
         % Hit:                                         100.0%        100                      
-    Cross cov_grp::cross_op_and_flags                   89.1%        100    Uncovered            
-        covered/total bins:                               487        546                      
-        missing/total bins:                                59        546                      
-        % Hit:                                          89.1%        100                      
+    Cross cov_grp::cross_op_and_flags                   90.6%        100    Uncovered            
+        covered/total bins:                               487        537                      
+        missing/total bins:                                50        537                      
+        % Hit:                                          90.6%        100                      
  Covergroup instance \/top/TheTest/stimuli/cov_grp_inst  
-                                                        98.6%        100    Uncovered            
-    covered/total bins:                                  1222       1281                      
-    missing/total bins:                                    59       1281                      
-    % Hit:                                              95.3%        100                      
+                                                        98.8%        100    Uncovered            
+    covered/total bins:                                  1222       1272                      
+    missing/total bins:                                    50       1272                      
+    % Hit:                                              96.0%        100                      
     Coverpoint pt_cmd                                  100.0%        100    Covered              
         covered/total bins:                                21         21                      
         missing/total bins:                                 0         21                      
@@ -819,10 +819,10 @@ Covergroup                                             Metric       Goal    Stat
         bin <op_shrc,reg_a[7],reg_b[0]>                   604          1    Covered              
         illegal_bin no_reg                                  0               ZERO                 
         illegal_bin only_reg_a                              0               ZERO                 
-    Cross cross_op_and_flags                            89.1%        100    Uncovered            
-        covered/total bins:                               487        546                      
-        missing/total bins:                                59        546                      
-        % Hit:                                          89.1%        100                      
+    Cross cross_op_and_flags                            90.6%        100    Uncovered            
+        covered/total bins:                               487        537                      
+        missing/total bins:                                50        537                      
+        % Hit:                                          90.6%        100                      
         bin <op_nop,carry[0],zero[0]>                    3201          1    Covered              
         bin <op_jump,carry[0],zero[0]>                   3184          1    Covered              
         bin <op_loadi,carry[0],zero[0]>                  3218          1    Covered              
@@ -970,11 +970,11 @@ Covergroup                                             Metric       Goal    Stat
         bin <op_add,trans_11,zero[1]>                       1          1    Covered              
         bin <op_addc,trans_11,zero[1]>                      4          1    Covered              
         bin <op_sub,carry[0],zero[1]>                     641          1    Covered              
+        bin <op_sub,trans_00,zero[1]>                     467          1    Covered              
+        bin <op_sub,trans_10,zero[1]>                     174          1    Covered              
         bin <op_subc,carry[0],zero[1]>                    533          1    Covered              
         bin <op_subc,carry[1],zero[1]>                      2          1    Covered              
-        bin <op_sub,trans_00,zero[1]>                     467          1    Covered              
         bin <op_subc,trans_00,zero[1]>                    531          1    Covered              
-        bin <op_sub,trans_10,zero[1]>                     174          1    Covered              
         bin <op_subc,trans_10,zero[1]>                      2          1    Covered              
         bin <op_subc,trans_11,zero[1]>                      2          1    Covered              
         bin <op_comp,carry[0],zero[1]>                    630          1    Covered              
@@ -1129,11 +1129,11 @@ Covergroup                                             Metric       Goal    Stat
         bin <op_add,trans_11,trans_01>                      1          1    Covered              
         bin <op_addc,trans_11,trans_01>                     4          1    Covered              
         bin <op_sub,carry[0],trans_01>                    610          1    Covered              
+        bin <op_sub,trans_00,trans_01>                    437          1    Covered              
+        bin <op_sub,trans_10,trans_01>                    173          1    Covered              
         bin <op_subc,carry[0],trans_01>                   481          1    Covered              
         bin <op_subc,carry[1],trans_01>                     2          1    Covered              
-        bin <op_sub,trans_00,trans_01>                    437          1    Covered              
         bin <op_subc,trans_00,trans_01>                   480          1    Covered              
-        bin <op_sub,trans_10,trans_01>                    173          1    Covered              
         bin <op_subc,trans_10,trans_01>                     1          1    Covered              
         bin <op_subc,trans_11,trans_01>                     2          1    Covered              
         bin <op_comp,carry[0],trans_01>                   591          1    Covered              
@@ -1281,10 +1281,10 @@ Covergroup                                             Metric       Goal    Stat
         bin <op_addc,trans_00,trans_11>                     9          1    Covered              
         bin <op_addc,trans_01,trans_11>                     2          1    Covered              
         bin <op_sub,carry[0],trans_11>                     31          1    Covered              
-        bin <op_subc,carry[0],trans_11>                    52          1    Covered              
         bin <op_sub,trans_00,trans_11>                     30          1    Covered              
-        bin <op_subc,trans_00,trans_11>                    51          1    Covered              
         bin <op_sub,trans_10,trans_11>                      1          1    Covered              
+        bin <op_subc,carry[0],trans_11>                    52          1    Covered              
+        bin <op_subc,trans_00,trans_11>                    51          1    Covered              
         bin <op_subc,trans_10,trans_11>                     1          1    Covered              
         bin <op_comp,carry[0],trans_11>                    39          1    Covered              
         bin <op_comp,trans_00,trans_11>                    38          1    Covered              
@@ -1314,44 +1314,37 @@ Covergroup                                             Metric       Goal    Stat
         illegal_bin no_carry_change                         0               ZERO                 
         illegal_bin carry_not_zero                          0               ZERO                 
         illegal_bin inc_carry_and_zero                      0               ZERO                 
-        bin <op_sub,carry[1],zero[1]>                       0          1    ZERO                 
+        illegal_bin sub_carry_and_zero                      0               ZERO                 
         bin <op_comp,carry[1],zero[1]>                      0          1    ZERO                 
         bin <op_dec,carry[1],zero[1]>                       0          1    ZERO                 
-        bin <op_sub,trans_01,zero[1]>                       0          1    ZERO                 
         bin <op_subc,trans_01,zero[1]>                      0          1    ZERO                 
         bin <op_comp,trans_01,zero[1]>                      0          1    ZERO                 
         bin <op_dec,trans_01,zero[1]>                       0          1    ZERO                 
         bin <op_addc,trans_10,zero[1]>                      0          1    ZERO                 
         bin <op_shlc,trans_10,zero[1]>                      0          1    ZERO                 
         bin <op_shrc,trans_10,zero[1]>                      0          1    ZERO                 
-        bin <op_sub,trans_11,zero[1]>                       0          1    ZERO                 
         bin <op_comp,trans_11,zero[1]>                      0          1    ZERO                 
         bin <op_dec,trans_11,zero[1]>                       0          1    ZERO                 
         bin <op_shlc,trans_11,zero[1]>                      0          1    ZERO                 
         bin <op_shrc,trans_11,zero[1]>                      0          1    ZERO                 
-        bin <op_sub,carry[1],trans_01>                      0          1    ZERO                 
         bin <op_comp,carry[1],trans_01>                     0          1    ZERO                 
         bin <op_dec,carry[1],trans_01>                      0          1    ZERO                 
-        bin <op_sub,trans_01,trans_01>                      0          1    ZERO                 
         bin <op_subc,trans_01,trans_01>                     0          1    ZERO                 
         bin <op_comp,trans_01,trans_01>                     0          1    ZERO                 
         bin <op_dec,trans_01,trans_01>                      0          1    ZERO                 
         bin <op_addc,trans_10,trans_01>                     0          1    ZERO                 
         bin <op_shlc,trans_10,trans_01>                     0          1    ZERO                 
         bin <op_shrc,trans_10,trans_01>                     0          1    ZERO                 
-        bin <op_sub,trans_11,trans_01>                      0          1    ZERO                 
         bin <op_comp,trans_11,trans_01>                     0          1    ZERO                 
         bin <op_dec,trans_11,trans_01>                      0          1    ZERO                 
         bin <op_shlc,trans_11,trans_01>                     0          1    ZERO                 
         bin <op_shrc,trans_11,trans_01>                     0          1    ZERO                 
         bin <op_add,carry[1],trans_11>                      0          1    ZERO                 
-        bin <op_sub,carry[1],trans_11>                      0          1    ZERO                 
         bin <op_subc,carry[1],trans_11>                     0          1    ZERO                 
         bin <op_comp,carry[1],trans_11>                     0          1    ZERO                 
         bin <op_dec,carry[1],trans_11>                      0          1    ZERO                 
         bin <op_shlc,carry[1],trans_11>                     0          1    ZERO                 
         bin <op_add,trans_01,trans_11>                      0          1    ZERO                 
-        bin <op_sub,trans_01,trans_11>                      0          1    ZERO                 
         bin <op_subc,trans_01,trans_11>                     0          1    ZERO                 
         bin <op_comp,trans_01,trans_11>                     0          1    ZERO                 
         bin <op_dec,trans_01,trans_11>                      0          1    ZERO                 
@@ -1365,7 +1358,6 @@ Covergroup                                             Metric       Goal    Stat
         bin <op_shrc,trans_10,trans_11>                     0          1    ZERO                 
         bin <op_add,trans_11,trans_11>                      0          1    ZERO                 
         bin <op_addc,trans_11,trans_11>                     0          1    ZERO                 
-        bin <op_sub,trans_11,trans_11>                      0          1    ZERO                 
         bin <op_subc,trans_11,trans_11>                     0          1    ZERO                 
         bin <op_comp,trans_11,trans_11>                     0          1    ZERO                 
         bin <op_dec,trans_11,trans_11>                      0          1    ZERO                 
@@ -1374,4 +1366,4 @@ Covergroup                                             Metric       Goal    Stat
         bin <op_shlc,trans_11,trans_11>                     0          1    ZERO                 
         bin <op_shrc,trans_11,trans_11>                     0          1    ZERO                 
 
-TOTAL COVERGROUP COVERAGE: 98.6%  COVERGROUP TYPES: 1
+TOTAL COVERGROUP COVERAGE: 98.8%  COVERGROUP TYPES: 1
