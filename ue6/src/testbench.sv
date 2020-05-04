@@ -224,6 +224,12 @@ program test (cpu_if.tb duv_if, output logic rst);
             illegal_bins addc = binsof(pt_last_cmd) intersect {ADDC} && binsof(pt_carry.trans_10) &&
                 // Zero = 1
                 (binsof(pt_zero.zero) intersect {1} || binsof(pt_zero.trans_01) || binsof(pt_zero.trans_11));
+
+            illegal_bins shl_shlc = binsof(pt_last_cmd) intersect {SHLC, SHRC} &&
+                // Last Carry = 1
+                (binsof(pt_carry.trans_10) || binsof(pt_carry.trans_11)) &&
+                // Zero = 1
+                (binsof(pt_zero.zero) intersect {1} || binsof(pt_zero.trans_01) || binsof(pt_zero.trans_11));
         }
 
     endgroup
