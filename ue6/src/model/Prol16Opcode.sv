@@ -41,6 +41,8 @@ class Prol16Opcode;
     constraint reg_a { ra inside {[0:gRegs-1]}; }
     constraint reg_b { rb inside {[0:gRegs-1]}; }
 
+    constraint unused_data { cmd != LOADI -> data == 0; }
+
     constraint ignore_cmds { !(cmd inside {SLEEP, STORE, LOAD}); }
 
     constraint no_reg_used {

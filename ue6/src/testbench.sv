@@ -195,6 +195,11 @@ program test (cpu_if.tb duv_if, output logic rst);
             illegal_bins carry_not_zero = binsof(pt_last_cmd) intersect {
                 AND, OR, XOR, NOT
             } && (binsof(pt_carry.carry) intersect {1} || binsof(pt_carry.trans_11) || binsof(pt_carry.trans_01));
+
+            illegal_bins inc_carry_and_zero = binsof(pt_last_cmd) intersect {
+                INC
+            } && !((binsof(pt_carry.carry) intersect {1} && binsof(pt_zero.zero) intersect {1}) ||
+                   (binsof(pt_carry.carry) intersect {0} && binsof(pt_zero.zero) intersect {0}));
         }
 
     endgroup
