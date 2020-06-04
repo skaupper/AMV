@@ -191,11 +191,18 @@ begin  -- rtl
 -- psl default clock is rising_edge(clk_i);
 
 -- alu_pass_a_c
+-- alu_pass_b_c
 
 -- psl assert always ((alu_func_i = alu_pass_a_c) -> next (result_o = side_a_i));
+-- psl assert always ((alu_func_i = alu_pass_b_c) -> next (result_o = side_b_i));
 
--- alu_pass_b_c
 -- alu_and_c
+
+-- psl assert always ((alu_func_i = alu_and_c) -> next (carry_o = '0'));
+-- psl assert always ((alu_func_i = alu_and_c) -> next (zero_o = (side_a_i = not side_b_i)));
+-- psl assert always ((alu_func_i = alu_and_c) -> next (result_o = (side_a_i and side_b_i)));
+
+
 -- alu_or_c
 -- alu_xor_c
 -- alu_not_c
