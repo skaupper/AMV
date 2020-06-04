@@ -58,8 +58,8 @@ Vacuity ist auch für andere temporale Logiken (LTL, CTL) wichtig, da oben genan
   "Wenn zuerst beliebig lange x und dann y, dann muss gleichzeitig mit y bereits z gelten."
 
     t 01234567
-    x 01111000
-    y 10000011
+    x 01111100
+    y 00000000
     z -------- (don't care)
 
     Erklärung des Beispiels:
@@ -74,7 +74,7 @@ Starker Operator (strong): "Im Zweifel falsch"
 Schwacher Operator (weak): "Im Zweifel richtig"
 
 `eventually! p` ist gleichbedeutend mit `F p` ("finally") aus LTL.
-`F p` ist eine Liveness Eigenschaft. Um diese zu widerlegen, bräuchte es ein unendliches Gegenbeispiel - und "unendliche Zeit" ist in Simulation nicht möglich.
+`F p` ist eine Liveness Eigenschaft. Um diese zu widerlegen, bräuchte es ein unendliches Gegenbeispiel - und "unendliche Zeit" ist in Simulation nicht möglich. Wäre `eventually!` also ein schwacher Operator, und `p` würde innerhalb der Simulationsdauer nicht auftreten, würde die Bedingung erfüllt sein ("im Zweifel richtig").
 
 - Beschreiben Sie den Algorithmus für Model Checking für Invarianten mit eigenen Worten!
 
@@ -107,6 +107,7 @@ Abarbeitung des Algorithmus:
 6. Auswahl n1t2, Assertion nicht verletzt
 --- alle Zustände besucht
 7. Neue Zustände erzeugt: {c1n2, c1t2, t1c2, n1c2}
+--- Iteration 2 vorbei (gehe zu Punkt 2 oben)
 8. Auswahl c1n2, Assertion nicht verletzt
 9. Auswahl c1t2, Assertion nicht verletzt
 10. Auswahl t1c2, Assertion nicht verletzt
@@ -141,4 +142,4 @@ Ist noch erfüllt. Automat 1 hat den Mutex bekommen, nachdem er ihn haben wollte
 `always (s2=t2 -> eventually! s2=c2);`
 Ist noch erfüllt. Automat 2 hat den Mutex bekommen, nachdem er ihn haben wollte.
 
-![Bsp 3.2](bsp3.jpg)
+![Bsp 3.2](bsp3.png)
