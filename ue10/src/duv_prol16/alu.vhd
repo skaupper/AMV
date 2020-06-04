@@ -190,28 +190,49 @@ begin  -- rtl
 
 -- psl default clock is rising_edge(clk_i);
 
--- alu_pass_a_c
--- alu_pass_b_c
 
--- psl assert always ((alu_func_i = alu_pass_a_c) -> next (result_o = side_a_i));
--- psl assert always ((alu_func_i = alu_pass_b_c) -> next (result_o = side_b_i));
+-- General sequences
 
--- alu_and_c
-
--- psl assert always ((alu_func_i = alu_and_c) -> next (carry_o = '0'));
--- psl assert always ((alu_func_i = alu_and_c) -> next (zero_o = (side_a_i = not side_b_i)));
--- psl assert always ((alu_func_i = alu_and_c) -> next (result_o = (side_a_i and side_b_i)));
+-- psl sequence aEqualsB       is {((side_a_i and side_b_i) = (side_a_i'range => '0'))};
+-- psl sequence aNotEqualsB    is {((side_a_i and side_b_i) /= (side_a_i'range => '0'))};
+-- psl sequence aEqualsZero    is {side_a_i = (side_a_i'range => '0')};
+-- psl sequence aNotEqualsZero is {side_a_i /= (side_a_i'range => '0')};
+-- psl sequence bEqualsZero    is {side_b_i = (side_b_i'range => '0')};
+-- psl sequence bNotEqualsZero is {side_b_i /= (side_b_i'range => '0')};
 
 
--- alu_or_c
--- alu_xor_c
--- alu_not_c
--- alu_add_c
--- alu_sub_c
--- alu_inc_c
--- alu_dec_c
--- alu_slc_c
--- alu_src_c
+
+-- OP: alu_pass_a_c
+-- OP: alu_pass_b_c
+
+-- psl assert always ((alu_func_i = alu_pass_a_c) -> (result_o = side_a_i));
+-- psl assert always ((alu_func_i = alu_pass_b_c) -> (result_o = side_b_i));
+
+
+-- OP: alu_and_c
+
+-- psl assert always ((alu_func_i = alu_and_c)                  ->  (carry_o = '0'));
+-- psl assert always ({(alu_func_i = alu_and_c) : aEqualsB}     |-> {zero_o = '1'});
+-- psl assert always ({(alu_func_i = alu_and_c) : aNotEqualsB}  |-> {zero_o = '0'});
+-- psl assert always ((alu_func_i = alu_and_c)                  ->  (result_o = (side_a_i and side_b_i)));
+
+
+-- OP: alu_or_c
+
+-- psl assert always ((alu_func_i = alu_or_c)                                       ->  (carry_o = '0'));
+-- psl assert always ({(alu_func_i = alu_or_c) : aEqualsZero : bEqualsZero}         |-> {zero_o = '1'});
+-- psl assert always ({(alu_func_i = alu_or_c) : (aNotEqualsZero | bNotEqualsZero)} |-> {zero_o = '1'});
+
+
+-- OP: alu_or_c
+-- OP: alu_xor_c
+-- OP: alu_not_c
+-- OP: alu_add_c
+-- OP: alu_sub_c
+-- OP: alu_inc_c
+-- OP: alu_dec_c
+-- OP: alu_slc_c
+-- OP: alu_src_c
 
 
 end rtl;
