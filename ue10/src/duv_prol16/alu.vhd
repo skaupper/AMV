@@ -206,7 +206,6 @@ begin  -- rtl
 -- psl sequence bNotAllOne     is {side_b_i /= (side_b_i'range => '1')};
 
 
-
 -- OP: alu_pass_a_c
 -- OP: alu_pass_b_c
 
@@ -249,6 +248,14 @@ begin  -- rtl
 
 
 -- OP: alu_add_c
+
+-- psl assert always ((alu_func_i = alu_add_c and (to_uint(side_a_i) + to_uint(side_b_i) > 16#ffff#))           -> (carry_o = '1'));
+-- psl assert always ((alu_func_i = alu_add_c and (to_uint(side_a_i) + to_uint(side_b_i) <= 16#ffff#))          -> (carry_o = '0'));
+-- psl assert always ((alu_func_i = alu_add_c and ((to_uint(side_a_i) + to_uint(side_b_i)) mod 16#ffff# = 0))   -> (zero_o = '1'));
+-- psl assert always ((alu_func_i = alu_add_c and ((to_uint(side_a_i) + to_uint(side_b_i)) mod 16#ffff# /= 0))  -> (zero_o = '0'));
+-- psl assert always ((alu_func_i = alu_not_c)                                                                  ->  (result_o = to_data(to_uint(side_a_i) + to_uint(side_b_i))));
+
+
 -- OP: alu_sub_c
 -- OP: alu_inc_c
 -- OP: alu_dec_c
