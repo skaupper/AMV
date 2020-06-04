@@ -283,7 +283,10 @@ package prol16_pack is
 
   function to_uint(a : std_ulogic_vector) return natural;
   function to_uint(a : std_ulogic) return natural;
-  function to_data(a : natural) return data_vec_t;
+  function to_sint(a : std_ulogic_vector) return natural;
+  function to_sint(a : std_ulogic) return natural;
+  function to_udata(a : integer) return data_vec_t;
+  function to_sdata(a : integer) return data_vec_t;
 end prol16_pack;
 
 package body prol16_pack is
@@ -298,7 +301,22 @@ package body prol16_pack is
     return to_uint("0" & a);
   end function;
 
-  function to_data(a : natural) return data_vec_t is
+  function to_sint(a : std_ulogic_vector) return integer is
+  begin
+    return to_integer(signed(a));
+  end function;
+
+  function to_sint(a : std_ulogic) return integer is
+  begin
+    return to_sint("0" & a);
+  end function;
+
+  function to_sdata(a : integer) return data_vec_t is
+  begin
+    return data_vec_t(to_signed(a, data_vec_length_c));
+  end function;
+
+  function to_udata(a : integer) return data_vec_t is
   begin
     return data_vec_t(to_unsigned(a, data_vec_length_c));
   end function;

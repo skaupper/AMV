@@ -253,10 +253,18 @@ begin  -- rtl
 -- psl assert always ((alu_func_i = alu_add_c and (to_uint(side_a_i) + to_uint(side_b_i) + to_uint(carry_i) <= 16#ffff#))           -> (carry_o = '0'));
 -- psl assert always ((alu_func_i = alu_add_c and ((to_uint(side_a_i) + to_uint(side_b_i) + to_uint(carry_i)) mod 16#10000# = 0))   -> (zero_o = '1'));
 -- psl assert always ((alu_func_i = alu_add_c and ((to_uint(side_a_i) + to_uint(side_b_i) + to_uint(carry_i)) mod 16#10000# /= 0))  -> (zero_o = '0'));
--- psl assert always ((alu_func_i = alu_add_c) -> (result_o = to_data(to_uint(side_a_i) + to_uint(side_b_i) + to_uint(carry_i))));
+-- psl assert always ((alu_func_i = alu_add_c) -> (result_o = to_udata(to_uint(side_a_i) + to_uint(side_b_i) + to_uint(carry_i))));
 
 
 -- OP: alu_sub_c
+
+-- psl assert always ((alu_func_i = alu_sub_c and (to_uint(side_b_i) + to_uint(carry_i) > to_uint(side_a_i)))   -> (carry_o = '1'));
+-- psl assert always ((alu_func_i = alu_sub_c and (to_uint(side_b_i) + to_uint(carry_i) <= to_uint(side_a_i)))  -> (carry_o = '0'));
+-- psl assert always ((alu_func_i = alu_sub_c and (to_uint(side_b_i) + to_uint(carry_i) = to_uint(side_a_i)))   -> (zero_o = '1'));
+-- psl assert always ((alu_func_i = alu_sub_c and (to_uint(side_b_i) + to_uint(carry_i) /= to_uint(side_a_i)))  -> (zero_o = '0'));
+-- psl assert always ((alu_func_i = alu_sub_c)   -> (result_o = to_sdata(to_sint(side_a_i) - to_sint(side_b_i) - to_sint(carry_i))));
+
+
 -- OP: alu_inc_c
 -- OP: alu_dec_c
 -- OP: alu_slc_c
