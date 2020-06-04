@@ -281,7 +281,20 @@ begin  -- rtl
 -- psl assert always ((alu_func_i = alu_dec_c) -> (result_o = to_udata(to_uint(side_a_i) - 1)));
 
 -- OP: alu_slc_c
+
+-- psl assert always ((alu_func_i = alu_slc_c and (to_uint(side_a_i) * 2 > 16#ffff#))  -> (carry_o = '1'));
+-- psl assert always ((alu_func_i = alu_slc_c and (to_uint(side_a_i) * 2 <= 16#ffff#)) -> (carry_o = '0'));
+-- psl assert always ((alu_func_i = alu_slc_c and ((to_uint(side_a_i) * 2 + to_uint(carry_i)) mod 16#10000# = 0))   -> (zero_o = '1'));
+-- psl assert always ((alu_func_i = alu_slc_c and ((to_uint(side_a_i) * 2 + to_uint(carry_i)) mod 16#10000# /= 0))  -> (zero_o = '0'));
+-- psl assert always ((alu_func_i = alu_slc_c) -> (result_o = to_udata(to_uint(side_a_i) * 2 + to_uint(carry_i))));
+
 -- OP: alu_src_c
+
+-- psl assert always ((alu_func_i = alu_src_c and (to_uint(side_a_i) mod 2 = 1))                  -> (carry_o = '1'));
+-- psl assert always ((alu_func_i = alu_src_c and (to_uint(side_a_i) mod 2 /= 1))                 -> (carry_o = '0'));
+-- psl assert always ((alu_func_i = alu_src_c and (to_uint(side_a_i) <= 1 and carry_i = '0'))     -> (zero_o = '1'));
+-- psl assert always ((alu_func_i = alu_src_c and not(to_uint(side_a_i) <= 1 and carry_i = '0'))  -> (zero_o = '0'));
+-- psl assert always ((alu_func_i = alu_src_c) -> (result_o = to_udata(to_uint(side_a_i) / 2 + to_uint(carry_i) * 2**(data_vec_length_c-1))));
 
 
 end rtl;
