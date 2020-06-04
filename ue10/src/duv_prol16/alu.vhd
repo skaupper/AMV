@@ -7,12 +7,12 @@
 -- it under the terms of the GNU General Public License as published by
 -- the Free Software Foundation, either version 3 of the License, or
 -- (at your option) any later version.
--- 
+--
 -- Prol16 is distributed in the hope that it will be useful,
 -- but WITHOUT ANY WARRANTY; without even the implied warranty of
 -- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 -- GNU General Public License for more details.
--- 
+--
 -- You should have received a copy of the GNU General Public License
 -- along with Prol16.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -31,6 +31,7 @@ entity alu is
     bit_width_g : integer := 16);
 
   port (
+    clk_i      : in std_ulogic;
     side_a_i   : in std_ulogic_vector(bit_width_g - 1 downto 0);
     side_b_i   : in std_ulogic_vector(bit_width_g - 1 downto 0);
     carry_i    : in std_ulogic;
@@ -180,5 +181,30 @@ begin  -- rtl
 
     zero_o <= not zero_v;
   end process zero_flag;
+
+
+
+-------------------------------------------------------------------------------
+-- _PSL assertions
+-------------------------------------------------------------------------------
+
+-- psl default clock is rising_edge(clk_i);
+
+-- alu_pass_a_c
+
+-- psl assert always ((alu_func_i = alu_pass_a_c) -> next (result_o = side_a_i));
+
+-- alu_pass_b_c
+-- alu_and_c
+-- alu_or_c
+-- alu_xor_c
+-- alu_not_c
+-- alu_add_c
+-- alu_sub_c
+-- alu_inc_c
+-- alu_dec_c
+-- alu_slc_c
+-- alu_src_c
+
 
 end rtl;

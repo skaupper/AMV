@@ -7,12 +7,12 @@
 -- it under the terms of the GNU General Public License as published by
 -- the Free Software Foundation, either version 3 of the License, or
 -- (at your option) any later version.
--- 
+--
 -- Prol16 is distributed in the hope that it will be useful,
 -- but WITHOUT ANY WARRANTY; without even the implied warranty of
 -- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 -- GNU General Public License for more details.
--- 
+--
 -- You should have received a copy of the GNU General Public License
 -- along with Prol16.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -145,6 +145,7 @@ package prol16_pack is
       bit_width_g : integer := 16);
 
     port (
+      clk_i      : in std_ulogic;
       side_a_i   : in std_ulogic_vector(bit_width_g - 1 downto 0);
       side_b_i   : in std_ulogic_vector(bit_width_g - 1 downto 0);
       carry_i    : in std_ulogic;
@@ -157,7 +158,7 @@ package prol16_pack is
   end component;
 
   component reg_file
-    
+
     generic (
       registers_g : integer := registers_c;
       is_fpga_g   : integer := tech_is_fpga_c);
@@ -184,7 +185,7 @@ package prol16_pack is
 
       -- control
       op_code_o          : out op_code_t;
-      -- asserted on register index decode error    
+      -- asserted on register index decode error
       reg_decode_error_o : out std_ulogic;
 
       sel_pc_i   : in std_ulogic;
@@ -209,7 +210,7 @@ package prol16_pack is
   end component;
 
   component control
-    
+
     port (
       clk_i : in std_ulogic;
       res_i : in std_ulogic;
@@ -260,7 +261,7 @@ package prol16_pack is
   end component;
 
   component cpu
-    
+
     port (
       clk_i : in std_ulogic;
       res_i : in std_ulogic;
@@ -279,4 +280,3 @@ package prol16_pack is
   end component;
 
 end prol16_pack;
-

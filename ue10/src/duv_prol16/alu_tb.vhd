@@ -7,12 +7,12 @@
 -- it under the terms of the GNU General Public License as published by
 -- the Free Software Foundation, either version 3 of the License, or
 -- (at your option) any later version.
--- 
+--
 -- Prol16 is distributed in the hope that it will be useful,
 -- but WITHOUT ANY WARRANTY; without even the implied warranty of
 -- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 -- GNU General Public License for more details.
--- 
+--
 -- You should have received a copy of the GNU General Public License
 -- along with Prol16.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -34,6 +34,7 @@ architecture bhv of alu_tb is
     generic (
       bit_width_g : integer);
     port (
+      clk_i      : in  std_ulogic;
       side_a_i   : in  std_ulogic_vector(bit_width_g - 1 downto 0);
       side_b_i   : in  std_ulogic_vector(bit_width_g - 1 downto 0);
       carry_i    : in  std_ulogic;
@@ -47,6 +48,7 @@ architecture bhv of alu_tb is
   constant bit_width_g : integer := 16;
 
   -- component ports
+  signal clk_i      : std_ulogic;
   signal side_a_i   : std_ulogic_vector(bit_width_g - 1 downto 0);
   signal side_b_i   : std_ulogic_vector(bit_width_g - 1 downto 0);
   signal carry_i    : std_ulogic;
@@ -55,7 +57,7 @@ architecture bhv of alu_tb is
   signal carry_o    : std_ulogic;
   signal zero_o     : std_ulogic;
 
-  
+
 begin  -- bhv
 
   -- component instantiation
@@ -63,6 +65,7 @@ begin  -- bhv
     generic map (
       bit_width_g => bit_width_g)
     port map (
+      clk_i      => clk_i,
       side_a_i   => side_a_i,
       side_b_i   => side_b_i,
       carry_i    => carry_i,
@@ -70,6 +73,15 @@ begin  -- bhv
       result_o   => result_o,
       carry_o    => carry_o,
       zero_o     => zero_o);
+
+  ClkGen_Proc : process is
+  begin
+    clk_i <= '0';
+
+    while true loop
+      clk_i <= not clk_i;
+    end loop;
+  end process;
 
   -- waveform generation
   WaveGen_Proc : process
@@ -100,14 +112,14 @@ begin  -- bhv
       end if;
     end TestAlu;
 
-    
+
     procedure TestSideA (
       constant sideA, sideB, result : in std_ulogic_vector(bit_width_g - 1 downto 0);
       constant carryIn, carryOut    : in std_ulogic) is
     begin  -- TestSideA
 
       TestAlu(alu_pass_a_c, sideA, sideB, result, carryIn, carryOut, "SideA");
-      
+
     end TestSideA;
 
     procedure TestSideB (
@@ -116,7 +128,7 @@ begin  -- bhv
     begin  -- TestSideB
 
       TestAlu(alu_pass_b_c, sideA, sideB, result, carryIn, carryOut, "SideB");
-      
+
     end TestSideB;
 
     procedure TestAnd (
@@ -125,7 +137,7 @@ begin  -- bhv
     begin  -- TestAnd
 
       TestAlu(alu_and_c, sideA, sideB, result, carryIn, carryOut, "And");
-      
+
     end TestAnd;
 
     procedure TestOr (
@@ -134,16 +146,16 @@ begin  -- bhv
     begin  -- TestAnd
 
       TestAlu(alu_or_c, sideA, sideB, result, carryIn, carryOut, "Or");
-      
+
     end TestOr;
 
     procedure TestXor (
       constant sideA, sideB, result : in std_ulogic_vector(bit_width_g - 1 downto 0);
       constant carryIn, carryOut    : in std_ulogic) is
     begin  -- TestXor
-      
+
       TestAlu(alu_xor_c, sideA, sideB, result, carryIn, carryOut, "Xor");
-      
+
     end TestXor;
 
     procedure TestNot (
@@ -152,7 +164,7 @@ begin  -- bhv
     begin  -- TestNot
 
       TestAlu(alu_not_c_side_a, sideA, sideB, result, carryIn, carryOut, "Not");
-      
+
     end TestNot;
 
     procedure TestAdd (
@@ -161,7 +173,7 @@ begin  -- bhv
     begin  -- TestAdd
 
       TestAlu(alu_add_c, sideA, sideB, result, carryIn, carryOut, "Add");
-      
+
     end TestAdd;
 
     procedure TestSub (
@@ -170,7 +182,7 @@ begin  -- bhv
     begin  -- TestSub
 
       TestAlu(alu_sub_c, sideA, sideB, result, carryIn, carryOut, "Sub");
-      
+
     end TestSub;
 
     procedure TestInc (
@@ -179,7 +191,7 @@ begin  -- bhv
     begin  -- TestInc
 
       TestAlu(alu_inc_c, sideA, sideB, result, carryIn, carryOut, "Inc");
-      
+
     end TestInc;
 
     procedure TestDec (
@@ -188,7 +200,7 @@ begin  -- bhv
     begin  -- TestDec
 
       TestAlu(alu_dec_c, sideA, sideB, result, carryIn, carryOut, "Dec");
-      
+
     end TestDec;
 
     procedure TestShl (
@@ -197,7 +209,7 @@ begin  -- bhv
     begin  -- TestShl
 
       TestAlu(alu_slc_c, sideA, sideB, result, carryIn, carryOut, "Shl");
-      
+
     end TestShl;
 
     procedure TestShr (
@@ -206,10 +218,10 @@ begin  -- bhv
     begin  -- TestShr
 
       TestAlu(alu_src_c, sideA, sideB, result, carryIn, carryOut, "Shr");
-      
+
     end TestShr;
-    
-    
+
+
   begin
 
     TestSideA(X"FFFF", X"0000", X"FFFF", '1', '0');
@@ -320,10 +332,9 @@ begin  -- bhv
     TestShr(X"4444", X"0000", X"2222", '0', '0');
 
     report "Simulation complete, ending with failure!" severity failure;
-    
+
   end process WaveGen_Proc;
 
 end bhv;
 
 -------------------------------------------------------------------------------
-

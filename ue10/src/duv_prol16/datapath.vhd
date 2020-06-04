@@ -7,12 +7,12 @@
 -- it under the terms of the GNU General Public License as published by
 -- the Free Software Foundation, either version 3 of the License, or
 -- (at your option) any later version.
--- 
+--
 -- Prol16 is distributed in the hope that it will be useful,
 -- but WITHOUT ANY WARRANTY; without even the implied warranty of
 -- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 -- GNU General Public License for more details.
--- 
+--
 -- You should have received a copy of the GNU General Public License
 -- along with Prol16.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -31,7 +31,7 @@ entity datapath is
 
     -- control
     op_code_o          : out op_code_t;
-    -- asserted on register index decode error    
+    -- asserted on register index decode error
     reg_decode_error_o : out std_ulogic;
 
     sel_pc_i   : in std_ulogic;
@@ -71,6 +71,7 @@ begin
     generic map (
       bit_width_g => data_vec_length_c)
     port map (
+      clk_i       => clk_i,
       side_a_i    => AluSideA,
       side_b_i    => RegTmpB,
       carry_i     => carry_i,

@@ -50,7 +50,8 @@ set GENERAL_COMPILE_FLAGS   [list -work $LIB_NAME             \
                                   -quiet]
 set VHDL_COMPILE_FLAGS      [list {*}$GENERAL_COMPILE_FLAGS     \
                                   -O0 \
-                                  -coverAll]
+                                  -coverAll \
+                                  -2008]
 set VERILOG_COMPILE_FLAGS   [list {*}$GENERAL_COMPILE_FLAGS]
 
 
