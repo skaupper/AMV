@@ -215,11 +215,11 @@ begin  -- rtl
 
 -- OP: alu_and_c
 
--- psl assert always ((alu_func_i = alu_and_c)                                      ->  (carry_o = '0'));
--- psl assert always ({(alu_func_i = alu_and_c) : aEqualsZero}                      |-> {zero_o = '1'});
--- psl assert always ({(alu_func_i = alu_and_c) : bEqualsZero}                      |-> {zero_o = '1'});
--- psl assert always ({(alu_func_i = alu_and_c) : aNotEqualsZero : bNotEqualsZero}  |-> {zero_o = '0'});
--- psl assert always ((alu_func_i = alu_and_c)                                      ->  (result_o = (side_a_i and side_b_i)));
+-- psl assert always ((alu_func_i = alu_and_c)                                         -> (carry_o = '0'));
+-- psl assert always ((alu_func_i = alu_and_c and to_uint(side_a_i) = 0)               -> (zero_o = '1'));
+-- psl assert always ((alu_func_i = alu_and_c and to_uint(side_b_i) = 0)               -> (zero_o = '1'));
+-- psl assert always ((alu_func_i = alu_and_c and to_uint(side_a_i and side_b_i) /= 0) -> (zero_o = '0'));
+-- psl assert always ((alu_func_i = alu_and_c)                                         -> (result_o = (side_a_i and side_b_i)));
 
 
 -- OP: alu_or_c
