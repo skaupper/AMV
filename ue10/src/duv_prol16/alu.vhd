@@ -199,6 +199,10 @@ begin  -- rtl
 -- psl sequence aNotEqualsZero is {side_a_i /= (side_a_i'range => '0')};
 -- psl sequence bEqualsZero    is {side_b_i = (side_b_i'range => '0')};
 -- psl sequence bNotEqualsZero is {side_b_i /= (side_b_i'range => '0')};
+-- psl sequence aAllOne        is {side_a_i = (side_a_i'range => '1')};
+-- psl sequence aNotAllOne     is {side_a_i /= (side_a_i'range => '1')};
+-- psl sequence bAllOne        is {side_b_i = (side_b_i'range => '1')};
+-- psl sequence bNotAllOne     is {side_b_i /= (side_b_i'range => '1')};
 
 
 
@@ -226,9 +230,22 @@ begin  -- rtl
 -- psl assert always ((alu_func_i = alu_or_c)                                   ->  (result_o = (side_a_i or side_b_i)));
 
 
--- OP: alu_or_c
 -- OP: alu_xor_c
+
+-- psl assert always ((alu_func_i = alu_xor_c)                    ->  (carry_o = '0'));
+-- psl assert always ({(alu_func_i = alu_xor_c) : aEqualsB}       |-> {zero_o = '1'});
+-- psl assert always ({(alu_func_i = alu_xor_c) : aNotEqualsB}    |-> {zero_o = '0'});
+-- psl assert always ((alu_func_i = alu_xor_c)                    ->  (result_o = (side_a_i xor side_b_i)));
+
+
 -- OP: alu_not_c
+
+-- psl assert always ((alu_func_i = alu_not_c)                ->  (carry_o = '0'));
+-- psl assert always ({(alu_func_i = alu_not_c) : aAllOne}    |-> {zero_o = '1'});
+-- psl assert always ({(alu_func_i = alu_not_c) : aNotAllOne} |-> {zero_o = '0'});
+-- psl assert always ((alu_func_i = alu_not_c)                ->  (result_o = (not side_a_i)));
+
+
 -- OP: alu_add_c
 -- OP: alu_sub_c
 -- OP: alu_inc_c
