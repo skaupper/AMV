@@ -266,7 +266,20 @@ begin  -- rtl
 
 
 -- OP: alu_inc_c
+
+-- psl assert always ((alu_func_i = alu_inc_c and (to_uint(side_a_i) = 16#ffff#))  -> (carry_o = '1' and zero_o = '1'));
+-- psl assert always ((alu_func_i = alu_inc_c and (to_uint(side_a_i) /= 16#ffff#)) -> (carry_o = '0' and zero_o = '0'));
+-- psl assert always ((alu_func_i = alu_inc_c) -> (result_o = to_udata(to_uint(side_a_i) + 1)));
+
+
 -- OP: alu_dec_c
+
+-- psl assert always ((alu_func_i = alu_dec_c and (to_uint(side_a_i) = 0))  -> (carry_o = '1'));
+-- psl assert always ((alu_func_i = alu_dec_c and (to_uint(side_a_i) /= 0)) -> (carry_o = '0'));
+-- psl assert always ((alu_func_i = alu_dec_c and (to_uint(side_a_i) = 1))  -> (zero_o = '1'));
+-- psl assert always ((alu_func_i = alu_dec_c and (to_uint(side_a_i) /= 1)) -> (zero_o = '0'));
+-- psl assert always ((alu_func_i = alu_dec_c) -> (result_o = to_udata(to_uint(side_a_i) - 1)));
+
 -- OP: alu_slc_c
 -- OP: alu_src_c
 
