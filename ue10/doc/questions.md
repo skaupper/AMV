@@ -2,6 +2,8 @@
 
 ## 1. P(S+RO)L  --> PSL on PROL16 :)
 
+Die Assertions der Core Control wurden so gewählt, dass vor allem Abweichungen gegenüber den Standardwerten getestet wurden.
+
 ## 2. Vacuity
 
 - Erklären Sie Vacuity! Warum ist dieses Konzept wichtig? Ist es auch für andere (temporale) Logiken wichtig ist, oder ist es nur in PSL notwendig?
