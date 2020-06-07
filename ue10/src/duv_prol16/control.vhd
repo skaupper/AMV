@@ -7,12 +7,12 @@
 -- it under the terms of the GNU General Public License as published by
 -- the Free Software Foundation, either version 3 of the License, or
 -- (at your option) any later version.
--- 
+--
 -- Prol16 is distributed in the hope that it will be useful,
 -- but WITHOUT ANY WARRANTY; without even the implied warranty of
 -- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 -- GNU General Public License for more details.
--- 
+--
 -- You should have received a copy of the GNU General Public License
 -- along with Prol16.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -95,7 +95,7 @@ begin  -- Rtl
       -- cycle counter
       Cycle <= NextCycle;
 
-      -- memory interface 
+      -- memory interface
       mem_rd_stb_o <= NextMemRead;
       mem_wr_stb_o <= NextMemWrite;
 
@@ -150,7 +150,7 @@ begin  -- Rtl
 
         -------------------------------------------------------------------------
         -- Cycle 1
-        -------------------------------------------------------------------------  
+        -------------------------------------------------------------------------
       when cCycle1 =>
         -- PC = PC+1
         sel_pc_o    <= '1';
@@ -324,7 +324,7 @@ begin  -- Rtl
 
         -------------------------------------------------------------------------
         -- Cycle 3
-        -------------------------------------------------------------------------  
+        -------------------------------------------------------------------------
       when cCycle3 =>
         clk_en_op_code_o <= '1';
         NextCycle        <= cCycle1;
@@ -336,5 +336,109 @@ begin  -- Rtl
   -----------------------------------------------------------------------------
 
   illegal_inst_o <= IllegalInst;
+
+
+
+
+-------------------------------------------------------------------------------
+-- _PSL assertions
+-------------------------------------------------------------------------------
+
+-- psl default clock is rising_edge(clk_i);
+
+
+-- General sequences
+
+-- psl sequence opcode_start(boolean is_opc) is {
+--   prev(mem_rd_stb_o = '1')
+--   and prev(clk_en_op_code_o = '1')
+--   and is_opc
+-- };
+
+
+
+
+
+-- OP: opc_nop_c
+
+
+-- OP: opc_sleep_c
+
+
+-- OP: opc_loadi_c
+
+
+-- OP: opc_load_c
+
+
+-- OP: opc_store_c
+
+
+-- OP: opc_jump_c
+
+
+-- OP: opc_jumpc_c
+
+
+-- OP: opc_jumpz_c
+
+
+-- OP: opc_jmp_c
+
+
+-- OP: opc_jmpc_c
+
+
+-- OP: opc_jmpz_c
+
+
+-- OP: opc_move_c
+
+
+-- OP: opc_and_c
+
+
+-- OP: opc_or_c
+
+
+-- OP: opc_xor_c
+
+
+-- OP: opc_not_c
+
+
+-- OP: opc_add_c
+
+
+-- OP: opc_addc_c
+
+
+-- OP: opc_sub_c
+
+
+-- OP: opc_subc_c
+
+
+-- OP: opc_comp_c
+
+
+-- OP: opc_inc_c
+
+
+-- OP: opc_dec_c
+
+
+-- OP: opc_shl_c
+
+
+-- OP: opc_shr_c
+
+
+-- OP: opc_shlc_c
+
+
+-- OP: opc_shrc_c
+
+
 
 end Rtl;
