@@ -355,56 +355,74 @@ begin  -- Rtl
 --   and is_opc
 -- };
 
+-- psl sequence alu_op is {
+--   CarryEnable = true and ZeroEnable = true and
+--   sel_addr_o = '0' and
+--   sel_load_o = '0' and
+--   clk_en_op_code_o = '1'
+-- };
+
+-- psl sequence non_alu_op is {
+--   CarryEnable = false and ZeroEnable = false
+-- };
 
 
+
+-- OP: opc_sleep_c
+-- OP: opc_load_c
+-- OP: opc_store_c
+
+-- Not implemented
 
 
 -- OP: opc_nop_c
 
-
--- OP: opc_sleep_c
+-- psl assert always ({opcode_start(op_code_i = opc_nop_c)} |=> {non_alu_op : (clk_en_reg_file_o = '0')});
 
 
 -- OP: opc_loadi_c
 
-
--- OP: opc_load_c
-
-
--- OP: opc_store_c
+-- psl assert always ({opcode_start(op_code_i = opc_loadi_c)} |=> {non_alu_op : (sel_pc_o  = '1' and sel_addr_o = '0' and clk_en_op_code_o = '0')});
 
 
 -- OP: opc_jump_c
 
+-- psl assert always ({opcode_start(op_code_i = opc_jump_c)} |=> {non_alu_op : (sel_pc_o  = '0')});
+
 
 -- OP: opc_jumpc_c
+
+-- psl assert always ({opcode_start(op_code_i = opc_jumpc_c)} |=> {non_alu_op : (sel_pc_o = '0' xor carry_i = '1')});
 
 
 -- OP: opc_jumpz_c
 
-
--- OP: opc_jmp_c
-
-
--- OP: opc_jmpc_c
-
-
--- OP: opc_jmpz_c
+-- psl assert always ({opcode_start(op_code_i = opc_jumpc_c)} |=> {non_alu_op : (sel_pc_o = '0' xor zero_i = '1')});
 
 
 -- OP: opc_move_c
 
+-- psl assert always ({opcode_start(op_code_i = opc_move_c)} |=> {non_alu_op : (alu_func_o = alu_pass_b_c)});
+
 
 -- OP: opc_and_c
+
+-- psl assert always ({opcode_start(op_code_i = opc_and_c)} |=> {alu_op : (alu_func_o = alu_and_c)});
 
 
 -- OP: opc_or_c
 
+-- psl assert always ({opcode_start(op_code_i = opc_or_c)} |=> {alu_op : (alu_func_o = alu_or_c)});
+
 
 -- OP: opc_xor_c
 
+-- psl assert always ({opcode_start(op_code_i = opc_xor_c)} |=> {alu_op : (alu_func_o = alu_xor_c)});
+
 
 -- OP: opc_not_c
+
+-- psl assert always ({opcode_start(op_code_i = opc_not_c)} |=> {alu_op : (alu_func_o = alu_not_c)});
 
 
 -- OP: opc_add_c
