@@ -386,17 +386,11 @@ begin  -- Rtl
 
 
 -- OP: opc_jump_c
-
--- psl assert always ({opcode_start(op_code_i = opc_jump_c)} |=> {non_alu_op : (sel_pc_o  = '0')});
-
-
 -- OP: opc_jumpc_c
-
--- psl assert always ({opcode_start(op_code_i = opc_jumpc_c)} |=> {non_alu_op : (sel_pc_o = '0' xor carry_i = '1')});
-
-
 -- OP: opc_jumpz_c
 
+-- psl assert always ({opcode_start(op_code_i = opc_jump_c)} |=> {non_alu_op : (sel_pc_o  = '0')});
+-- psl assert always ({opcode_start(op_code_i = opc_jumpc_c)} |=> {non_alu_op : (sel_pc_o = '0' xor carry_i = '1')});
 -- psl assert always ({opcode_start(op_code_i = opc_jumpc_c)} |=> {non_alu_op : (sel_pc_o = '0' xor zero_i = '1')});
 
 
@@ -406,57 +400,54 @@ begin  -- Rtl
 
 
 -- OP: opc_and_c
-
--- psl assert always ({opcode_start(op_code_i = opc_and_c)} |=> {alu_op : (alu_func_o = alu_and_c)});
-
-
 -- OP: opc_or_c
-
--- psl assert always ({opcode_start(op_code_i = opc_or_c)} |=> {alu_op : (alu_func_o = alu_or_c)});
-
-
 -- OP: opc_xor_c
-
--- psl assert always ({opcode_start(op_code_i = opc_xor_c)} |=> {alu_op : (alu_func_o = alu_xor_c)});
-
-
 -- OP: opc_not_c
 
+-- psl assert always ({opcode_start(op_code_i = opc_and_c)} |=> {alu_op : (alu_func_o = alu_and_c)});
+-- psl assert always ({opcode_start(op_code_i = opc_or_c)} |=> {alu_op : (alu_func_o = alu_or_c)});
+-- psl assert always ({opcode_start(op_code_i = opc_xor_c)} |=> {alu_op : (alu_func_o = alu_xor_c)});
 -- psl assert always ({opcode_start(op_code_i = opc_not_c)} |=> {alu_op : (alu_func_o = alu_not_c)});
 
 
 -- OP: opc_add_c
-
-
 -- OP: opc_addc_c
+
+-- psl assert always ({opcode_start(op_code_i = opc_add_c)} |=> {alu_op : (alu_func_o = alu_add_c and carry_o = '0')});
+-- psl assert always ({opcode_start(op_code_i = opc_addc_c)} |=> {alu_op : (alu_func_o = alu_add_c and carry_o = Carry)});
 
 
 -- OP: opc_sub_c
-
-
 -- OP: opc_subc_c
+
+-- psl assert always ({opcode_start(op_code_i = opc_sub_c)} |=> {alu_op : (alu_func_o = alu_sub_c and carry_o = '0')});
+-- psl assert always ({opcode_start(op_code_i = opc_subc_c)} |=> {alu_op : (alu_func_o = alu_sub_c and carry_o = Carry)});
 
 
 -- OP: opc_comp_c
 
+-- psl assert always ({opcode_start(op_code_i = opc_comp_c)} |=> {alu_op : (alu_func_o = alu_sub_c and carry_o = '0' and clk_en_reg_file_o = '0')});
+
 
 -- OP: opc_inc_c
-
-
 -- OP: opc_dec_c
+
+-- psl assert always ({opcode_start(op_code_i = opc_inc_c)} |=> {alu_op : (alu_func_o = alu_inc_c and carry_o = '0')});
+-- psl assert always ({opcode_start(op_code_i = opc_dec_c)} |=> {alu_op : (alu_func_o = alu_dec_c and carry_o = '0')});
 
 
 -- OP: opc_shl_c
+-- OP: opc_shlc_c
+
+-- psl assert always ({opcode_start(op_code_i = opc_shl_c)} |=> {alu_op : (alu_func_o = alu_slc_c and carry_o = '0')});
+-- psl assert always ({opcode_start(op_code_i = opc_shlc_c)} |=> {alu_op : (alu_func_o = alu_slc_c and carry_o = Carry)});
 
 
 -- OP: opc_shr_c
-
-
--- OP: opc_shlc_c
-
-
 -- OP: opc_shrc_c
 
+-- psl assert always ({opcode_start(op_code_i = opc_shr_c)} |=> {alu_op : (alu_func_o = alu_src_c and carry_o = '0')});
+-- psl assert always ({opcode_start(op_code_i = opc_shrc_c)} |=> {alu_op : (alu_func_o = alu_src_c and carry_o = Carry)});
 
 
 end Rtl;
