@@ -391,7 +391,7 @@ begin  -- Rtl
 
 -- psl assert always ({opcode_start(op_code_i = opc_jump_c)} |=> {non_alu_op : (sel_pc_o  = '0')});
 -- psl assert always ({opcode_start(op_code_i = opc_jumpc_c)} |=> {non_alu_op : (sel_pc_o = '0' xor carry_i = '1')});
--- psl assert always ({opcode_start(op_code_i = opc_jumpc_c)} |=> {non_alu_op : (sel_pc_o = '0' xor zero_i = '1')});
+-- psl assert always ({opcode_start(op_code_i = opc_jumpz_c)} |=> {non_alu_op : (sel_pc_o = '0' xor zero_i = '1')});
 
 
 -- OP: opc_move_c
